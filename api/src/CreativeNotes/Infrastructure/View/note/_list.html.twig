@@ -1,0 +1,5 @@
+<div class="card-columns mt-4">
+    {% for note in notes %}
+        {{ include('note/_item.html.twig') }}
+    {% endfor %}
+</div>

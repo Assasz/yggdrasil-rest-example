@@ -1,0 +1,8 @@
+CreativeNotes\Domain\Entity\Note:
+  properties:
+    title:
+      - NotBlank: ~
+      - Length: { max: 255 }
+    content:
+      - NotBlank: ~
+      - Length: { max: 1000 }
