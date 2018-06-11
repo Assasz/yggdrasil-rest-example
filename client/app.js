@@ -62,6 +62,7 @@ $(document).ready(function () {
         })();;
 
     $("#create_form").validate(validationOptions);
+    $("#edit_form").validate(validationOptions);
 
     $.ajax({
         url: apiUrl,
@@ -88,11 +89,24 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '[data-action="toggle-modal"]', function () {
-       $('#' + $(this).data('target')).modal();
+        var target = $(this).data('target');
 
-       if($(this).is("[data-noteid]")){
-           currentNoteId = $(this).data('noteid');
-       }
+        $('#' + target).modal();
+        $('.form-control').removeClass('is-valid is-invalid');
+
+        if($(this).is("[data-noteid]")){
+            currentNoteId = $(this).data('noteid');
+
+            if(target === 'edit_modal'){
+                $.ajax({
+                    url: apiUrl + /item/ + currentNoteId,
+                    method: 'GET'
+                }).then(function (response) {
+                    $('#title_edit').val(response[0].title);
+                    $('#content_edit').val(response[0].content);
+                });
+            }
+        }
     });
 
     $('[data-action="create-note"]').click(function () {
@@ -116,11 +130,30 @@ $(document).ready(function () {
 
     $(document).on('click', '[data-action="delete-note"]', function () {
         $.ajax({
-            url: apiUrl + '/remove/' + currentNoteId,
+            url: apiUrl + '/item/' + currentNoteId,
             method: 'DELETE'
         }).then(function (response) {
             $('#' + currentNoteId).remove();
             $('#delete_modal').modal('hide');
         });
+    });
+
+    $(document).on('click', '[data-action="edit-note"]', function () {
+        if($('#edit_form').valid()) {
+            var data = {
+                title: $('#title_edit').val(),
+                content: $('#content_edit').val()
+            };
+
+            $.ajax({
+                url: apiUrl + '/edit/' + currentNoteId,
+                method: 'PUT',
+                data: JSON.stringify(data),
+                contentType: 'application/json'
+            }).then(function (response) {
+                $('#' + currentNoteId).replaceWith(response);
+                $('#edit_modal').modal('hide');
+            });
+        }
     });
 });

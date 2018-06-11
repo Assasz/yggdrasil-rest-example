@@ -1,13 +1,13 @@
 <div id="{{ note.id }}" class="card border-primary mb-3">
     <div class="card-header">
-        <h2>{{ note.title }}</h2>
+        <h2 id="note_title">{{ note.title }}</h2>
         <p class="text-muted my-2">{{ note.createDate|date('d M Y H:i') }}</p>
     </div>
     <div class="card-body">
-        <p class="card-text">{{ note.content|nl2br }}</p>
+        <p id="note_content" class="card-text">{{ note.content|nl2br }}</p>
     </div>
     <div class="card-footer">
-        <button type="button" class="btn btn-sm btn-primary mr-2">
+        <button type="button" class="btn btn-sm btn-primary mr-2" data-action="toggle-modal" data-target="edit_modal" data-noteid="{{ note.id }}">
             <span class="fa fa-fw fa-pencil mr-1" aria-hidden="true"></span>
             Edit
         </button>

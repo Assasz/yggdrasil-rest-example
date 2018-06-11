@@ -2,16 +2,16 @@
 
 namespace CreativeNotes\Application\Service\NoteModule\Response;
 
-use CreativeNotes\Domain\Entity\Note;
 use Yggdrasil\Core\Service\ServiceResponseInterface;
+use CreativeNotes\Domain\Entity\Note;
 
 /**
- * Class CreateResponse
+ * Class EditResponse
  *
  * @package CreativeNotes\Application\Service\NoteModule\Response
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
-class CreateResponse implements ServiceResponseInterface
+class EditResponse implements ServiceResponseInterface
 {
     /**
      * Result of service processing
@@ -21,14 +21,14 @@ class CreateResponse implements ServiceResponseInterface
     private $success;
 
     /**
-     * Created note
+     * Edited note
      *
      * @var Note
      */
     private $note;
 
     /**
-     * CreateResponse constructor.
+     * EditResponse constructor.
      *
      * Sets $success default value
      */
@@ -58,7 +58,7 @@ class CreateResponse implements ServiceResponseInterface
     }
 
     /**
-     * Returns created note
+     * Returns edited note
      *
      * @return Note
      */
@@ -68,7 +68,7 @@ class CreateResponse implements ServiceResponseInterface
     }
 
     /**
-     * Sets created note
+     * Sets edited note
      *
      * @param Note $note
      */

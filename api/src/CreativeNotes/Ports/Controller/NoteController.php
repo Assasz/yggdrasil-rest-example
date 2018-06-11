@@ -4,6 +4,8 @@ namespace CreativeNotes\Ports\Controller;
 
 use CreativeNotes\Application\Service\NoteModule\Request\CreateRequest;
 use CreativeNotes\Application\Service\NoteModule\Request\DeleteRequest;
+use CreativeNotes\Application\Service\NoteModule\Request\EditRequest;
+use CreativeNotes\Application\Service\NoteModule\Request\GetOneRequest;
 use CreativeNotes\Application\Service\NoteModule\Request\GetRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,6 +42,28 @@ class NoteController extends ApiController
         ]);
 
         return $this->json([$view]);
+    }
+
+    /**
+     * Item GET action
+     * Route: /api/note/item/{id}
+     *
+     * @param int $id
+     * @return JsonResponse|Response
+     */
+    public function itemGetAction(int $id)
+    {
+        $request = new GetOneRequest();
+        $request->setNoteId($id);
+
+        $service = $this->getContainer()->get('note.get_one');
+        $response = $service->process($request);
+
+        if(!$response->isSuccess()){
+            return $this->notFound('Not found. Requested note doesn\'t exist.');
+        }
+
+        return $this->json(EntitySerializer::toArray([$response->getNote()]));
     }
 
     /**
@@ -98,13 +122,45 @@ class NoteController extends ApiController
     }
 
     /**
-     * Remove DELETE action
-     * Route: /api/note/remove/{id}
+     * Edit PUT action
+     * Route: /api/note/edit/{id}
+     *
+     * @param int $id
+     * @return JsonResponse|Response
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function editPutAction(int $id)
+    {
+        $request = new EditRequest();
+        $request->setNoteId($id);
+        $request->setTitle($this->fromBody('title'));
+        $request->setContent($this->fromBody('content'));
+
+        $service = $this->getContainer()->get('note.edit');
+        $response = $service->process($request);
+
+        if(!$response->isSuccess()){
+            return $this->badRequest('Bad request. Requested note doesn\'t exist or provided data is invalid.');
+        }
+
+        $view = $this->renderPartial('note/_item.html.twig', [
+            'note' => $response->getNote()
+        ]);
+
+        return $this->json([$view]);
+    }
+
+    /**
+     * Item DELETE action
+     * Route: /api/note/item/{id}
      *
      * @param int $id
      * @return JsonResponse|Response
      */
-    public function removeDeleteAction(int $id)
+    public function itemDeleteAction(int $id)
     {
         $request = new DeleteRequest();
         $request->setNoteId($id);

@@ -5,12 +5,12 @@ namespace CreativeNotes\Application\Service\NoteModule\Request;
 use Yggdrasil\Core\Service\ServiceRequestInterface;
 
 /**
- * Class DeleteRequest
+ * Class GetOneRequest
  *
  * @package CreativeNotes\Application\Service\NoteModule\Request
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
-class DeleteRequest implements ServiceRequestInterface
+class GetOneRequest implements ServiceRequestInterface
 {
     /**
      * Note ID
