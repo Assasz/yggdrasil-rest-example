@@ -51,6 +51,16 @@ $(document).ready(function () {
               }
           };
 
+    var currentNoteId,
+        delay = (function(){
+            var timer = 0;
+
+            return function(callback, ms){
+                clearTimeout (timer);
+                timer = setTimeout(callback, ms);
+            };
+        })();;
+
     $("#create_form").validate(validationOptions);
 
     $.ajax({
@@ -65,18 +75,24 @@ $(document).ready(function () {
             searchTerm: $(this).val()
         };
 
-        $.ajax({
-            url: apiUrl + '/search',
-            method: 'POST',
-            data: JSON.stringify(data),
-            contentType: 'application/json'
-        }).then(function (response) {
-            $('#notes').html(response);
-        });
+        delay(function () {
+            $.ajax({
+                url: apiUrl + '/search',
+                method: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json'
+            }).then(function (response) {
+                $('#notes').html(response);
+            });
+        }, 500);
     });
 
-    $('[data-action="toggle-modal"]').click(function () {
+    $(document).on('click', '[data-action="toggle-modal"]', function () {
        $('#' + $(this).data('target')).modal();
+
+       if($(this).is("[data-noteid]")){
+           currentNoteId = $(this).data('noteid');
+       }
     });
 
     $('[data-action="create-note"]').click(function () {
@@ -96,5 +112,15 @@ $(document).ready(function () {
                 $('#create_modal').modal('hide');
             });
         }
+    });
+
+    $(document).on('click', '[data-action="delete-note"]', function () {
+        $.ajax({
+            url: apiUrl + '/remove/' + currentNoteId,
+            method: 'DELETE'
+        }).then(function (response) {
+            $('#' + currentNoteId).remove();
+            $('#delete_modal').modal('hide');
+        });
     });
 });

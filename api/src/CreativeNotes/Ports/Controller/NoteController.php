@@ -3,6 +3,7 @@
 namespace CreativeNotes\Ports\Controller;
 
 use CreativeNotes\Application\Service\NoteModule\Request\CreateRequest;
+use CreativeNotes\Application\Service\NoteModule\Request\DeleteRequest;
 use CreativeNotes\Application\Service\NoteModule\Request\GetRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,8 +19,8 @@ use Yggdrasil\Core\Controller\ApiController;
 class NoteController extends ApiController
 {
     /**
-     * List GET action
-     * Routes: /api/note/list, /api, /api/note
+     * Items GET action
+     * Routes: /api/note/items, /api/note, /api
      *
      * @return JsonResponse
      *
@@ -27,7 +28,7 @@ class NoteController extends ApiController
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function listGetAction(): JsonResponse
+    public function itemsGetAction(): JsonResponse
     {
         $request = new GetRequest();
 
@@ -94,5 +95,27 @@ class NoteController extends ApiController
         ]);
 
         return $this->json([$view]);
+    }
+
+    /**
+     * Remove DELETE action
+     * Route: /api/note/remove/{id}
+     *
+     * @param int $id
+     * @return JsonResponse|Response
+     */
+    public function removeDeleteAction(int $id)
+    {
+        $request = new DeleteRequest();
+        $request->setNoteId($id);
+
+        $service = $this->getContainer()->get('note.delete');
+        $response = $service->process($request);
+
+        if(!$response->isSuccess()){
+            return $this->notFound('Not found. Requested note doesn\'t exist.');
+        }
+
+        return $this->json();
     }
 }
