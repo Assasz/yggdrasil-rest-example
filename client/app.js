@@ -7,7 +7,7 @@ $(document).ajaxComplete(function() {
 });
 
 $(document).ajaxError(function(event, jqXHR) {
-    var error = jqXHR.responseText;
+    var error = JSON.parse(jqXHR.responseText);
 
     if(jqXHR.status == 500){
         error = '<div id="app_error" class="alert alert-dismissible alert-primary mt-4">' +
@@ -17,7 +17,7 @@ $(document).ajaxError(function(event, jqXHR) {
     }
 
     if(!$('#app_error').length) {
-        $(error).insertAfter($('#app_header'));
+        $('#app_header').after(error);
     } else {
         $('#app_error').replaceWith(error);
     }
