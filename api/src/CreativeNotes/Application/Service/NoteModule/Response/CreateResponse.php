@@ -51,10 +51,13 @@ class CreateResponse implements ServiceResponseInterface
      * Sets result of service processing
      *
      * @param bool $success
+     * @return CreateResponse
      */
-    public function setSuccess(bool $success): void
+    public function setSuccess(bool $success): CreateResponse
     {
         $this->success = $success;
+
+        return $this;
     }
 
     /**
@@ -71,9 +74,12 @@ class CreateResponse implements ServiceResponseInterface
      * Sets created note
      *
      * @param Note $note
+     * @return CreateResponse
      */
-    public function setNote(Note $note): void
+    public function setNote(Note $note): CreateResponse
     {
         $this->note = $note;
+
+        return $this;
     }
 }

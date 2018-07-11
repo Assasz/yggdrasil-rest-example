@@ -33,9 +33,12 @@ class GetRequest implements ServiceRequestInterface
      * Sets search term
      *
      * @param string $searchTerm
+     * @return GetRequest
      */
-    public function setSearchTerm(string $searchTerm): void
+    public function setSearchTerm(string $searchTerm): GetRequest
     {
         $this->searchTerm = $searchTerm;
+
+        return $this;
     }
 }

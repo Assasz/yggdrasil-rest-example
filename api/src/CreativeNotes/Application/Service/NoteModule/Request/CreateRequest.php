@@ -40,10 +40,13 @@ class CreateRequest implements ServiceRequestInterface
      * Sets note title
      *
      * @param string $title
+     * @return CreateRequest
      */
-    public function setTitle(string $title): void
+    public function setTitle(string $title): CreateRequest
     {
         $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -60,9 +63,12 @@ class CreateRequest implements ServiceRequestInterface
      * Sets note content
      *
      * @param string $content
+     * @return CreateRequest
      */
-    public function setContent(string $content): void
+    public function setContent(string $content): CreateRequest
     {
         $this->content = $content;
+
+        return $this;
     }
 }

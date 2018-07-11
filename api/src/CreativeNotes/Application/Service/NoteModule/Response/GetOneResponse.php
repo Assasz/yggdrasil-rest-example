@@ -51,10 +51,13 @@ class GetOneResponse implements ServiceResponseInterface
      * Sets result of service processing
      *
      * @param bool $success
+     * @return GetOneResponse
      */
-    public function setSuccess(bool $success): void
+    public function setSuccess(bool $success): GetOneResponse
     {
         $this->success = $success;
+
+        return $this;
     }
 
     /**
@@ -71,9 +74,12 @@ class GetOneResponse implements ServiceResponseInterface
      * Sets note
      *
      * @param Note $note
+     * @return GetOneResponse
      */
-    public function setNote(Note $note): void
+    public function setNote(Note $note): GetOneResponse
     {
         $this->note = $note;
+
+        return $this;
     }
 }

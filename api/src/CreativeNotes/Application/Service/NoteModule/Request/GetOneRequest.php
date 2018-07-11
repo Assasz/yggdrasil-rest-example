@@ -33,9 +33,12 @@ class GetOneRequest implements ServiceRequestInterface
      * Sets note ID
      *
      * @param int $noteId
+     * @return GetOneRequest
      */
-    public function setNoteId(int $noteId): void
+    public function setNoteId(int $noteId): GetOneRequest
     {
         $this->noteId = $noteId;
+
+        return $this;
     }
 }

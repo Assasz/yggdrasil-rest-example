@@ -53,8 +53,8 @@ class NoteController extends ApiController
      */
     public function itemGetAction(int $id)
     {
-        $request = new GetOneRequest();
-        $request->setNoteId($id);
+        $request = (new GetOneRequest())
+            ->setNoteId($id);
 
         $service = $this->getContainer()->get('note.get_one');
         $response = $service->process($request);
@@ -78,8 +78,8 @@ class NoteController extends ApiController
      */
     public function searchPostAction(): JsonResponse
     {
-        $request = new GetRequest();
-        $request->setSearchTerm($this->fromBody('searchTerm'));
+        $request = (new GetRequest())
+            ->setSearchTerm($this->fromBody('searchTerm'));
 
         $service = $this->getContainer()->get('note.get');
         $response = $service->process($request);
@@ -103,9 +103,9 @@ class NoteController extends ApiController
      */
     public function createPostAction()
     {
-        $request = new CreateRequest();
-        $request->setTitle($this->fromBody('title'));
-        $request->setContent($this->fromBody('content'));
+        $request = (new CreateRequest())
+            ->setTitle($this->fromBody('title'))
+            ->setContent($this->fromBody('content'));
 
         $service = $this->getContainer()->get('note.create');
         $response = $service->process($request);
@@ -134,10 +134,10 @@ class NoteController extends ApiController
      */
     public function editPutAction(int $id)
     {
-        $request = new EditRequest();
-        $request->setNoteId($id);
-        $request->setTitle($this->fromBody('title'));
-        $request->setContent($this->fromBody('content'));
+        $request = (new EditRequest())
+            ->setNoteId($id)
+            ->setTitle($this->fromBody('title'))
+            ->setContent($this->fromBody('content'));
 
         $service = $this->getContainer()->get('note.edit');
         $response = $service->process($request);
@@ -162,8 +162,8 @@ class NoteController extends ApiController
      */
     public function itemDeleteAction(int $id)
     {
-        $request = new DeleteRequest();
-        $request->setNoteId($id);
+        $request = (new DeleteRequest())
+            ->setNoteId($id);
 
         $service = $this->getContainer()->get('note.delete');
         $response = $service->process($request);

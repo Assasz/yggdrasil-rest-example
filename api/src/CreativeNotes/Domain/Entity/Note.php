@@ -81,10 +81,13 @@ class Note implements SerializableEntityInterface
      * Sets note title
      *
      * @param string $title
+     * @return Note
      */
-    public function setTitle(string $title): void
+    public function setTitle(string $title): Note
     {
         $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -101,10 +104,13 @@ class Note implements SerializableEntityInterface
      * Sets note content
      *
      * @param string $content
+     * @return Note
      */
-    public function setContent(string $content): void
+    public function setContent(string $content): Note
     {
         $this->content = $content;
+
+        return $this;
     }
 
     /**

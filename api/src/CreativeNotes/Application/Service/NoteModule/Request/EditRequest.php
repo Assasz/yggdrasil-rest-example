@@ -47,10 +47,13 @@ class EditRequest implements ServiceRequestInterface
      * Sets note ID
      *
      * @param int $noteId
+     * @return EditRequest
      */
-    public function setNoteId(int $noteId): void
+    public function setNoteId(int $noteId): EditRequest
     {
         $this->noteId = $noteId;
+
+        return $this;
     }
 
     /**
@@ -67,10 +70,13 @@ class EditRequest implements ServiceRequestInterface
      * Sets note title
      *
      * @param string $title
+     * @return EditRequest
      */
-    public function setTitle(string $title): void
+    public function setTitle(string $title): EditRequest
     {
         $this->title = $title;
+
+        return $this;
     }
 
     /**
@@ -87,9 +93,12 @@ class EditRequest implements ServiceRequestInterface
      * Sets note content
      *
      * @param string $content
+     * @return EditRequest
      */
-    public function setContent(string $content): void
+    public function setContent(string $content): EditRequest
     {
         $this->content = $content;
+
+        return $this;
     }
 }

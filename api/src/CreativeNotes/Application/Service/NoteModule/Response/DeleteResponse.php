@@ -43,9 +43,12 @@ class DeleteResponse implements ServiceResponseInterface
      * Sets result of service processing
      *
      * @param bool $success
+     * @return DeleteResponse
      */
-    public function setSuccess(bool $success): void
+    public function setSuccess(bool $success): DeleteResponse
     {
         $this->success = $success;
+
+        return $this;
     }
 }

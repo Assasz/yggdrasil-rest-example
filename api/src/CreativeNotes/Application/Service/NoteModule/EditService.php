@@ -32,16 +32,18 @@ class EditService extends AbstractService implements ServiceInterface
         $response = new EditResponse();
 
         if(!empty($note)){
-            $note->setTitle($request->getTitle());
-            $note->setContent($request->getContent());
+            $note
+                ->setTitle($request->getTitle())
+                ->setContent($request->getContent());
 
             $errors = $this->getValidator()->validate($note);
 
             if(count($errors) < 1){
                 $this->getEntityManager()->flush();
 
-                $response->setSuccess(true);
-                $response->setNote($note);
+                $response
+                    ->setSuccess(true)
+                    ->setNote($note);
             }
         }
 

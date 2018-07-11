@@ -28,9 +28,9 @@ class CreateService extends AbstractService implements ServiceInterface
      */
     public function process(ServiceRequestInterface $request): ServiceResponseInterface
     {
-        $note = new Note();
-        $note->setTitle($request->getTitle());
-        $note->setContent($request->getContent());
+        $note = (new Note())
+            ->setTitle($request->getTitle())
+            ->setContent($request->getContent());
 
         $response = new CreateResponse();
 
@@ -40,8 +40,9 @@ class CreateService extends AbstractService implements ServiceInterface
             $this->getEntityManager()->persist($note);
             $this->getEntityManager()->flush();
 
-            $response->setSuccess(true);
-            $response->setNote($note);
+            $response
+                ->setSuccess(true)
+                ->setNote($note);
         }
 
         return $response;

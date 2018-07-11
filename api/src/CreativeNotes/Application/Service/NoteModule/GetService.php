@@ -30,8 +30,8 @@ class GetService extends AbstractService implements ServiceInterface
             $notes = $this->getEntityManager()->getRepository('Entity:Note')->findBy([], ['createDate' => 'desc']);
         }
 
-        $response = new GetResponse();
-        $response->setNotes($notes);
+        $response = (new GetResponse())
+            ->setNotes($notes);
 
         return $response;
     }

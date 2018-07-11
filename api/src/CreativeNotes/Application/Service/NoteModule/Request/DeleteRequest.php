@@ -33,9 +33,12 @@ class DeleteRequest implements ServiceRequestInterface
      * Sets note ID
      *
      * @param int $noteId
+     * @return DeleteRequest
      */
-    public function setNoteId(int $noteId): void
+    public function setNoteId(int $noteId): DeleteRequest
     {
         $this->noteId = $noteId;
+
+        return $this;
     }
 }

@@ -33,9 +33,12 @@ class GetResponse implements ServiceResponseInterface
      * Sets notes collection
      *
      * @param array $notes
+     * @return GetResponse
      */
-    public function setNotes(array $notes): void
+    public function setNotes(array $notes): GetResponse
     {
         $this->notes = $notes;
+
+        return $this;
     }
 }

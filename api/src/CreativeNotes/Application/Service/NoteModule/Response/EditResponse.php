@@ -51,10 +51,13 @@ class EditResponse implements ServiceResponseInterface
      * Sets result of service processing
      *
      * @param bool $success
+     * @return EditResponse
      */
-    public function setSuccess(bool $success): void
+    public function setSuccess(bool $success): EditResponse
     {
         $this->success = $success;
+
+        return $this;
     }
 
     /**
@@ -71,9 +74,12 @@ class EditResponse implements ServiceResponseInterface
      * Sets edited note
      *
      * @param Note $note
+     * @return EditResponse
      */
-    public function setNote(Note $note): void
+    public function setNote(Note $note): EditResponse
     {
         $this->note = $note;
+
+        return $this;
     }
 }
