@@ -1,5 +1,5 @@
 <?php
-define('BASE_URL', 'http://localhost/creative-notes/api/web/');
+
 define('DEBUG', true);
 
 if(!DEBUG) {

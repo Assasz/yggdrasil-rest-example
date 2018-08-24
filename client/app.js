@@ -1,3 +1,5 @@
+const debug = true;
+
 $(document).ajaxStart(function() {
     NProgress.start();
 });
@@ -7,19 +9,24 @@ $(document).ajaxComplete(function() {
 });
 
 $(document).ajaxError(function(event, jqXHR) {
-    var error = JSON.parse(jqXHR.responseText);
+    var response = JSON.parse(jqXHR.responseText);
 
-    if(jqXHR.status == 500){
-        error = '<div id="app_error" class="alert alert-dismissible alert-primary mt-4">' +
-            '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-            '<p id="error_message" class="mb-0">Internal server error.</p>' +
+    if(jqXHR.status === 500){
+        if (debug) {
+            console.error(response.error.message);
+        }
+
+        response =
+            '<div id="app_error" class="alert alert-dismissible alert-primary mt-4">' +
+                '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                '<p id="error_message" class="mb-0">Internal server error.</p>' +
             '</div>';
     }
 
     if(!$('#app_error').length) {
-        $('#app_header').after(error);
+        $('#app_header').after(response);
     } else {
-        $('#app_error').replaceWith(error);
+        $('#app_error').replaceWith(response);
     }
 });
 
@@ -49,17 +56,17 @@ $(document).ready(function () {
               errorPlacement: function(error, element) {
                   error.appendTo( element.parent() );
               }
-          };
+          },
+          delay = (function(){
+              var timer = 0;
 
-    var currentNoteId,
-        delay = (function(){
-            var timer = 0;
+              return function(callback, ms){
+                  clearTimeout (timer);
+                  timer = setTimeout(callback, ms);
+              };
+          })();
 
-            return function(callback, ms){
-                clearTimeout (timer);
-                timer = setTimeout(callback, ms);
-            };
-        })();;
+    var currentNoteId;
 
     $("#create_form").validate(validationOptions);
     $("#edit_form").validate(validationOptions);

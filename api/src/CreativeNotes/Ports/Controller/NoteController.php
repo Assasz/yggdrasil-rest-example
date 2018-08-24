@@ -29,13 +29,13 @@ class NoteController extends ApiController
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
+     * @throws \Exception
      */
     public function itemsGetAction(): JsonResponse
     {
         $request = new GetRequest();
 
-        $service = $this->getContainer()->get('note.get');
-        $response = $service->process($request);
+        $response = $this->getService('note.get')->process($request);
 
         $view = $this->renderPartial('note/_list.html.twig', [
             'notes' => $response->getNotes()
@@ -50,14 +50,15 @@ class NoteController extends ApiController
      *
      * @param int $id
      * @return JsonResponse|Response
+     *
+     * @throws \Exception
      */
     public function itemGetAction(int $id)
     {
         $request = (new GetOneRequest())
             ->setNoteId($id);
 
-        $service = $this->getContainer()->get('note.get_one');
-        $response = $service->process($request);
+        $response = $this->getService('note.get_one')->process($request);
 
         if(!$response->isSuccess()){
             return $this->notFound('Not found. Requested note doesn\'t exist.');
@@ -75,14 +76,14 @@ class NoteController extends ApiController
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
+     * @throws \Exception
      */
     public function searchPostAction(): JsonResponse
     {
         $request = (new GetRequest())
             ->setSearchTerm($this->fromBody('searchTerm'));
 
-        $service = $this->getContainer()->get('note.get');
-        $response = $service->process($request);
+        $response = $this->getService('note.get')->process($request);
 
         $view = $this->renderPartial('note/_list.html.twig', [
             'notes' => $response->getNotes()
@@ -100,6 +101,7 @@ class NoteController extends ApiController
      * @throws \Twig_Error_Syntax
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Loader
+     * @throws \Exception
      */
     public function createPostAction()
     {
@@ -107,8 +109,7 @@ class NoteController extends ApiController
             ->setTitle($this->fromBody('title'))
             ->setContent($this->fromBody('content'));
 
-        $service = $this->getContainer()->get('note.create');
-        $response = $service->process($request);
+        $response = $this->getService('note.create')->process($request);
 
         if(!$response->isSuccess()){
             return $this->badRequest('Bad request. Provided data is invalid.');
@@ -131,6 +132,7 @@ class NoteController extends ApiController
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
+     * @throws \Exception
      */
     public function editPutAction(int $id)
     {
@@ -139,8 +141,7 @@ class NoteController extends ApiController
             ->setTitle($this->fromBody('title'))
             ->setContent($this->fromBody('content'));
 
-        $service = $this->getContainer()->get('note.edit');
-        $response = $service->process($request);
+        $response = $this->getService('note.edit')->process($request);
 
         if(!$response->isSuccess()){
             return $this->badRequest('Bad request. Requested note doesn\'t exist or provided data is invalid.');
@@ -159,14 +160,15 @@ class NoteController extends ApiController
      *
      * @param int $id
      * @return JsonResponse|Response
+     *
+     * @throws \Exception
      */
     public function itemDeleteAction(int $id)
     {
         $request = (new DeleteRequest())
             ->setNoteId($id);
 
-        $service = $this->getContainer()->get('note.delete');
-        $response = $service->process($request);
+        $response = $this->getService('note.delete')->process($request);
 
         if(!$response->isSuccess()){
             return $this->notFound('Not found. Requested note doesn\'t exist.');
