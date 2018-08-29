@@ -29,6 +29,8 @@ class YjaxController extends ApiController
             return $this->badRequest();
         }
 
+        $this->enableCors();
+
         return $this->json($this->getRouter()->getQueryMap());
     }
 }

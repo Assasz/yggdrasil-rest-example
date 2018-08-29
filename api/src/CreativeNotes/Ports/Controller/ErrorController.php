@@ -3,8 +3,10 @@
 namespace CreativeNotes\Ports\Controller;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yggdrasil\Core\Controller\ApiController;
+use Yggdrasil\Core\Driver\Base\DriverCollection;
 
 /**
  * Class ErrorController
@@ -17,6 +19,20 @@ use Yggdrasil\Core\Controller\ApiController;
 class ErrorController extends ApiController
 {
     /**
+     * ErrorController constructor.
+     *
+     * @param DriverCollection $drivers
+     * @param Request $request
+     * @param Response $response
+     */
+    public function __construct(DriverCollection $drivers, Request $request, Response $response)
+    {
+        parent::__construct($drivers, $request, $response);
+
+        $this->enableCors();
+    }
+
+  /**
      * Bad Request action
      *
      * @return JsonResponse

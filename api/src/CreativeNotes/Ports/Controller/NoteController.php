@@ -8,9 +8,11 @@ use CreativeNotes\Application\Service\NoteModule\Request\EditRequest;
 use CreativeNotes\Application\Service\NoteModule\Request\GetOneRequest;
 use CreativeNotes\Application\Service\NoteModule\Request\GetRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yggdrasil\Component\DoctrineComponent\EntitySerializer;
 use Yggdrasil\Core\Controller\ApiController;
+use Yggdrasil\Core\Driver\Base\DriverCollection;
 
 /**
  * Class NoteController
@@ -21,6 +23,20 @@ use Yggdrasil\Core\Controller\ApiController;
 class NoteController extends ApiController
 {
     /**
+     * NoteController constructor.
+     *
+     * @param DriverCollection $drivers
+     * @param Request $request
+     * @param Response $response
+     */
+    public function __construct(DriverCollection $drivers, Request $request, Response $response)
+    {
+        parent::__construct($drivers, $request, $response);
+
+        $this->enableCors();
+    }
+
+  /**
      * Items GET action
      * Routes: /api/note/items, /api/note, /api
      *
