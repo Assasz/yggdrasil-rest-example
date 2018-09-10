@@ -21,16 +21,23 @@ use Yggdrasil\Core\Driver\ValidatorDriver;
 class AppConfiguration extends AbstractConfiguration implements ConfigurationInterface
 {
     /**
-     * AppConfiguration constructor.
+     * Returns application config path
      *
-     * Register drivers here
+     * @return string
      */
-    public function __construct()
+    protected function getConfigPath(): string
     {
-        // Config directory of application
-        parent::__construct('CreativeNotes/Infrastructure/Config');
+        return 'CreativeNotes/Infrastructure/Config';
+    }
 
-        $this->drivers = [
+    /**
+     * Returns application drivers registry
+     *
+     * @return array
+     */
+    protected function getDriverRegistry(): array
+    {
+        return [
             'exceptionHandler' => ExceptionHandlerDriver::class,
             'router' => RouterDriver::class,
             'entityManager' => EntityManagerDriver::class,
