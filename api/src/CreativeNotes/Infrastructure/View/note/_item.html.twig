@@ -7,11 +7,11 @@
         <p id="note_content" class="card-text">{{ note.content|nl2br }}</p>
     </div>
     <div class="card-footer">
-        <button type="button" class="btn btn-sm btn-primary mr-2" data-action="toggle-modal" data-target="edit_modal" data-note-id="{{ note.id }}">
+        <button type="button" class="btn btn-sm btn-primary mr-2" data-action="toggleModal" data-target="edit_modal" data-note-id="{{ note.id }}">
             <span class="fa fa-fw fa-pencil mr-1" aria-hidden="true"></span>
             Edit
         </button>
-        <button type="button" class="btn btn-sm btn-danger" data-action="toggle-modal" data-target="delete_modal" data-note-id="{{ note.id }}">
+        <button type="button" class="btn btn-sm btn-danger" data-action="toggleModal" data-target="delete_modal" data-note-id="{{ note.id }}">
             <span class="fa fa-fw fa-trash mr-1" aria-hidden="true"></span>
             Delete
         </button>

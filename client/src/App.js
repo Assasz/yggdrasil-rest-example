@@ -70,12 +70,22 @@ class App {
     /**
      * Registers action
      *
-     * @param {string} name
-     * @param {function} action
+     * @param {string}   name     Action name, equivalent to data-action HTML attribute
+     * @param {string}   event    Event, on which action will be triggered
+     * @param {function} callback Action callback
      * @return {App}
      */
-    register(name, action) {
-        this.actions[name] = action;
+    register(name, event, callback) {
+        if (typeof this.actions[name] !== 'undefined') {
+            console.error(name + ' action already exist.');
+
+            return this;
+        }
+
+        this.actions[name] = {
+            event: event,
+            callback: callback
+        };
 
         return this;
     }
@@ -102,12 +112,28 @@ class App {
         let self = this;
 
         $(document).ready(function () {
-            self.actions[action]();
+            if ('no-event' === self.actions[action].event) {
+                self.actions[action].callback();
+            } else {
+                $('body').on(
+                    self.actions[action].event,
+                    '[data-action="' + action + '"]',
+                    self.actions[action].callback
+                );
+            }
         });
 
         if (this.isPjax) {
             $(document).on('pjax:end', function () {
-                self.actions[action]();
+                if ('no-event' === self.actions[action].event) {
+                    self.actions[action].callback();
+                } else {
+                    $('body').off().on(
+                        self.actions[action].event,
+                        '[data-action="' + action + '"]',
+                        self.actions[action].callback
+                    );
+                }
             });
         }
 
@@ -117,11 +143,17 @@ class App {
     /**
      * Mounts plugin
      *
-     * @param {string} name
-     * @param {object} plugin
+     * @param {string} name   Name of plugin
+     * @param {object} plugin Plugin object, which can be anonymous or class instance
      * @return {App}
      */
     mount(name, plugin) {
+        if (typeof this.plugins[name] !== 'undefined') {
+            console.error(name + ' plugin already exist.');
+
+            return this;
+        }
+
         this.plugins[name] = plugin;
 
         return this;

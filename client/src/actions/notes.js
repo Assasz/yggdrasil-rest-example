@@ -3,7 +3,7 @@ let currentNoteId;
 /**
  * List notes action
  */
-app.register('listNotes', function () {
+app.register('listNotes', 'no-event', function () {
     app.use('yjax').get('API:Note:items', [], function (response) {
         $('#notes').html(response);
     });
@@ -12,7 +12,7 @@ app.register('listNotes', function () {
 /**
  * Search notes action
  */
-app.register('searchNotes', function () {
+app.register('searchNotes', 'keyup propertychange', function () {
     const delay = (function(){
         let timer = 0;
 
@@ -22,94 +22,84 @@ app.register('searchNotes', function () {
         };
     })();
 
-    $('[data-action="search-notes"]').on('keyup propertychange', function () {
-        let data = {searchTerm: $(this).val()};
+    let data = {searchTerm: $('#search').val()};
 
-        delay(function () {
-           app.use('yjax').post('API:Note:search', data, [], function (response) {
-               $('#notes').html(response);
-           });
-        }, 500);
-    });
+    delay(function () {
+       app.use('yjax').post('API:Note:search', data, [], function (response) {
+           $('#notes').html(response);
+       });
+    }, 500);
 }).run();
 
 /**
  * Create note action
  */
-app.register('createNote', function () {
-    $('[data-action="create-note"]').click(function () {
-        if($("#create_form").valid()){
-            let data = {
-                title: $('#create_form #title').val(),
-                content: $('#create_form #content').val()
-            };
+app.register('createNote', 'click', function () {
+    if($("#create_form").valid()){
+        let data = {
+            title: $('#create_form #title').val(),
+            content: $('#create_form #content').val()
+        };
 
-            app.use('yjax').post('API:Note:create', data, [], function (response) {
-                $('#notes .card-columns').prepend(response);
-                $('#create_modal').modal('hide');
-            });
-        }
-    });
+        app.use('yjax').post('API:Note:create', data, [], function (response) {
+            $('#notes .card-columns').prepend(response);
+            $('#create_modal').modal('hide');
+        });
+    }
 }).run();
 
 /**
  * Edit note action
  */
-app.register('editNote', function () {
-    $(document).on('click', '[data-action="edit-note"]', function () {
-        if($('#edit_form').valid()) {
-            let data = {
-                title: $('#title_edit').val(),
-                content: $('#content_edit').val()
-            };
+app.register('editNote', 'click', function () {
+    if($('#edit_form').valid()) {
+        let data = {
+            title: $('#title_edit').val(),
+            content: $('#content_edit').val()
+        };
 
-            app.use('yjax').put('API:Note:edit', data, [currentNoteId], function (response) {
-                $('#' + currentNoteId).replaceWith(response);
-                $('#edit_modal').modal('hide');
-            });
-        }
-    });
+        app.use('yjax').put('API:Note:edit', data, [currentNoteId], function (response) {
+            $('#' + currentNoteId).replaceWith(response);
+            $('#edit_modal').modal('hide');
+        });
+    }
 }).run();
 
 /**
  * Delete note action
  */
-app.register('deleteNote', function () {
-    $(document).on('click', '[data-action="delete-note"]', function () {
-        app.use('yjax').delete('API:Note:item', [currentNoteId], function () {
-            $('#' + currentNoteId).remove();
-            $('#delete_modal').modal('hide');
-        });
+app.register('deleteNote', 'click', function () {
+    app.use('yjax').delete('API:Note:item', [currentNoteId], function () {
+        $('#' + currentNoteId).remove();
+        $('#delete_modal').modal('hide');
     });
 }).run();
 
 /**
  * Toggle modal action
  */
-app.register('toggleModal', function () {
-    $(document).on('click', '[data-action="toggle-modal"]', function () {
-        let target = $(this).data('target');
+app.register('toggleModal', 'click', function () {
+    let target = $(this).data('target');
 
-        $('#' + target).modal();
-        $('.form-control').removeClass('is-valid is-invalid');
+    $('#' + target).modal();
+    $('.form-control').removeClass('is-valid is-invalid');
 
-        if($(this).is("[data-note-id]")){
-            currentNoteId = $(this).data('note-id');
+    if($(this).is("[data-note-id]")){
+        currentNoteId = $(this).data('note-id');
 
-            if(target === 'edit_modal'){
-                app.use('yjax').get('API:Note:item', [currentNoteId], function (response) {
-                    $('#title_edit').val(response[0].title);
-                    $('#content_edit').val(response[0].content);
-                });
-            }
+        if(target === 'edit_modal'){
+            app.use('yjax').get('API:Note:item', [currentNoteId], function (response) {
+                $('#title_edit').val(response[0].title);
+                $('#content_edit').val(response[0].content);
+            });
         }
-    });
+    }
 }).run();
 
 /**
  * Validate forms action
  */
-app.register('validateForms', function () {
+app.register('validateForms', 'no-event', function () {
     const validationOptions = {
         rules: {
             title: {
@@ -143,16 +133,12 @@ app.register('validateForms', function () {
 /**
  * Error action
  */
-app.register('error', function () {
-    const debug = true;
-
+app.register('error', 'no-event', function () {
     app.use('yjax').onError(function(event, jqXHR) {
         let response = JSON.parse(jqXHR.responseText);
 
         if(jqXHR.status === 500){
-            if (debug) {
-                console.error(response.error.message);
-            }
+            console.error(response.error.message);
 
             response =
                 '<div id="app_error" class="alert alert-dismissible alert-primary mt-4">' +

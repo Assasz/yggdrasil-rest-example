@@ -25,11 +25,14 @@ class YjaxPlugin {
             }
         }
 
-        this.loadRoutes();
+        this.loadRoutes()
+            .onError();
     }
 
     /**
      * Loads routes from remote
+     *
+     * @return {YjaxPlugin}
      */
     loadRoutes() {
         let self = this;
@@ -40,8 +43,14 @@ class YjaxPlugin {
             async: false,
             success: function (routes) {
                 self.routes = routes;
+            },
+            error: function () {
+                console.error('Unable to load routes from remote.');
+                self.routes = {};
             }
-        })
+        });
+
+        return this;
     }
 
     /**
@@ -52,7 +61,7 @@ class YjaxPlugin {
      * @param {function|null} success On success callback
      * @param {function|null} error   On error callback
      * @param {object|null}   options Set of ajax options
-     * @return {boolean}
+     * @return {boolean}              Returns false is action route doesn't exist
      */
     get (action, params = [], success = null, error = null, options = null) {
         if (typeof this.routes[action] === 'undefined') {
@@ -84,13 +93,13 @@ class YjaxPlugin {
     /**
      * Calls remote POST action
      *
-     * @param {string}        action  Alias of remote action like Controller:action
+     * @param {string}        action  Alias of remote action like [API:]Controller:action
      * @param {object}        data    Data to send
      * @param {array}         params  Remote action parameters
      * @param {function|null} success On success callback
      * @param {function|null} error   On error callback
      * @param {object|null}   options Set of ajax options
-     * @return {boolean}
+     * @return {boolean}              Returns false is action route doesn't exist
      */
     post (action, data, params = [], success = null, error = null, options = null) {
         if (typeof this.routes[action] === 'undefined') {
@@ -125,13 +134,13 @@ class YjaxPlugin {
     /**
      * Calls remote PUT action
      *
-     * @param {string}        action  Alias of remote action like Controller:action
+     * @param {string}        action  Alias of remote action like [API:]Controller:action
      * @param {object}        data    Data to send
      * @param {array}         params  Remote action parameters
      * @param {function|null} success On success callback
      * @param {function|null} error   On error callback
      * @param {object|null}   options Set of ajax options
-     * @return {boolean}
+     * @return {boolean}              Returns false is action route doesn't exist
      */
     put (action, data, params = [], success = null, error = null, options = null) {
         if (typeof this.routes[action] === 'undefined') {
@@ -166,12 +175,12 @@ class YjaxPlugin {
     /**
      * Calls remote DELETE action
      *
-     * @param {string}        action  Alias of remote action like Controller:action
+     * @param {string}        action  Alias of remote action like [API:]Controller:action
      * @param {array}         params  Remote action parameters
      * @param {function|null} success On success callback
      * @param {function|null} error   On error callback
      * @param {object|null}   options Set of ajax options
-     * @return {boolean}
+     * @return {boolean}              Returns false is action route doesn't exist
      */
     delete (action, params = [], success = null, error = null, options = null) {
         if (typeof this.routes[action] === 'undefined') {
@@ -204,9 +213,17 @@ class YjaxPlugin {
     /**
      * Registers on error callback
      *
-     * @param {function} callback
+     * @param {function|null} callback Sets default callback if null
      */
-    onError (callback) {
-        $(document).ajaxError((typeof callback === 'function') ? callback : function () {});
+    onError (callback = null) {
+        $(document).ajaxError((typeof callback === 'function') ? callback : function (event, jqXHR) {
+            if (jqXHR.getResponseHeader("Content-Type").indexOf('json') && 500 === jqXHR.status) {
+                console.error(JSON.parse(jqXHR.responseText).error.message);
+
+                return;
+            }
+
+            console.error(jqXHR.status + ' HTTP response.');
+        });
     }
 }
