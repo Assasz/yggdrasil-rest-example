@@ -1,5 +1,3 @@
-let currentNoteId;
-
 /**
  * List notes action
  */
@@ -13,14 +11,21 @@ app.register('listNotes', 'no-event', function () {
  * Search notes action
  */
 app.register('searchNotes', 'keyup propertychange', function () {
-    const delay = (function(){
-        let timer = 0;
 
-        return function(callback, ms){
-            clearTimeout (timer);
-            timer = setTimeout(callback, ms);
-        };
-    })();
+    let delay = app.retrieve('delay');
+
+    if (null === delay) {
+        delay = (function(){
+            let timer = 0;
+
+            return function(callback, ms){
+                clearTimeout (timer);
+                timer = setTimeout(callback, ms);
+            };
+        })();
+
+        app.store('delay', delay);
+    }
 
     let data = {searchTerm: $('#search').val()};
 
@@ -58,8 +63,8 @@ app.register('editNote', 'click', function () {
             content: $('#content_edit').val()
         };
 
-        app.use('yjax').put('API:Note:edit', data, [currentNoteId], function (response) {
-            $('#' + currentNoteId).replaceWith(response);
+        app.use('yjax').put('API:Note:edit', data, [app.retrieve('noteId')], function (response) {
+            $('#' + app.retrieve('noteId')).replaceWith(response);
             $('#edit_modal').modal('hide');
         });
     }
@@ -69,8 +74,8 @@ app.register('editNote', 'click', function () {
  * Delete note action
  */
 app.register('deleteNote', 'click', function () {
-    app.use('yjax').delete('API:Note:item', [currentNoteId], function () {
-        $('#' + currentNoteId).remove();
+    app.use('yjax').delete('API:Note:item', [app.retrieve('noteId')], function () {
+        $('#' + app.retrieve('noteId')).remove();
         $('#delete_modal').modal('hide');
     });
 }).run();
@@ -85,10 +90,10 @@ app.register('toggleModal', 'click', function () {
     $('.form-control').removeClass('is-valid is-invalid');
 
     if($(this).is("[data-note-id]")){
-        currentNoteId = $(this).data('note-id');
+        app.store('noteId', $(this).data('note-id'));
 
         if(target === 'edit_modal'){
-            app.use('yjax').get('API:Note:item', [currentNoteId], function (response) {
+            app.use('yjax').get('API:Note:item', [app.retrieve('noteId')], function (response) {
                 $('#title_edit').val(response[0].title);
                 $('#content_edit').val(response[0].content);
             });
