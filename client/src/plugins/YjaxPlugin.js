@@ -8,7 +8,7 @@ class YjaxPlugin {
     /**
      * Initializes plugin
      *
-     * @param {?string} host Hostname of remote - if null, Yjax will try to resolve it automatically
+     * @param {string|null} host Hostname of remote - if null, Yjax will try to resolve it automatically
      */
     constructor(host = null) {
         if (null !== host) {
@@ -56,12 +56,12 @@ class YjaxPlugin {
     /**
      * Calls remote GET action
      *
-     * @param {string}    action  Alias of remote action like [API:]Controller:action
-     * @param {array}     params  Remote action parameters
-     * @param {?function} success On success callback
-     * @param {?function} error   On error callback
-     * @param {?object}   options Set of ajax options
-     * @return {boolean}          Returns false is action route doesn't exist
+     * @param {string}        action  Alias of remote action like [API:]Controller:action
+     * @param {array}         params  Remote action parameters
+     * @param {function|null} success On success callback
+     * @param {function|null} error   On error callback
+     * @param {object|null}   options Set of ajax options
+     * @return {boolean}              Returns false is action route doesn't exist
      */
     get (action, params = [], success = null, error = null, options = null) {
         if (typeof this.routes[action] === 'undefined') {
@@ -93,13 +93,13 @@ class YjaxPlugin {
     /**
      * Calls remote POST action
      *
-     * @param {string}    action  Alias of remote action like [API:]Controller:action
-     * @param {object}    data    Data to send
-     * @param {array}     params  Remote action parameters
-     * @param {?function} success On success callback
-     * @param {?function} error   On error callback
-     * @param {?object}   options Set of ajax options
-     * @return {boolean}          Returns false is action route doesn't exist
+     * @param {string}        action  Alias of remote action like [API:]Controller:action
+     * @param {object}        data    Data to send
+     * @param {array}         params  Remote action parameters
+     * @param {function|null} success On success callback
+     * @param {function|null} error   On error callback
+     * @param {object|null}   options Set of ajax options
+     * @return {boolean}              Returns false is action route doesn't exist
      */
     post (action, data, params = [], success = null, error = null, options = null) {
         if (typeof this.routes[action] === 'undefined') {
@@ -134,13 +134,13 @@ class YjaxPlugin {
     /**
      * Calls remote PUT action
      *
-     * @param {string}    action  Alias of remote action like [API:]Controller:action
-     * @param {object}    data    Data to send
-     * @param {array}     params  Remote action parameters
-     * @param {?function} success On success callback
-     * @param {?function} error   On error callback
-     * @param {?object}   options Set of ajax options
-     * @return {boolean}          Returns false is action route doesn't exist
+     * @param {string}        action  Alias of remote action like [API:]Controller:action
+     * @param {object}        data    Data to send
+     * @param {array}         params  Remote action parameters
+     * @param {function|null} success On success callback
+     * @param {function|null} error   On error callback
+     * @param {object|null}   options Set of ajax options
+     * @return {boolean}              Returns false is action route doesn't exist
      */
     put (action, data, params = [], success = null, error = null, options = null) {
         if (typeof this.routes[action] === 'undefined') {
@@ -175,12 +175,12 @@ class YjaxPlugin {
     /**
      * Calls remote DELETE action
      *
-     * @param {string}    action  Alias of remote action like [API:]Controller:action
-     * @param {array}     params  Remote action parameters
-     * @param {?function} success On success callback
-     * @param {?function} error   On error callback
-     * @param {?object}   options Set of ajax options
-     * @return {boolean}          Returns false is action route doesn't exist
+     * @param {string}        action  Alias of remote action like [API:]Controller:action
+     * @param {array}         params  Remote action parameters
+     * @param {function|null} success On success callback
+     * @param {function|null} error   On error callback
+     * @param {object|null}   options Set of ajax options
+     * @return {boolean}              Returns false is action route doesn't exist
      */
     delete (action, params = [], success = null, error = null, options = null) {
         if (typeof this.routes[action] === 'undefined') {
@@ -212,9 +212,8 @@ class YjaxPlugin {
 
     /**
      * Registers on error callback
-     * Default callback works pretty well with Whoops JsonResponseHandler
      *
-     * @param {?function} callback Sets default callback if null
+     * @param {function|null} callback Sets default callback if null
      */
     onError (callback = null) {
         $(document).ajaxError((typeof callback === 'function') ? callback : function (event, jqXHR) {

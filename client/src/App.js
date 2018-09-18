@@ -10,7 +10,6 @@ class App {
         this.isPjax = false;
         this.actions = {};
         this.plugins = {};
-        this.storage = {};
     }
 
     /**
@@ -41,16 +40,8 @@ class App {
      * @return {App}
      */
     initNProgress() {
-        $(document).ready(function () {
-            if (this.isPjax) {
-                $(document).on('pjax:send', function () {
-                    NProgress.start();
-                });
-
-                $(document).on('pjax:end', function () {
-                    NProgress.done();
-                });
-            } else {
+        if (!this.isPjax) {
+            $(document).ready(function () {
                 $(document).ajaxStart(function() {
                     NProgress.start();
                 });
@@ -58,7 +49,19 @@ class App {
                 $(document).ajaxComplete(function() {
                     NProgress.done();
                 });
-            }
+            });
+
+            return this;
+        }
+
+        $(document).ready(function () {
+            $(document).on('pjax:send', function () {
+                NProgress.start();
+            });
+
+            $(document).on('pjax:end', function () {
+                NProgress.done();
+            });
         });
 
         return this;
@@ -68,7 +71,7 @@ class App {
      * Registers action
      *
      * @param {string}   name     Action name, equivalent to data-action HTML attribute
-     * @param {string}   event    Event to bind action, use 'no-event' if no needed
+     * @param {string}   event    Event, on which action will be triggered
      * @param {function} callback Action callback
      * @return {App}
      */
@@ -109,44 +112,30 @@ class App {
         let self = this;
 
         $(document).ready(function () {
-            if (this.isPjax) {
-                if ('no-event' === self.actions[action].event) {
-                    self.actions[action].callback();
-                } else {
-                    $('#pjax-container').on(
-                        self.actions[action].event,
-                        '[data-action="' + action + '"]',
-                        self.actions[action].callback
-                    );
-                }
-
-                $(document).on('pjax:start', function () {
-                    $('#pjax-container').off();
-                });
-
-                $(document).on('pjax:end', function () {
-                    if ('no-event' === self.actions[action].event) {
-                        self.actions[action].callback();
-                    } else {
-                        $('#pjax-container').on(
-                            self.actions[action].event,
-                            '[data-action="' + action + '"]',
-                            self.actions[action].callback
-                        );
-                    }
-                });
+            if ('no-event' === self.actions[action].event) {
+                self.actions[action].callback();
             } else {
-                if ('no-event' === self.actions[action].event) {
-                    self.actions[action].callback();
-                } else {
-                    $(document).on(
-                        self.actions[action].event,
-                        '[data-action="' + action + '"]',
-                        self.actions[action].callback
-                    );
-                }
+                $('body').on(
+                    self.actions[action].event,
+                    '[data-action="' + action + '"]',
+                    self.actions[action].callback
+                );
             }
         });
+
+        if (this.isPjax) {
+            $(document).on('pjax:end', function () {
+                if ('no-event' === self.actions[action].event) {
+                    self.actions[action].callback();
+                } else {
+                    $('body').off().on(
+                        self.actions[action].event,
+                        '[data-action="' + action + '"]',
+                        self.actions[action].callback
+                    );
+                }
+            });
+        }
 
         return this;
     }
@@ -184,34 +173,5 @@ class App {
         }
 
         return this.plugins[plugin];
-    }
-
-    /**
-     * Stores data in storage
-     *
-     * @param {string} key   Key of data
-     * @param {*}      value Value of data
-     * @return {App}
-     */
-    store(key, value) {
-        this.storage[key] = value;
-
-        return this;
-    }
-
-    /**
-     * Retrieves data from storage
-     *
-     * @param {string} key Key of data
-     * @return {*}
-     */
-    retrieve(key) {
-        if (typeof this.storage[key] === 'undefined') {
-            console.error(key + ' data doesn\'t exist in storage.');
-
-            return null;
-        }
-
-        return this.storage[key];
     }
 }
