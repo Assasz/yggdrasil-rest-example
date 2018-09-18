@@ -10,6 +10,7 @@ class App {
         this.isPjax = false;
         this.actions = {};
         this.plugins = {};
+        this.storage = {};
     }
 
     /**
@@ -40,8 +41,16 @@ class App {
      * @return {App}
      */
     initNProgress() {
-        if (!this.isPjax) {
-            $(document).ready(function () {
+        $(document).ready(function () {
+            if (this.isPjax) {
+                $(document).on('pjax:send', function () {
+                    NProgress.start();
+                });
+
+                $(document).on('pjax:end', function () {
+                    NProgress.done();
+                });
+            } else {
                 $(document).ajaxStart(function() {
                     NProgress.start();
                 });
@@ -49,19 +58,7 @@ class App {
                 $(document).ajaxComplete(function() {
                     NProgress.done();
                 });
-            });
-
-            return this;
-        }
-
-        $(document).ready(function () {
-            $(document).on('pjax:send', function () {
-                NProgress.start();
-            });
-
-            $(document).on('pjax:end', function () {
-                NProgress.done();
-            });
+            }
         });
 
         return this;
@@ -93,7 +90,7 @@ class App {
     /**
      * Runs given action
      *
-     * @param {string|null} action Name of action - if null, last registered action will be run
+     * @param {?string} action Name of action - if null, last registered action will be run
      * @return {App}
      */
     run(action = null) {
@@ -112,30 +109,44 @@ class App {
         let self = this;
 
         $(document).ready(function () {
-            if ('no-event' === self.actions[action].event) {
-                self.actions[action].callback();
-            } else {
-                $('body').on(
-                    self.actions[action].event,
-                    '[data-action="' + action + '"]',
-                    self.actions[action].callback
-                );
-            }
-        });
-
-        if (this.isPjax) {
-            $(document).on('pjax:end', function () {
+            if (this.isPjax) {
                 if ('no-event' === self.actions[action].event) {
                     self.actions[action].callback();
                 } else {
-                    $('body').off().on(
+                    $('#pjax-container').on(
                         self.actions[action].event,
                         '[data-action="' + action + '"]',
                         self.actions[action].callback
                     );
                 }
-            });
-        }
+
+                $(document).on('pjax:start', function () {
+                    $('#pjax-container').off();
+                });
+
+                $(document).on('pjax:end', function () {
+                    if ('no-event' === self.actions[action].event) {
+                        self.actions[action].callback();
+                    } else {
+                        $('#pjax-container').on(
+                            self.actions[action].event,
+                            '[data-action="' + action + '"]',
+                            self.actions[action].callback
+                        );
+                    }
+                });
+            } else {
+                if ('no-event' === self.actions[action].event) {
+                    self.actions[action].callback();
+                } else {
+                    $(document).on(
+                        self.actions[action].event,
+                        '[data-action="' + action + '"]',
+                        self.actions[action].callback
+                    );
+                }
+            }
+        });
 
         return this;
     }
@@ -163,7 +174,7 @@ class App {
      * Uses given plugin
      *
      * @param {string} plugin Name of plugin
-     * @return {object|null}
+     * @return {?object}
      */
     use(plugin) {
         if (typeof this.plugins[plugin] === 'undefined') {
@@ -173,5 +184,28 @@ class App {
         }
 
         return this.plugins[plugin];
+    }
+
+    /**
+     * Stores data in storage
+     *
+     * @param {string} key   Key of data
+     * @param {*}      value Value of data
+     * @return {App}
+     */
+    store(key, value) {
+        this.storage[key] = value;
+
+        return this;
+    }
+
+    /**
+     * Retrieves data from storage
+     *
+     * @param {string} key Key of data
+     * @return {*}
+     */
+    retrieve(key) {
+        return this.storage[key] || null;
     }
 }
