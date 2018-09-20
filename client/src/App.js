@@ -68,7 +68,7 @@ class App {
      * Registers action
      *
      * @param {string}   name     Action name, equivalent to data-action HTML attribute
-     * @param {string}   event    Event, on which action will be triggered
+     * @param {string}   event    Event to bind action, use 'no-event' if no needed
      * @param {function} callback Action callback
      * @return {App}
      */
