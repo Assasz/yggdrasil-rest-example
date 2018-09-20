@@ -12,9 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use CreativeNotes\Infrastructure\Config\AppConfiguration;
 use Yggdrasil\Core\Kernel;
 
-$appConfiguration = new AppConfiguration();
-$kernel = new Kernel($appConfiguration);
-
-$request = Request::createFromGlobals();
-$response = $kernel->handle($request);
-$response->send();
+(new Kernel(new AppConfiguration()))
+    ->handle(Request::createFromGlobals())
+    ->send();
