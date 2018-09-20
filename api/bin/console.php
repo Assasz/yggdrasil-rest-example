@@ -1,25 +1,33 @@
 <?php
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
-use CreativeNotes\Infrastructure\Config\AppConfiguration;
+use CreativeNotes\Infrastructure\Configuration\AppConfiguration;
+use CreativeNotes\Ports\Command\EntityGenerateCommand;
 
 try {
-    $application = new Application('Yggdrasil CLI', '0.1');
+    $application = new Application('Yggdrasil CLI', 'dev');
+    $appConfiguration = new AppConfiguration();
 
-    $appConfig = new AppConfiguration();
-    $entityManager = $appConfig->loadDriver('entityManager');
+    $consoleModule = (!isset($argv[1])) ?: explode(':', $argv[1])[0];
 
-    $helperSet = ConsoleRunner::createHelperSet($entityManager);
-    $application->setHelperSet($helperSet);
+    switch (true) {
+        case in_array($consoleModule, ['dbal', 'orm']):
+            $entityManager = $appConfiguration->loadDriver('entityManager');
+            $helperSet = ConsoleRunner::createHelperSet($entityManager);
 
-    ConsoleRunner::addCommands($application);
-
-    // register commands here
+            $application->setHelperSet($helperSet);
+            ConsoleRunner::addCommands($application);
+            break;
+        default:
+            // register commands here
+            $application->add(new EntityGenerateCommand($appConfiguration));
+            break;
+    }
 
     $application->run();
-} catch (Exception $e) {
-    echo 'Console error: '.$e->getMessage();
+} catch (Throwable $t) {
+    echo 'Console error: ' . $t->getMessage();
 }

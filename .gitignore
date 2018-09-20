@@ -1,5 +1,4 @@
 /.idea
 /api/vendor
 /api/composer.lock
-/api/src/CreativeNotes/Infrastructure/Resource/Log/*
 /api/src/CreativeNotes/Infrastructure/Config/config.ini

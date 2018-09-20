@@ -1,6 +1,6 @@
 <?php
 
-namespace CreativeNotes\Infrastructure\Config;
+namespace CreativeNotes\Infrastructure\Configuration;
 
 use Yggdrasil\Core\Configuration\AbstractConfiguration;
 use Yggdrasil\Core\Configuration\ConfigurationInterface;
@@ -16,7 +16,7 @@ use Yggdrasil\Core\Driver\ValidatorDriver;
  *
  * Manages configuration of application
  *
- * @package CreativeNotes\Infrastructure\Config
+ * @package CreativeNotes\Infrastructure\Configuration
  */
 class AppConfiguration extends AbstractConfiguration implements ConfigurationInterface
 {
@@ -27,7 +27,7 @@ class AppConfiguration extends AbstractConfiguration implements ConfigurationInt
      */
     protected function getConfigPath(): string
     {
-        return 'CreativeNotes/Infrastructure/Config';
+        return 'CreativeNotes/Infrastructure/Configuration';
     }
 
     /**
