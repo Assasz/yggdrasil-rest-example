@@ -6,7 +6,7 @@ use Yggdrasil\Core\Configuration\AbstractConfiguration;
 use Yggdrasil\Core\Configuration\ConfigurationInterface;
 use Yggdrasil\Core\Driver\ContainerDriver;
 use Yggdrasil\Core\Driver\EntityManagerDriver;
-use Yggdrasil\Core\Driver\ExceptionHandlerDriver;
+use CreativeNotes\Infrastructure\Driver\ExceptionHandlerDriver;
 use Yggdrasil\Core\Driver\RouterDriver;
 use Yggdrasil\Core\Driver\TemplateEngineDriver;
 use Yggdrasil\Core\Driver\ValidatorDriver;

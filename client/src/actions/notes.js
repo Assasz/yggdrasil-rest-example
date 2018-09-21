@@ -141,14 +141,10 @@ app.register('error', 'no-event', function () {
     app.use('yjax').onError(function(event, jqXHR) {
         let response = JSON.parse(jqXHR.responseText);
 
-        if(jqXHR.status === 500){
+        if (typeof response.error !== 'undefined') {
             console.error(response.error.message);
 
-            response =
-                '<div id="app_error" class="alert alert-dismissible alert-primary mt-4">' +
-                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    '<p id="error_message" class="mb-0">Internal server error.</p>' +
-                '</div>';
+            return;
         }
 
         if(!$('#app_error').length) {
