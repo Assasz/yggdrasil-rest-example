@@ -1,3 +1,3 @@
-# Yggdrasil REST api example
+# Yggdrasil REST API example
 
-Simple REST api created with [Yggdrasil Skeleton](https://github.com/Assasz/yggdrasil-skeleton).
+Simple REST API created with [Yggdrasil Skeleton](https://github.com/Assasz/yggdrasil-skeleton).
