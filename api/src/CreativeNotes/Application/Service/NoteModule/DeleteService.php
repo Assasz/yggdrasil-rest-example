@@ -21,9 +21,6 @@ class DeleteService extends AbstractService implements ServiceInterface
      *
      * @param ServiceRequestInterface $request
      * @return ServiceResponseInterface
-     *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function process(ServiceRequestInterface $request): ServiceResponseInterface
     {
@@ -31,7 +28,7 @@ class DeleteService extends AbstractService implements ServiceInterface
 
         $response = new DeleteResponse();
 
-        if(!empty($note)){
+        if (!empty($note)) {
             $this->getEntityManager()->remove($note);
             $this->getEntityManager()->flush();
 

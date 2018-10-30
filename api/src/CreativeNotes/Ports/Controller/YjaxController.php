@@ -25,7 +25,7 @@ class YjaxController extends ApiController
      */
     public function routesGetAction()
     {
-        if (!$this->getRequest()->isXmlHttpRequest()) {
+        if (!$this->isYjaxRequest()) {
             return $this->badRequest();
         }
 

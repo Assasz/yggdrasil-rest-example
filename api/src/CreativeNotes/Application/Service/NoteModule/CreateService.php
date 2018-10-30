@@ -22,9 +22,6 @@ class CreateService extends AbstractService implements ServiceInterface
      *
      * @param ServiceRequestInterface $request
      * @return ServiceResponseInterface
-     *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function process(ServiceRequestInterface $request): ServiceResponseInterface
     {
@@ -34,9 +31,7 @@ class CreateService extends AbstractService implements ServiceInterface
 
         $response = new CreateResponse();
 
-        $errors = $this->getValidator()->validate($note);
-
-        if(count($errors) < 1){
+        if ($this->getValidator()->isValid($note)) {
             $this->getEntityManager()->persist($note);
             $this->getEntityManager()->flush();
 

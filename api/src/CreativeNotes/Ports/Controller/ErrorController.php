@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yggdrasil\Core\Controller\ApiController;
-use Yggdrasil\Core\Driver\Base\DriverCollection;
+use Yggdrasil\Core\Driver\DriverCollection;
 
 /**
  * Class ErrorController

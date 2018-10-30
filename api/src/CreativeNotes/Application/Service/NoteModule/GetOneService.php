@@ -28,7 +28,7 @@ class GetOneService extends AbstractService implements ServiceInterface
 
         $response = new GetOneResponse();
 
-        if(!empty($note)){
+        if (!empty($note)) {
             $response
                 ->setSuccess(true)
                 ->setNote($note);

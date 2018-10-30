@@ -21,9 +21,6 @@ class EditService extends AbstractService implements ServiceInterface
      *
      * @param ServiceRequestInterface $request
      * @return ServiceResponseInterface
-     *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function process(ServiceRequestInterface $request): ServiceResponseInterface
     {
@@ -31,14 +28,12 @@ class EditService extends AbstractService implements ServiceInterface
 
         $response = new EditResponse();
 
-        if(!empty($note)){
+        if (!empty($note)) {
             $note
                 ->setTitle($request->getTitle())
                 ->setContent($request->getContent());
 
-            $errors = $this->getValidator()->validate($note);
-
-            if(count($errors) < 1){
+            if ($this->getValidator()->isValid($note)) {
                 $this->getEntityManager()->flush();
 
                 $response

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yggdrasil\Component\DoctrineComponent\EntitySerializer;
 use Yggdrasil\Core\Controller\ApiController;
-use Yggdrasil\Core\Driver\Base\DriverCollection;
+use Yggdrasil\Core\Driver\DriverCollection;
 
 /**
  * Class NoteController
@@ -42,16 +42,13 @@ class NoteController extends ApiController
      *
      * @return JsonResponse
      *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
      * @throws \Exception
      */
     public function itemsGetAction(): JsonResponse
     {
         $request = new GetRequest();
 
-        $response = $this->getService('note.get')->process($request);
+        $response = $this->getContainer()->getService('note.get')->process($request);
 
         $view = $this->renderPartial('note/_list.html.twig', [
             'notes' => $response->getNotes()
@@ -74,7 +71,7 @@ class NoteController extends ApiController
         $request = (new GetOneRequest())
             ->setNoteId($id);
 
-        $response = $this->getService('note.get_one')->process($request);
+        $response = $this->getContainer()->getService('note.get_one')->process($request);
 
         if(!$response->isSuccess()){
             return $this->notFound('Not found. Requested note doesn\'t exist.');
@@ -89,9 +86,6 @@ class NoteController extends ApiController
      *
      * @return JsonResponse
      *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
      * @throws \Exception
      */
     public function searchPostAction(): JsonResponse
@@ -99,7 +93,7 @@ class NoteController extends ApiController
         $request = (new GetRequest())
             ->setSearchTerm($this->fromBody('searchTerm'));
 
-        $response = $this->getService('note.get')->process($request);
+        $response = $this->getContainer()->getService('note.get')->process($request);
 
         $view = $this->renderPartial('note/_list.html.twig', [
             'notes' => $response->getNotes()
@@ -114,9 +108,6 @@ class NoteController extends ApiController
      *
      * @return JsonResponse|Response
      *
-     * @throws \Twig_Error_Syntax
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Loader
      * @throws \Exception
      */
     public function createPostAction()
@@ -125,7 +116,7 @@ class NoteController extends ApiController
             ->setTitle($this->fromBody('title'))
             ->setContent($this->fromBody('content'));
 
-        $response = $this->getService('note.create')->process($request);
+        $response = $this->getContainer()->getService('note.create')->process($request);
 
         if(!$response->isSuccess()){
             return $this->badRequest('Bad request. Provided data is invalid.');
@@ -145,9 +136,6 @@ class NoteController extends ApiController
      * @param int $id
      * @return JsonResponse|Response
      *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
      * @throws \Exception
      */
     public function editPutAction(int $id)
@@ -157,7 +145,7 @@ class NoteController extends ApiController
             ->setTitle($this->fromBody('title'))
             ->setContent($this->fromBody('content'));
 
-        $response = $this->getService('note.edit')->process($request);
+        $response = $this->getContainer()->getService('note.edit')->process($request);
 
         if(!$response->isSuccess()){
             return $this->badRequest('Bad request. Requested note doesn\'t exist or provided data is invalid.');
@@ -184,7 +172,7 @@ class NoteController extends ApiController
         $request = (new DeleteRequest())
             ->setNoteId($id);
 
-        $response = $this->getService('note.delete')->process($request);
+        $response = $this->getContainer()->getService('note.delete')->process($request);
 
         if(!$response->isSuccess()){
             return $this->notFound('Not found. Requested note doesn\'t exist.');

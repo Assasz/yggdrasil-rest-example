@@ -24,7 +24,7 @@ class GetService extends AbstractService implements ServiceInterface
      */
     public function process(ServiceRequestInterface $request): ServiceResponseInterface
     {
-        if(!empty($request->getSearchTerm())){
+        if (!empty($request->getSearchTerm())) {
             $notes = $this->getEntityManager()->getRepository('Entity:Note')->search($request->getSearchTerm());
         } else {
             $notes = $this->getEntityManager()->getRepository('Entity:Note')->findBy([], ['createDate' => 'desc']);
