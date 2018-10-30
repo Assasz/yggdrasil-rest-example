@@ -9,7 +9,7 @@
     }
   },
   "require": {
-    "php": "^7.1",
+    "php": "^7.2",
     "symfony/http-foundation": "^4.0",
     "doctrine/orm": "^2.6",
     "twig/twig": "^2.4",
