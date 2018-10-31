@@ -36,10 +36,6 @@ class ErrorController extends ApiController
      * Bad Request action
      *
      * @return JsonResponse
-     *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
      */
     public function code400Action(): JsonResponse
     {
@@ -54,10 +50,6 @@ class ErrorController extends ApiController
      * Not Found action
      *
      * @return JsonResponse
-     *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
      */
     public function code404Action(): JsonResponse
     {
@@ -72,10 +64,6 @@ class ErrorController extends ApiController
      * Default error action
      *
      * @return JsonResponse
-     *
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
      */
     public function defaultAction(): JsonResponse
     {

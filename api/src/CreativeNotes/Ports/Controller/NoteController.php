@@ -73,7 +73,7 @@ class NoteController extends ApiController
 
         $response = $this->getContainer()->getService('note.get_one')->process($request);
 
-        if(!$response->isSuccess()){
+        if (!$response->isSuccess()) {
             return $this->notFound('Not found. Requested note doesn\'t exist.');
         }
 
@@ -118,7 +118,7 @@ class NoteController extends ApiController
 
         $response = $this->getContainer()->getService('note.create')->process($request);
 
-        if(!$response->isSuccess()){
+        if (!$response->isSuccess()) {
             return $this->badRequest('Bad request. Provided data is invalid.');
         }
 
@@ -147,7 +147,7 @@ class NoteController extends ApiController
 
         $response = $this->getContainer()->getService('note.edit')->process($request);
 
-        if(!$response->isSuccess()){
+        if (!$response->isSuccess()) {
             return $this->badRequest('Bad request. Requested note doesn\'t exist or provided data is invalid.');
         }
 
@@ -174,7 +174,7 @@ class NoteController extends ApiController
 
         $response = $this->getContainer()->getService('note.delete')->process($request);
 
-        if(!$response->isSuccess()){
+        if (!$response->isSuccess()) {
             return $this->notFound('Not found. Requested note doesn\'t exist.');
         }
 
