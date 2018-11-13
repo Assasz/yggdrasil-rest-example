@@ -10,7 +10,7 @@ use Yggdrasil\Core\Service\Utils\ServicePortGenerateCommand;
 
 try {
     $consoleApplication = new Application('Yggdrasil CLI', 'dev');
-    $appConfiguration = new AppConfiguration();
+    $appConfiguration   = new AppConfiguration();
 
     $consoleModule = (!isset($argv[1])) ?: explode(':', $argv[1])[0];
 
@@ -34,5 +34,5 @@ try {
 
     $consoleApplication->run();
 } catch (Throwable $t) {
-    echo 'Console error: ' . $t->getMessage();
+    echo "Console error: {$t->getMessage()} at line {$t->getLine()} in {$t->getFile()}";
 }
