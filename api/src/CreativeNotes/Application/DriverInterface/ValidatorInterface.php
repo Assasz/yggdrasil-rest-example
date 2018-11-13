@@ -1,11 +1,11 @@
 <?php
 
-namespace CreativeNotes\Application\AppInterface;
+namespace CreativeNotes\Application\DriverInterface;
 
 /**
  * Interface ValidatorInterface
  *
- * @package CreativeNotes\Application\AppInterface
+ * @package CreativeNotes\Application\DriverInterface
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
 interface ValidatorInterface

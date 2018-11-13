@@ -2,7 +2,7 @@
 
 namespace CreativeNotes\Infrastructure\Driver;
 
-use CreativeNotes\Application\AppInterface\ValidatorInterface;
+use CreativeNotes\Application\DriverInterface\ValidatorInterface;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\RecursiveValidator;
 use Yggdrasil\Core\Configuration\ConfigurationInterface;

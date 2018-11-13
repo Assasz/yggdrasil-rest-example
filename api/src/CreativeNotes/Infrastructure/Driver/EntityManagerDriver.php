@@ -11,7 +11,7 @@ use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\Common\Persistence\ObjectRepository;
-use CreativeNotes\Application\AppInterface\EntityManagerInterface;
+use CreativeNotes\Application\DriverInterface\EntityManagerInterface;
 use Yggdrasil\Core\Configuration\ConfigurationInterface;
 use Yggdrasil\Core\Driver\DriverInterface;
 use Yggdrasil\Core\Exception\MissingConfigurationException;
