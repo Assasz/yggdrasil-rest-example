@@ -2,7 +2,7 @@
  * List notes action
  */
 app.register('listNotes', 'no-event', function () {
-    app.use('yjax').get('API:Note:items', [], function (response) {
+    app.use('yjax').get('Note:all', [], function (response) {
         $('#notes').html(response);
     });
 }).run();
@@ -29,7 +29,7 @@ app.register('searchNotes', 'keyup propertychange', function () {
     let data = {searchTerm: $(this).val()};
 
     delay(function () {
-       app.use('yjax').post('API:Note:search', data, [], function (response) {
+       app.use('yjax').post('Note:search', data, [], function (response) {
            $('#notes').html(response);
        });
     }, 500);
@@ -45,7 +45,7 @@ app.register('createNote', 'click', function () {
             content: $('#create_form #content').val()
         };
 
-        app.use('yjax').post('API:Note:create', data, [], function (response) {
+        app.use('yjax').post('Note:create', data, [], function (response) {
             $('#notes .card-columns').prepend(response);
             $('#create_modal').modal('hide');
         });
@@ -62,7 +62,7 @@ app.register('editNote', 'click', function () {
             content: $('#content_edit').val()
         };
 
-        app.use('yjax').put('API:Note:edit', data, [app.retrieve('noteId')], function (response) {
+        app.use('yjax').put('Note:edit', data, [app.retrieve('noteId')], function (response) {
             $('#' + app.retrieve('noteId')).replaceWith(response);
             $('#edit_modal').modal('hide');
         });
@@ -73,7 +73,7 @@ app.register('editNote', 'click', function () {
  * Delete note action
  */
 app.register('deleteNote', 'click', function () {
-    app.use('yjax').delete('API:Note:item', [app.retrieve('noteId')], function () {
+    app.use('yjax').delete('Note:delete', [app.retrieve('noteId')], function () {
         $('#' + app.retrieve('noteId')).remove();
         $('#delete_modal').modal('hide');
     });
@@ -92,7 +92,7 @@ app.register('toggleModal', 'click', function () {
         app.store('noteId', $(this).data('note-id'));
 
         if(target === 'edit_modal'){
-            app.use('yjax').get('API:Note:item', [app.retrieve('noteId')], function (response) {
+            app.use('yjax').get('Note:get', [app.retrieve('noteId')], function (response) {
                 $('#title_edit').val(response[0].title);
                 $('#content_edit').val(response[0].content);
             });
@@ -130,8 +130,7 @@ app.register('validateForms', 'no-event', function () {
         }
     };
 
-    $("#create_form").validate(validationOptions);
-    $("#edit_form").validate(validationOptions);
+    $("#create_form, #edit_form").validate(validationOptions);
 }).run();
 
 /**

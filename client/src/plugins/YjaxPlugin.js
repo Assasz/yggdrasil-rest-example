@@ -62,7 +62,7 @@ class YjaxPlugin {
     /**
      * Calls remote GET action
      *
-     * @param {string}    action  Alias of remote action like [API:]Controller:action
+     * @param {string}    action  Alias of remote action like Controller:action
      * @param {array}     params  Remote action parameters
      * @param {?function} success On success callback
      * @param {?function} error   On error callback
@@ -101,7 +101,7 @@ class YjaxPlugin {
     /**
      * Calls remote POST action
      *
-     * @param {string}    action  Alias of remote action like [API:]Controller:action
+     * @param {string}    action  Alias of remote action like Controller:action
      * @param {object}    data    Data to send
      * @param {array}     params  Remote action parameters
      * @param {?function} success On success callback
@@ -144,7 +144,7 @@ class YjaxPlugin {
     /**
      * Calls remote PUT action
      *
-     * @param {string}    action  Alias of remote action like [API:]Controller:action
+     * @param {string}    action  Alias of remote action like Controller:action
      * @param {object}    data    Data to send
      * @param {array}     params  Remote action parameters
      * @param {?function} success On success callback
@@ -187,7 +187,7 @@ class YjaxPlugin {
     /**
      * Calls remote DELETE action
      *
-     * @param {string}    action  Alias of remote action like [API:]Controller:action
+     * @param {string}    action  Alias of remote action like Controller:action
      * @param {array}     params  Remote action parameters
      * @param {?function} success On success callback
      * @param {?function} error   On error callback
