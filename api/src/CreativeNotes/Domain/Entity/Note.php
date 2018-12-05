@@ -2,12 +2,11 @@
 
 namespace CreativeNotes\Domain\Entity;
 
-use Yggdrasil\Component\DoctrineComponent\SerializableEntityInterface;
+use Yggdrasil\Core\Entity\SerializableEntityInterface;
 
 /**
  * Note Entity
  *
- * @Entity(repositoryClass="CreativeNotes\Application\Repository\NoteRepository")
  * @package CreativeNotes\Domain\Entity
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
@@ -16,9 +15,6 @@ class Note implements SerializableEntityInterface
     /**
      * Note ID
      *
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue(strategy="AUTO")
      * @var int
      */
     private $id;
@@ -26,7 +22,6 @@ class Note implements SerializableEntityInterface
     /**
      * Note title
      *
-     * @Column(type="string", length=255)
      * @var string
      */
     private $title;
@@ -34,7 +29,6 @@ class Note implements SerializableEntityInterface
     /**
      * Note content
      *
-     * @Column(type="text")
      * @var string
      */
     private $content;
@@ -42,7 +36,6 @@ class Note implements SerializableEntityInterface
     /**
      * Note create date
      *
-     * @Column(type="datetime")
      * @var \DateTime
      */
     private $createDate;

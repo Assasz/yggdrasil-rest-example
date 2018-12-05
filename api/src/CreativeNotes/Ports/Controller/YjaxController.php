@@ -16,17 +16,21 @@ use Yggdrasil\Core\Controller\ApiController;
 class YjaxController extends ApiController
 {
     /**
-     * Routes GET action
-     * Route: /api/yjax/routes
+     * Routes action
+     * GET: /yjax/routes
      *
      * @return JsonResponse|Response
      *
      * @throws \Exception
      */
-    public function routesGetAction()
+    public function routesAction()
     {
         if (!$this->isYjaxRequest()) {
             return $this->badRequest();
+        }
+
+        if (!$this->getRequest()->isMethod('GET')) {
+            return $this->methodNotAllowed();
         }
 
         $this->enableCors();

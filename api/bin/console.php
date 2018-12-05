@@ -5,7 +5,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use Symfony\Component\Console\Application;
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use CreativeNotes\Infrastructure\Configuration\AppConfiguration;
-use Yggdrasil\Component\DoctrineComponent\EntityGenerateCommand;
+use Yggdrasil\Core\Entity\EntityGenerateCommand;
 use Yggdrasil\Core\Service\Utils\ServicePortGenerateCommand;
 
 try {

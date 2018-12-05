@@ -6,11 +6,11 @@ use Doctrine\Common\Cache\RedisCache;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\OptimisticLockException;
-use Doctrine\Common\Persistence\ObjectRepository;
 use CreativeNotes\Application\DriverInterface\EntityManagerInterface;
 use Yggdrasil\Core\Configuration\ConfigurationInterface;
 use Yggdrasil\Core\Driver\DriverInterface;
@@ -78,9 +78,14 @@ class EntityManagerDriver implements DriverInterface, EntityManagerInterface
                 'charset'  => $configuration['entity_manager']['db_charset'] ?? 'UTF8'
             ];
 
-            $entityPath = [dirname(__DIR__, 4) . '/src/' . $configuration['entity_manager']['entity_namespace'] . '/'];
+            $fullResourcePath = dirname(__DIR__, 4) . '/src/' . $configuration['entity_manager']['resource_path'];
 
-            $config = Setup::createAnnotationMetadataConfiguration($entityPath);
+            $driver = new SimplifiedYamlDriver([
+                $fullResourcePath => $configuration['entity_manager']['entity_namespace']
+            ]);
+
+            $config = Setup::createConfiguration();
+            $config->setMetadataDriverImpl($driver);
             $config->addEntityNamespace('Entity', $configuration['entity_manager']['entity_namespace']);
 
             if (!DEBUG && $appConfiguration->hasDriver('cache')) {
@@ -118,9 +123,9 @@ class EntityManagerDriver implements DriverInterface, EntityManagerInterface
      * Return given repository
      *
      * @param string $name Name of repository
-     * @return ObjectRepository|EntityRepository
+     * @return EntityRepository
      */
-    public function getRepository(string $name)
+    public function getRepository(string $name): EntityRepository
     {
         return self::$managerInstance->getRepository($name);
     }

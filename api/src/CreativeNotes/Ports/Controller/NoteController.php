@@ -10,7 +10,7 @@ use CreativeNotes\Application\Service\NoteModule\Request\GetRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yggdrasil\Component\DoctrineComponent\EntitySerializer;
+use Yggdrasil\Core\Entity\EntitySerializer;
 use Yggdrasil\Core\Controller\ApiController;
 use Yggdrasil\Core\Driver\DriverCollection;
 
@@ -37,15 +37,19 @@ class NoteController extends ApiController
     }
 
   /**
-     * Items GET action
-     * Routes: /api/note/items, /api/note, /api
+     * All action
+     * GET: /note/all, /note, /
      *
-     * @return JsonResponse
+     * @return JsonResponse|Response
      *
      * @throws \Exception
      */
-    public function itemsGetAction(): JsonResponse
+    public function allAction()
     {
+        if (!$this->getRequest()->isMethod('GET')) {
+            return $this->methodNotAllowed();
+        }
+
         $request = new GetRequest();
 
         $response = $this->getContainer()->getService('note.get')->process($request);
@@ -58,16 +62,20 @@ class NoteController extends ApiController
     }
 
     /**
-     * Item GET action
-     * Route: /api/note/item/{id}
+     * Get action
+     * GET: /note/get/{id}
      *
      * @param int $id
      * @return JsonResponse|Response
      *
      * @throws \Exception
      */
-    public function itemGetAction(int $id)
+    public function getAction(int $id)
     {
+        if (!$this->getRequest()->isMethod('GET')) {
+            return $this->methodNotAllowed();
+        }
+
         $request = (new GetOneRequest())
             ->setNoteId($id);
 
@@ -81,15 +89,19 @@ class NoteController extends ApiController
     }
 
     /**
-     * Search POST action
-     * Route: /api/note/search
+     * Search action
+     * POST: /note/search
      *
-     * @return JsonResponse
+     * @return JsonResponse|Response
      *
      * @throws \Exception
      */
-    public function searchPostAction(): JsonResponse
+    public function searchAction()
     {
+        if (!$this->getRequest()->isMethod('POST')) {
+            return $this->methodNotAllowed();
+        }
+
         $request = (new GetRequest())
             ->setSearchTerm($this->fromBody('searchTerm'));
 
@@ -103,15 +115,19 @@ class NoteController extends ApiController
     }
 
     /**
-     * Create POST action
-     * Route: /api/note/create
+     * Create action
+     * POST: /note/create
      *
      * @return JsonResponse|Response
      *
      * @throws \Exception
      */
-    public function createPostAction()
+    public function createAction()
     {
+        if (!$this->getRequest()->isMethod('POST')) {
+            return $this->methodNotAllowed();
+        }
+
         $request = (new CreateRequest())
             ->setTitle($this->fromBody('title'))
             ->setContent($this->fromBody('content'));
@@ -130,16 +146,20 @@ class NoteController extends ApiController
     }
 
     /**
-     * Edit PUT action
-     * Route: /api/note/edit/{id}
+     * Edit action
+     * PUT: /note/edit/{id}
      *
      * @param int $id
      * @return JsonResponse|Response
      *
      * @throws \Exception
      */
-    public function editPutAction(int $id)
+    public function editAction(int $id)
     {
+        if (!$this->getRequest()->isMethod('PUT')) {
+            return $this->methodNotAllowed();
+        }
+
         $request = (new EditRequest())
             ->setNoteId($id)
             ->setTitle($this->fromBody('title'))
@@ -159,16 +179,20 @@ class NoteController extends ApiController
     }
 
     /**
-     * Item DELETE action
-     * Route: /api/note/item/{id}
+     * Delete action
+     * DELETE: /note/delete/{id}
      *
      * @param int $id
      * @return JsonResponse|Response
      *
      * @throws \Exception
      */
-    public function itemDeleteAction(int $id)
+    public function deleteAction(int $id)
     {
+        if (!$this->getRequest()->isMethod('DELETE')) {
+            return $this->methodNotAllowed();
+        }
+
         $request = (new DeleteRequest())
             ->setNoteId($id);
 

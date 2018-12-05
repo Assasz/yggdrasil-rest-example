@@ -1,16 +1,17 @@
 <?php
 
-namespace CreativeNotes\Application\Repository;
+namespace CreativeNotes\Infrastructure\Repository;
 
+use CreativeNotes\Application\RepositoryInterface\NoteRepositoryInterface;
 use Doctrine\ORM\EntityRepository;
 
 /**
  * Class NoteRepository
  *
- * @package CreativeNotes\Application\Repository
+ * @package CreativeNotes\Application\RepositoryInterface
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
-class NoteRepository extends EntityRepository
+class NoteRepository extends EntityRepository implements NoteRepositoryInterface
 {
     /**
      * Searches notes
