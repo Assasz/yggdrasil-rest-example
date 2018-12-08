@@ -5,12 +5,10 @@ namespace CreativeNotes\Application\Service\NoteModule;
 use CreativeNotes\Application\DriverInterface\EntityManagerInterface;
 use CreativeNotes\Application\DriverInterface\ValidatorInterface;
 use CreativeNotes\Application\Exception\BrokenContractException;
+use CreativeNotes\Application\Service\NoteModule\Request\CreateRequest;
 use CreativeNotes\Application\Service\NoteModule\Response\CreateResponse;
 use CreativeNotes\Domain\Entity\Note;
 use Yggdrasil\Core\Service\AbstractService;
-use Yggdrasil\Core\Service\ServiceInterface;
-use Yggdrasil\Core\Service\ServiceRequestInterface;
-use Yggdrasil\Core\Service\ServiceResponseInterface;
 
 /**
  * Class CreateService
@@ -18,15 +16,15 @@ use Yggdrasil\Core\Service\ServiceResponseInterface;
  * @package CreativeNotes\Application\Service\NoteModule
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
-class CreateService extends AbstractService implements ServiceInterface
+class CreateService extends AbstractService
 {
     /**
      * Creates note
      *
-     * @param ServiceRequestInterface $request
-     * @return ServiceResponseInterface
+     * @param CreateRequest $request
+     * @return CreateResponse
      */
-    public function process(ServiceRequestInterface $request): ServiceResponseInterface
+    public function process(CreateRequest $request): CreateResponse
     {
         $this->validateContracts();
 

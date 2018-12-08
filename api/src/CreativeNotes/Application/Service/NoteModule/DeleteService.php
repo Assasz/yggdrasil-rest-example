@@ -5,11 +5,9 @@ namespace CreativeNotes\Application\Service\NoteModule;
 use CreativeNotes\Application\DriverInterface\EntityManagerInterface;
 use CreativeNotes\Application\Exception\BrokenContractException;
 use CreativeNotes\Application\RepositoryInterface\NoteRepositoryInterface;
+use CreativeNotes\Application\Service\NoteModule\Request\DeleteRequest;
 use CreativeNotes\Application\Service\NoteModule\Response\DeleteResponse;
 use Yggdrasil\Core\Service\AbstractService;
-use Yggdrasil\Core\Service\ServiceInterface;
-use Yggdrasil\Core\Service\ServiceRequestInterface;
-use Yggdrasil\Core\Service\ServiceResponseInterface;
 
 /**
  * Class DeleteService
@@ -17,15 +15,15 @@ use Yggdrasil\Core\Service\ServiceResponseInterface;
  * @package CreativeNotes\Application\Service\NoteModule
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
-class DeleteService extends AbstractService implements ServiceInterface
+class DeleteService extends AbstractService
 {
     /**
      * Deletes note
      *
-     * @param ServiceRequestInterface $request
-     * @return ServiceResponseInterface
+     * @param DeleteRequest $request
+     * @return DeleteResponse
      */
-    public function process(ServiceRequestInterface $request): ServiceResponseInterface
+    public function process(DeleteRequest $request): DeleteResponse
     {
         $this->validateContracts();
 

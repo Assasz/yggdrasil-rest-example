@@ -7,7 +7,7 @@ use Yggdrasil\Component\TwigComponent\RoutingExtension;
 use Yggdrasil\Component\TwigComponent\StandardExtension;
 use Yggdrasil\Core\Configuration\ConfigurationInterface;
 use Yggdrasil\Core\Driver\DriverInterface;
-use Yggdrasil\Core\Driver\Abstraction\TemplateEngineDriver as AbstractDriver;
+use Yggdrasil\Core\Driver\TemplateEngineDriver as AbstractDriver;
 use Yggdrasil\Core\Exception\MissingConfigurationException;
 
 /**
@@ -85,17 +85,6 @@ class TemplateEngineDriver extends AbstractDriver implements DriverInterface
     public function render(string $view, array $params = []): string
     {
         return self::$engineInstance->render($view, $params);
-    }
-
-    /**
-     * Displays given view
-     *
-     * @param string $view
-     * @param array $params
-     */
-    public function display(string $view, array $params = []): void
-    {
-        self::$engineInstance->display($view, $params);
     }
 
     /**

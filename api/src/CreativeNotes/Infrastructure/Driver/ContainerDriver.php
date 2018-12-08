@@ -10,7 +10,7 @@ use Yggdrasil\Core\Driver\DriverInterface;
 use Yggdrasil\Core\Exception\MissingConfigurationException;
 use Yggdrasil\Core\Exception\NotServiceReturnedException;
 use Yggdrasil\Core\Exception\ServiceNotFoundException;
-use Yggdrasil\Core\Service\ServiceInterface;
+use Yggdrasil\Core\Service\AbstractService;
 
 /**
  * Class ContainerDriver
@@ -80,19 +80,19 @@ class ContainerDriver implements DriverInterface
      * Returns given service from container
      *
      * @param string $alias Alias of service like module.service_name
-     * @return ServiceInterface
+     * @return AbstractService
      *
      * @throws \Exception
      * @throws ServiceNotFoundException if given service doesn't exist
      * @throws NotServiceReturnedException if object returned by container is not a service
      */
-    public function getService(string $alias): ServiceInterface
+    public function getService(string $alias): AbstractService
     {
         if (!self::$containerInstance->get($alias)) {
             throw new ServiceNotFoundException('Service with alias ' . $alias . ' doesn\'t exist.');
         }
 
-        if (!self::$containerInstance->get($alias) instanceof ServiceInterface) {
+        if (!self::$containerInstance->get($alias) instanceof AbstractService) {
             throw new NotServiceReturnedException('Not a service returned by container for alias ' . $alias . '.');
         }
 

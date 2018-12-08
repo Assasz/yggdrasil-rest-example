@@ -8,7 +8,7 @@ use Yggdrasil\Core\Driver\DriverInterface;
 use Yggdrasil\Core\Exception\MissingConfigurationException;
 use Yggdrasil\Core\Routing\Router;
 use Yggdrasil\Core\Routing\RoutingConfiguration;
-use Yggdrasil\Core\Driver\Abstraction\RouterDriver as AbstractDriver;
+use Yggdrasil\Core\Driver\RouterDriver as AbstractDriver;
 
 /**
  * Class RouterDriver

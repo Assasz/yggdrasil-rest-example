@@ -2,15 +2,13 @@
 
 namespace CreativeNotes\Domain\Entity;
 
-use Yggdrasil\Core\Entity\SerializableEntityInterface;
-
 /**
  * Note Entity
  *
  * @package CreativeNotes\Domain\Entity
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
-class Note implements SerializableEntityInterface
+class Note
 {
     /**
      * Note ID

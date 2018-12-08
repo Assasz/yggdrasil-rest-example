@@ -5,11 +5,9 @@ namespace CreativeNotes\Application\Service\NoteModule;
 use CreativeNotes\Application\DriverInterface\EntityManagerInterface;
 use CreativeNotes\Application\Exception\BrokenContractException;
 use CreativeNotes\Application\RepositoryInterface\NoteRepositoryInterface;
+use CreativeNotes\Application\Service\NoteModule\Request\GetOneRequest;
 use CreativeNotes\Application\Service\NoteModule\Response\GetOneResponse;
 use Yggdrasil\Core\Service\AbstractService;
-use Yggdrasil\Core\Service\ServiceInterface;
-use Yggdrasil\Core\Service\ServiceRequestInterface;
-use Yggdrasil\Core\Service\ServiceResponseInterface;
 
 /**
  * Class GetOneService
@@ -17,15 +15,15 @@ use Yggdrasil\Core\Service\ServiceResponseInterface;
  * @package CreativeNotes\Application\Service\NoteModule
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
-class GetOneService extends AbstractService implements ServiceInterface
+class GetOneService extends AbstractService
 {
     /**
      * Gets one note
      *
-     * @param ServiceRequestInterface $request
-     * @return ServiceResponseInterface
+     * @param GetOneRequest $request
+     * @return GetOneResponse
      */
-    public function process(ServiceRequestInterface $request): ServiceResponseInterface
+    public function process(GetOneRequest $request): GetOneResponse
     {
         $this->validateContracts();
 
