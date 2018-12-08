@@ -2,15 +2,13 @@
 
 namespace CreativeNotes\Application\Service\NoteModule\Response;
 
-use Yggdrasil\Core\Service\ServiceResponseInterface;
-
 /**
  * Class DeleteResponse
  *
  * @package CreativeNotes\Application\Service\NoteModule\Response
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
-class DeleteResponse implements ServiceResponseInterface
+class DeleteResponse
 {
     /**
      * Result of service processing

@@ -2,15 +2,13 @@
 
 namespace CreativeNotes\Application\Service\NoteModule\Request;
 
-use Yggdrasil\Core\Service\ServiceRequestInterface;
-
 /**
  * Class GetRequest
  *
  * @package CreativeNotes\Application\Service\NoteModule\Request
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
-class GetRequest implements ServiceRequestInterface
+class GetRequest
 {
     /**
      * Optional search term
@@ -22,7 +20,7 @@ class GetRequest implements ServiceRequestInterface
     /**
      * Returns search term
      *
-     * @return null|string
+     * @return string?
      */
     public function getSearchTerm(): ?string
     {

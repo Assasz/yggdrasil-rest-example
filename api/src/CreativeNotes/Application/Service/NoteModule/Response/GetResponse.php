@@ -2,15 +2,13 @@
 
 namespace CreativeNotes\Application\Service\NoteModule\Response;
 
-use Yggdrasil\Core\Service\ServiceResponseInterface;
-
 /**
  * Class GetResponse
  *
  * @package CreativeNotes\Application\Service\NoteModule\Response
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
-class GetResponse implements ServiceResponseInterface
+class GetResponse
 {
     /**
      * Notes collection

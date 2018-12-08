@@ -2,7 +2,6 @@
 
 namespace CreativeNotes\Application\Service\NoteModule\Response;
 
-use Yggdrasil\Core\Service\ServiceResponseInterface;
 use CreativeNotes\Domain\Entity\Note;
 
 /**
@@ -11,7 +10,7 @@ use CreativeNotes\Domain\Entity\Note;
  * @package CreativeNotes\Application\Service\NoteModule\Response
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
-class EditResponse implements ServiceResponseInterface
+class EditResponse
 {
     /**
      * Result of service processing

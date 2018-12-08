@@ -2,15 +2,13 @@
 
 namespace CreativeNotes\Application\Service\NoteModule\Request;
 
-use Yggdrasil\Core\Service\ServiceRequestInterface;
-
 /**
  * Class EditRequest
  *
  * @package CreativeNotes\Application\Service\NoteModule\Request
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
-class EditRequest implements ServiceRequestInterface
+class EditRequest
 {
     /**
      * Note ID

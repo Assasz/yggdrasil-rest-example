@@ -2,15 +2,13 @@
 
 namespace CreativeNotes\Application\Service\NoteModule\Request;
 
-use Yggdrasil\Core\Service\ServiceRequestInterface;
-
 /**
  * Class CreateRequest
  *
  * @package CreativeNotes\Application\Service\NoteModule\Request
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
-class CreateRequest implements ServiceRequestInterface
+class CreateRequest
 {
     /**
      * Note title

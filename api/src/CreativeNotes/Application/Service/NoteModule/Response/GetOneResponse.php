@@ -3,7 +3,6 @@
 namespace CreativeNotes\Application\Service\NoteModule\Response;
 
 use CreativeNotes\Domain\Entity\Note;
-use Yggdrasil\Core\Service\ServiceResponseInterface;
 
 /**
  * Class GetOneResponse
@@ -11,7 +10,7 @@ use Yggdrasil\Core\Service\ServiceResponseInterface;
  * @package CreativeNotes\Application\Service\NoteModule\Response
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
-class GetOneResponse implements ServiceResponseInterface
+class GetOneResponse
 {
     /**
      * Result of service processing
