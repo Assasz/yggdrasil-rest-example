@@ -5,7 +5,7 @@ namespace CreativeNotes\Infrastructure\Driver;
 use Whoops\Run;
 use Yggdrasil\Core\Configuration\ConfigurationInterface;
 use Yggdrasil\Core\Driver\DriverInterface;
-use Yggdrasil\Core\Exception\Logger\ExceptionLogger;
+use Yggdrasil\Utils\ExceptionLogger;
 use Yggdrasil\Core\Exception\MissingConfigurationException;
 
 /**

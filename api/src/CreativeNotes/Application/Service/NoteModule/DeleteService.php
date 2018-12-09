@@ -3,11 +3,10 @@
 namespace CreativeNotes\Application\Service\NoteModule;
 
 use CreativeNotes\Application\DriverInterface\EntityManagerInterface;
-use CreativeNotes\Application\Exception\BrokenContractException;
 use CreativeNotes\Application\RepositoryInterface\NoteRepositoryInterface;
 use CreativeNotes\Application\Service\NoteModule\Request\DeleteRequest;
 use CreativeNotes\Application\Service\NoteModule\Response\DeleteResponse;
-use Yggdrasil\Core\Service\AbstractService;
+use Yggdrasil\Utils\Service\AbstractService;
 
 /**
  * Class DeleteService
@@ -25,8 +24,6 @@ class DeleteService extends AbstractService
      */
     public function process(DeleteRequest $request): DeleteResponse
     {
-        $this->validateContracts();
-
         $note = $this->getEntityManager()->getRepository('Entity:Note')->find($request->getNoteId());
 
         $response = new DeleteResponse();
@@ -42,18 +39,17 @@ class DeleteService extends AbstractService
     }
 
     /**
-     * Validates contracts between service and external suppliers
+     * Returns contracts between service and external suppliers
      *
-     * @throws BrokenContractException
+     * @example [EntityManagerInterface::class => $this->getEntityManager()]
+     *
+     * @return array
      */
-    private function validateContracts(): void
+    protected function getContracts(): array
     {
-        if (!$this->getEntityManager() instanceof EntityManagerInterface) {
-            throw new BrokenContractException(EntityManagerInterface::class);
-        }
-
-        if (!$this->getEntityManager()->getRepository('Entity:Note') instanceof NoteRepositoryInterface) {
-            throw new BrokenContractException(NoteRepositoryInterface::class);
-        }
+        return [
+            EntityManagerInterface::class  => $this->getEntityManager(),
+            NoteRepositoryInterface::class => $this->getEntityManager()->getRepository('Entity:Note')
+        ];
     }
 }

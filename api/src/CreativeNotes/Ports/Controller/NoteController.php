@@ -10,7 +10,7 @@ use CreativeNotes\Application\Service\NoteModule\Request\GetRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yggdrasil\Core\Entity\EntitySerializer;
+use Yggdrasil\Utils\Entity\EntitySerializer;
 use Yggdrasil\Core\Controller\ApiController;
 use Yggdrasil\Core\Driver\DriverCollection;
 

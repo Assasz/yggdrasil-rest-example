@@ -4,11 +4,10 @@ namespace CreativeNotes\Application\Service\NoteModule;
 
 use CreativeNotes\Application\DriverInterface\EntityManagerInterface;
 use CreativeNotes\Application\DriverInterface\ValidatorInterface;
-use CreativeNotes\Application\Exception\BrokenContractException;
 use CreativeNotes\Application\RepositoryInterface\NoteRepositoryInterface;
 use CreativeNotes\Application\Service\NoteModule\Request\EditRequest;
 use CreativeNotes\Application\Service\NoteModule\Response\EditResponse;
-use Yggdrasil\Core\Service\AbstractService;
+use Yggdrasil\Utils\Service\AbstractService;
 
 /**
  * Class EditService
@@ -50,22 +49,18 @@ class EditService extends AbstractService
     }
 
     /**
-     * Validates contracts between service and external suppliers
+     * Returns contracts between service and external suppliers
      *
-     * @throws BrokenContractException
+     * @example [EntityManagerInterface::class => $this->getEntityManager()]
+     *
+     * @return array
      */
-    private function validateContracts(): void
+    protected function getContracts(): array
     {
-        if (!$this->getValidator() instanceof ValidatorInterface) {
-            throw new BrokenContractException(ValidatorInterface::class);
-        }
-
-        if (!$this->getEntityManager() instanceof EntityManagerInterface) {
-            throw new BrokenContractException(EntityManagerInterface::class);
-        }
-
-        if (!$this->getEntityManager()->getRepository('Entity:Note') instanceof NoteRepositoryInterface) {
-            throw new BrokenContractException(NoteRepositoryInterface::class);
-        }
+        return [
+            ValidatorInterface::class      => $this->getValidator(),
+            EntityManagerInterface::class  => $this->getEntityManager(),
+            NoteRepositoryInterface::class => $this->getEntityManager()->getRepository('Entity:Note')
+        ];
     }
 }
