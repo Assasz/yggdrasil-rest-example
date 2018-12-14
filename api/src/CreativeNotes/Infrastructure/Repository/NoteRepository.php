@@ -3,6 +3,7 @@
 namespace CreativeNotes\Infrastructure\Repository;
 
 use CreativeNotes\Application\RepositoryInterface\NoteRepositoryInterface;
+use CreativeNotes\Domain\Entity\Note;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -14,7 +15,35 @@ use Doctrine\ORM\EntityRepository;
 class NoteRepository extends EntityRepository implements NoteRepositoryInterface
 {
     /**
-     * Searches notes
+     * Returns a note by its primary key / identifier.
+     *
+     * @param mixed $id          The identifier.
+     * @param int?  $lockMode    One of the \Doctrine\DBAL\LockMode::* constants
+     *                           or NULL if no specific lock mode should be used
+     *                           during the search.
+     * @param int?  $lockVersion The lock version.
+     * @return Note? The entity instance or NULL if the entity can not be found.
+     */
+    public function pick($id, int $lockMode = null, int $lockVersion = null): Note
+    {
+        return $this->find($id, $lockMode, $lockVersion);
+    }
+
+    /**
+     * Returns notes by a set of criteria
+     *
+     * @param array? $criteria
+     * @param array? $orderBy
+     * @param int?   $limit
+     * @param int?   $offset
+     * @return array
+     */
+    public function fetch(array $criteria = null, array $orderBy = null, int $limit = null, int $offset = null): array
+    {
+        return (empty($criteria)) ? $this->findAll() : $this->findBy($criteria, $orderBy, $limit, $offset);
+    }
+    /**
+     * Searches notes by specific term
      *
      * @param string $searchTerm
      * @return array

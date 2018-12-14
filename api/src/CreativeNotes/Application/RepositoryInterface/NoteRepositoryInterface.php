@@ -1,6 +1,7 @@
 <?php
 
 namespace CreativeNotes\Application\RepositoryInterface;
+use CreativeNotes\Domain\Entity\Note;
 
 /**
  * Interface NoteRepositoryInterface
@@ -11,19 +12,19 @@ namespace CreativeNotes\Application\RepositoryInterface;
 interface NoteRepositoryInterface
 {
     /**
-     * Finds an entity by its primary key / identifier.
+     * Returns a note by its primary key / identifier.
      *
      * @param mixed $id          The identifier.
      * @param int?  $lockMode    One of the \Doctrine\DBAL\LockMode::* constants
      *                           or NULL if no specific lock mode should be used
      *                           during the search.
      * @param int?  $lockVersion The lock version.
-     * @return object? The entity instance or NULL if the entity can not be found.
+     * @return Note? The entity instance or NULL if the entity can not be found.
      */
-    public function find($id, $lockMode = null, $lockVersion = null);
+    public function pick($id, int $lockMode = null, int $lockVersion = null): Note;
 
     /**
-     * Finds entities by a set of criteria
+     * Returns notes by a set of criteria
      *
      * @param array  $criteria
      * @param array? $orderBy
@@ -31,10 +32,10 @@ interface NoteRepositoryInterface
      * @param int?   $offset
      * @return array The objects
      */
-    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null);
+    public function fetch(array $criteria, array $orderBy = null, int $limit = null, int $offset = null): array;
 
     /**
-     * Searches notes
+     * Searches notes by specific term
      *
      * @param string $searchTerm
      * @return array

@@ -14,6 +14,9 @@ use Yggdrasil\Utils\Service\AbstractService;
  *
  * @package CreativeNotes\Application\Service\NoteModule
  * @author Paweł Antosiak <contact@pawelantosiak.com>
+ *
+ * @property EntityManagerInterface $entityManager
+ * @property ValidatorInterface $validator
  */
 class CreateService extends AbstractService
 {
@@ -31,9 +34,9 @@ class CreateService extends AbstractService
 
         $response = new CreateResponse();
 
-        if ($this->getValidator()->isValid($note)) {
-            $this->getEntityManager()->persist($note);
-            $this->getEntityManager()->flush();
+        if ($this->validator->isValid($note)) {
+            $this->entityManager->persist($note);
+            $this->entityManager->flush();
 
             $response
                 ->setSuccess(true)

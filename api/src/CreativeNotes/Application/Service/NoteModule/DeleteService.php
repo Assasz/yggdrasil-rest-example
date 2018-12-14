@@ -13,6 +13,9 @@ use Yggdrasil\Utils\Service\AbstractService;
  *
  * @package CreativeNotes\Application\Service\NoteModule
  * @author Paweł Antosiak <contact@pawelantosiak.com>
+ *
+ * @property EntityManagerInterface $entityManager
+ * @property NoteRepositoryInterface $noteRepository
  */
 class DeleteService extends AbstractService
 {
@@ -24,13 +27,13 @@ class DeleteService extends AbstractService
      */
     public function process(DeleteRequest $request): DeleteResponse
     {
-        $note = $this->getEntityManager()->getRepository('Entity:Note')->find($request->getNoteId());
+        $note = $this->noteRepository->pick($request->getNoteId());
 
         $response = new DeleteResponse();
 
         if (!empty($note)) {
-            $this->getEntityManager()->remove($note);
-            $this->getEntityManager()->flush();
+            $this->entityManager->remove($note);
+            $this->entityManager->flush();
 
             $response->setSuccess(true);
         }

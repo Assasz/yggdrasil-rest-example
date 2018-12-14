@@ -14,6 +14,10 @@ use Yggdrasil\Utils\Service\AbstractService;
  *
  * @package CreativeNotes\Application\Service\NoteModule
  * @author Paweł Antosiak <contact@pawelantosiak.com>
+ *
+ * @property ValidatorInterface $validator
+ * @property EntityManagerInterface $entityManager
+ * @property NoteRepositoryInterface $noteRepository
  */
 class EditService extends AbstractService
 {
@@ -25,9 +29,7 @@ class EditService extends AbstractService
      */
     public function process(EditRequest $request): EditResponse
     {
-        $this->validateContracts();
-
-        $note = $this->getEntityManager()->getRepository('Entity:Note')->find($request->getNoteId());
+        $note = $this->noteRepository->pick($request->getNoteId());
 
         $response = new EditResponse();
 
@@ -36,8 +38,8 @@ class EditService extends AbstractService
                 ->setTitle($request->getTitle())
                 ->setContent($request->getContent());
 
-            if ($this->getValidator()->isValid($note)) {
-                $this->getEntityManager()->flush();
+            if ($this->validator->isValid($note)) {
+                $this->entityManager->flush();
 
                 $response
                     ->setSuccess(true)

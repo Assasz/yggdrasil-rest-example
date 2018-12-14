@@ -13,6 +13,9 @@ use Yggdrasil\Utils\Service\AbstractService;
  *
  * @package CreativeNotes\Application\Service\NoteModule
  * @author Paweł Antosiak <contact@pawelantosiak.com>
+ *
+ * @property EntityManagerInterface $entityManager
+ * @property NoteRepositoryInterface $noteRepository
  */
 class GetService extends AbstractService
 {
@@ -25,9 +28,9 @@ class GetService extends AbstractService
     public function process(GetRequest $request): GetResponse
     {
         if (!empty($request->getSearchTerm())) {
-            $notes = $this->getEntityManager()->getRepository('Entity:Note')->search($request->getSearchTerm());
+            $notes = $this->noteRepository->search($request->getSearchTerm());
         } else {
-            $notes = $this->getEntityManager()->getRepository('Entity:Note')->findBy([], ['createDate' => 'desc']);
+            $notes = $this->noteRepository->fetch([], ['createDate' => 'desc']);
         }
 
         $response = (new GetResponse())

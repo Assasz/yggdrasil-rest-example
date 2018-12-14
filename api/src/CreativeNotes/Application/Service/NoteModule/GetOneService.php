@@ -13,6 +13,9 @@ use Yggdrasil\Utils\Service\AbstractService;
  *
  * @package CreativeNotes\Application\Service\NoteModule
  * @author Paweł Antosiak <contact@pawelantosiak.com>
+ *
+ * @property EntityManagerInterface $entityManager
+ * @property NoteRepositoryInterface $noteRepository
  */
 class GetOneService extends AbstractService
 {
@@ -24,7 +27,7 @@ class GetOneService extends AbstractService
      */
     public function process(GetOneRequest $request): GetOneResponse
     {
-        $note = $this->getEntityManager()->getRepository('Entity:Note')->find($request->getNoteId());
+        $note = $this->noteRepository->pick($request->getNoteId());
 
         $response = new GetOneResponse();
 
