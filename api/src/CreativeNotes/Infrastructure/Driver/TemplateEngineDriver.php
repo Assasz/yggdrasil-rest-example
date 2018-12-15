@@ -62,10 +62,8 @@ class TemplateEngineDriver extends AbstractDriver implements DriverInterface
                 $loader, ['cache' => (!DEBUG) ? dirname(__DIR__, 4) . '/var/twig' : false]
             );
 
-            $router = $appConfiguration->loadDriver('router')->getComponentInstance();
-
             $twig->addExtension(new StandardExtension($configuration['template_engine']['application_name']));
-            $twig->addExtension(new RoutingExtension($router));
+            $twig->addExtension(new RoutingExtension($appConfiguration->loadDriver('router')));
             $twig->addExtension(new FormExtension($formPath));
 
             self::$engineInstance = $twig;

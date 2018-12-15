@@ -42,6 +42,7 @@ class NoteRepository extends EntityRepository implements NoteRepositoryInterface
     {
         return (empty($criteria)) ? $this->findAll() : $this->findBy($criteria, $orderBy, $limit, $offset);
     }
+
     /**
      * Searches notes by specific term
      *

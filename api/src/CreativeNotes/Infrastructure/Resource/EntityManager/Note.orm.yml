@@ -1,4 +1,4 @@
-CreativeNotes\Domain\Entity\User:
+CreativeNotes\Domain\Entity\Note:
   type: entity
   repositoryClass: CreativeNotes\Infrastructure\Repository\NoteRepository
   table: note

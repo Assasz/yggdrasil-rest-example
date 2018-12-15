@@ -2,6 +2,7 @@
 
 namespace CreativeNotes\Ports\Controller;
 
+use CreativeNotes\Infrastructure\Driver\RouterDriver;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Yggdrasil\Core\Controller\ApiController;
@@ -12,6 +13,8 @@ use Yggdrasil\Core\Controller\ApiController;
  * Yjax plugin controller
  *
  * @package CreativeNotes\Ports\Controller
+ *
+ * @property RouterDriver $router
  */
 class YjaxController extends ApiController
 {
@@ -35,6 +38,6 @@ class YjaxController extends ApiController
 
         $this->enableCors();
 
-        return $this->json($this->getRouter()->getQueryMap());
+        return $this->json($this->router->getQueryMap());
     }
 }

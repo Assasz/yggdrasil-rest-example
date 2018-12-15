@@ -7,6 +7,7 @@ use CreativeNotes\Application\Service\NoteModule\Request\DeleteRequest;
 use CreativeNotes\Application\Service\NoteModule\Request\EditRequest;
 use CreativeNotes\Application\Service\NoteModule\Request\GetOneRequest;
 use CreativeNotes\Application\Service\NoteModule\Request\GetRequest;
+use CreativeNotes\Infrastructure\Driver\ContainerDriver;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,6 +20,8 @@ use Yggdrasil\Core\Driver\DriverCollection;
  *
  * @package CreativeNotes\Ports\Controller
  * @author Paweł Antosiak <contact@pawelantosiak.com>
+ *
+ * @property ContainerDriver $container
  */
 class NoteController extends ApiController
 {
@@ -52,7 +55,7 @@ class NoteController extends ApiController
 
         $request = new GetRequest();
 
-        $response = $this->getContainer()->getService('note.get')->process($request);
+        $response = $this->container->getService('note.get')->process($request);
 
         $view = $this->renderPartial('note/_list.html.twig', [
             'notes' => $response->getNotes()
@@ -79,7 +82,7 @@ class NoteController extends ApiController
         $request = (new GetOneRequest())
             ->setNoteId($id);
 
-        $response = $this->getContainer()->getService('note.get_one')->process($request);
+        $response = $this->container->getService('note.get_one')->process($request);
 
         if (!$response->isSuccess()) {
             return $this->notFound('Not found. Requested note doesn\'t exist.');
@@ -105,7 +108,7 @@ class NoteController extends ApiController
         $request = (new GetRequest())
             ->setSearchTerm($this->fromBody('searchTerm'));
 
-        $response = $this->getContainer()->getService('note.get')->process($request);
+        $response = $this->container->getService('note.get')->process($request);
 
         $view = $this->renderPartial('note/_list.html.twig', [
             'notes' => $response->getNotes()
@@ -132,7 +135,7 @@ class NoteController extends ApiController
             ->setTitle($this->fromBody('title'))
             ->setContent($this->fromBody('content'));
 
-        $response = $this->getContainer()->getService('note.create')->process($request);
+        $response = $this->container->getService('note.create')->process($request);
 
         if (!$response->isSuccess()) {
             return $this->badRequest('Bad request. Provided data is invalid.');
@@ -165,7 +168,7 @@ class NoteController extends ApiController
             ->setTitle($this->fromBody('title'))
             ->setContent($this->fromBody('content'));
 
-        $response = $this->getContainer()->getService('note.edit')->process($request);
+        $response = $this->container->getService('note.edit')->process($request);
 
         if (!$response->isSuccess()) {
             return $this->badRequest('Bad request. Requested note doesn\'t exist or provided data is invalid.');
@@ -196,7 +199,7 @@ class NoteController extends ApiController
         $request = (new DeleteRequest())
             ->setNoteId($id);
 
-        $response = $this->getContainer()->getService('note.delete')->process($request);
+        $response = $this->container->getService('note.delete')->process($request);
 
         if (!$response->isSuccess()) {
             return $this->notFound('Not found. Requested note doesn\'t exist.');
