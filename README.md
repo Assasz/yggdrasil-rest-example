@@ -1,3 +1,3 @@
-# Yggdrasil REST API example
+# CreativeNotes
 
 Simple REST API created with [Yggdrasil Skeleton](https://github.com/Assasz/yggdrasil-skeleton).

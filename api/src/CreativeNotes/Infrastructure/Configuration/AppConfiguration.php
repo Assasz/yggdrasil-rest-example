@@ -38,8 +38,8 @@ class AppConfiguration extends AbstractConfiguration implements ConfigurationInt
     protected function getDriverRegistry(): array
     {
         return [
-            'exceptionHandler' => ExceptionHandlerDriver::class,
             'router' => RouterDriver::class,
+            'exceptionHandler' => ExceptionHandlerDriver::class,
             'entityManager' => EntityManagerDriver::class,
             'templateEngine' => TemplateEngineDriver::class,
             'container' => ContainerDriver::class,

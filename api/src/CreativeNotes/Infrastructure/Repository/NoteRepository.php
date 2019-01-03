@@ -32,15 +32,15 @@ class NoteRepository extends EntityRepository implements NoteRepositoryInterface
     /**
      * Returns notes by a set of criteria
      *
-     * @param array? $criteria
+     * @param array  $criteria
      * @param array? $orderBy
      * @param int?   $limit
      * @param int?   $offset
      * @return array
      */
-    public function fetch(array $criteria = null, array $orderBy = null, int $limit = null, int $offset = null): array
+    public function fetch(array $criteria = [], array $orderBy = null, int $limit = null, int $offset = null): array
     {
-        return (empty($criteria)) ? $this->findAll() : $this->findBy($criteria, $orderBy, $limit, $offset);
+        return $this->findBy($criteria, $orderBy, $limit, $offset);
     }
 
     /**

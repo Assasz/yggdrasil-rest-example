@@ -32,7 +32,7 @@ interface NoteRepositoryInterface
      * @param int?   $offset
      * @return array The objects
      */
-    public function fetch(array $criteria, array $orderBy = null, int $limit = null, int $offset = null): array;
+    public function fetch(array $criteria = [], array $orderBy = null, int $limit = null, int $offset = null): array;
 
     /**
      * Searches notes by specific term

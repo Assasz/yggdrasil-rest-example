@@ -13,13 +13,14 @@ use Yggdrasil\Core\Controller\ApiController;
  * Yjax plugin controller
  *
  * @package CreativeNotes\Ports\Controller
+ * @author Paweł Antosiak <contact@pawelantosiak.com>
  *
  * @property RouterDriver $router
  */
 class YjaxController extends ApiController
 {
     /**
-     * Routes action
+     * Action used by Yjax to resolve routes to remote actions
      * GET: /yjax/routes
      *
      * @return JsonResponse|Response
