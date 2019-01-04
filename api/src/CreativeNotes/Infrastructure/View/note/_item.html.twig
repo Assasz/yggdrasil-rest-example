@@ -1,6 +1,10 @@
 <div id="{{ note.id }}" class="card border-primary mb-3">
     <div class="card-header">
-        <h2 id="note_title">{{ note.title }}</h2>
+        {% if note.title|length > 100 %}
+            <h2 id="note_title" data-toggle="tooltip" data-placement="bottom" title="{{ note.title }}" data-original-title="{{ note.title }}">{{ note.title|slice(0, 100) ~ '...' }}</h2>
+        {% else %}
+            <h2 id="note_title">{{ note.title }}</h2>
+        {% endif %}
         <p class="text-muted my-2">{{ note.createDate|date|time_diff }}</p>
     </div>
     <div class="card-body">

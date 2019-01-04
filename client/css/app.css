@@ -9,3 +9,18 @@ p.is-invalid {
     font-size: 80%;
     color: #D9831F;
 }
+
+.tooltip-inner {
+    max-width: 400px;
+}
+
+@media (min-width: 992px) {
+    #search {
+        width: 200px;
+        transition: all .3s ease;
+    }
+
+    #search:focus {
+        width: 500px;
+    }
+}

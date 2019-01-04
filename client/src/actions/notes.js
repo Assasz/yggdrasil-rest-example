@@ -1,4 +1,37 @@
 /**
+ * Init action
+ */
+app.register('init', 'no-event', function () {
+    $(document).tooltip({ selector: '[data-toggle="tooltip"]'});
+
+    const normalizer = function(value) {
+        return $.trim(value);
+    };
+
+    $("#create_form, #edit_form").validate({
+        rules: {
+            title: {
+                required: true,
+                maxlength: 255,
+                normalizer: normalizer()
+            },
+            content: {
+                required: true,
+                maxlength: 1000,
+                normalizer: normalizer()
+            }
+        },
+        onkeyup: false,
+        errorClass: "is-invalid",
+        validClass: "is-valid",
+        errorElement: "p",
+        errorPlacement: function(error, element) {
+            error.appendTo(element.parent());
+        }
+    });
+}).run();
+
+/**
  * List notes action
  */
 app.register('listNotes', 'no-event', function () {
@@ -98,39 +131,6 @@ app.register('toggleModal', 'click', function () {
             });
         }
     }
-}).run();
-
-/**
- * Validate forms action
- */
-app.register('validateForms', 'no-event', function () {
-    const validationOptions = {
-        rules: {
-            title: {
-                required: true,
-                maxlength: 255,
-                normalizer: function(value) {
-                    return $.trim(value);
-                }
-            },
-            content: {
-                required: true,
-                maxlength: 1000,
-                normalizer: function(value) {
-                    return $.trim(value);
-                }
-            }
-        },
-        onkeyup: false,
-        errorClass: "is-invalid",
-        validClass: "is-valid",
-        errorElement: "p",
-        errorPlacement: function(error, element) {
-            error.appendTo( element.parent() );
-        }
-    };
-
-    $("#create_form, #edit_form").validate(validationOptions);
 }).run();
 
 /**
