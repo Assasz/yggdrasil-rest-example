@@ -31,13 +31,9 @@ class GetOneService extends AbstractService
 
         $response = new GetOneResponse();
 
-        if (!empty($note)) {
-            $response
-                ->setSuccess(true)
-                ->setNote($note);
-        }
-
-        return $response;
+        return (empty($note)) ? $response : $response
+            ->setSuccess(true)
+            ->setNote($note);
     }
 
     /**

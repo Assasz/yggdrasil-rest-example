@@ -12,16 +12,12 @@ use CreativeNotes\Domain\Entity\Note;
 interface NoteRepositoryInterface
 {
     /**
-     * Returns a note by its primary key / identifier.
+     * Returns a note by its identifier.
      *
-     * @param mixed $id          The identifier.
-     * @param int?  $lockMode    One of the \Doctrine\DBAL\LockMode::* constants
-     *                           or NULL if no specific lock mode should be used
-     *                           during the search.
-     * @param int?  $lockVersion The lock version.
+     * @param int $id The identifier.
      * @return Note? The entity instance or NULL if the entity can not be found.
      */
-    public function pick($id, int $lockMode = null, int $lockVersion = null): Note;
+    public function pick(int $id): Note;
 
     /**
      * Returns notes by a set of criteria

@@ -33,21 +33,23 @@ class EditService extends AbstractService
 
         $response = new EditResponse();
 
-        if (!empty($note)) {
-            $note
-                ->setTitle($request->getTitle())
-                ->setContent($request->getContent());
-
-            if ($this->validator->isValid($note)) {
-                $this->entityManager->flush();
-
-                $response
-                    ->setSuccess(true)
-                    ->setNote($note);
-            }
+        if (empty($note)) {
+            return $response;
         }
 
-        return $response;
+        $note
+            ->setTitle($request->getTitle())
+            ->setContent($request->getContent());
+
+        if (!$this->validator->isValid($note)) {
+            return $response;
+        }
+
+        $this->entityManager->flush();
+
+        return $response
+            ->setSuccess(true)
+            ->setNote($note);
     }
 
     /**

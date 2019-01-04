@@ -31,14 +31,14 @@ class DeleteService extends AbstractService
 
         $response = new DeleteResponse();
 
-        if (!empty($note)) {
-            $this->entityManager->remove($note);
-            $this->entityManager->flush();
-
-            $response->setSuccess(true);
+        if (empty($note)) {
+            return $response;
         }
 
-        return $response;
+        $this->entityManager->remove($note);
+        $this->entityManager->flush();
+
+        return $response->setSuccess(true);
     }
 
     /**

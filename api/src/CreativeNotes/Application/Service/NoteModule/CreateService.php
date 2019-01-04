@@ -34,16 +34,16 @@ class CreateService extends AbstractService
 
         $response = new CreateResponse();
 
-        if ($this->validator->isValid($note)) {
-            $this->entityManager->persist($note);
-            $this->entityManager->flush();
-
-            $response
-                ->setSuccess(true)
-                ->setNote($note);
+        if (!$this->validator->isValid($note)) {
+            return $response;
         }
 
-        return $response;
+        $this->entityManager->persist($note);
+        $this->entityManager->flush();
+
+        return $response
+            ->setSuccess(true)
+            ->setNote($note);
     }
 
     /**
