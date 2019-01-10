@@ -2,7 +2,7 @@
   "name": "assasz/yggdrasil-rest-example",
   "type": "project",
   "license": "MIT",
-  "description": "Simple REST api created with Yggdrasil Skeleton",
+  "description": "Simple REST API created with Yggdrasil Skeleton",
   "autoload": {
     "psr-4": {
       "CreativeNotes\\": "src/CreativeNotes/"
