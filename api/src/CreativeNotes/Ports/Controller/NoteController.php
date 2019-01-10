@@ -61,7 +61,7 @@ class NoteController extends ApiController
             'notes' => $response->getNotes()
         ]);
 
-        return $this->json([$view]);
+        return $this->json(['html' => $view]);
     }
 
     /**
@@ -88,7 +88,9 @@ class NoteController extends ApiController
             return $this->notFound('Not found. Requested note doesn\'t exist.');
         }
 
-        return $this->json(EntitySerializer::toArray([$response->getNote()]));
+        $serialized = EntitySerializer::toArray([$response->getNote()]);
+
+        return $this->json(['note' => $serialized[0]]);
     }
 
     /**
@@ -114,7 +116,7 @@ class NoteController extends ApiController
             'notes' => $response->getNotes()
         ]);
 
-        return $this->json([$view]);
+        return $this->json(['html' => $view]);
     }
 
     /**
@@ -145,7 +147,7 @@ class NoteController extends ApiController
             'note' => $response->getNote()
         ]);
 
-        return $this->json([$view]);
+        return $this->json(['html' => $view], Response::HTTP_CREATED);
     }
 
     /**
@@ -178,7 +180,7 @@ class NoteController extends ApiController
             'note' => $response->getNote()
         ]);
 
-        return $this->json([$view]);
+        return $this->json(['html' => $view]);
     }
 
     /**
@@ -205,6 +207,6 @@ class NoteController extends ApiController
             return $this->notFound('Not found. Requested note doesn\'t exist.');
         }
 
-        return $this->json();
+        return $this->json([], Response::HTTP_NO_CONTENT);
     }
 }

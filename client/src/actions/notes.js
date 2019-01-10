@@ -13,12 +13,12 @@ app.register('init', 'no-event', function () {
             title: {
                 required: true,
                 maxlength: 255,
-                normalizer: normalizer()
+                normalizer: normalizer
             },
             content: {
                 required: true,
                 maxlength: 1000,
-                normalizer: normalizer()
+                normalizer: normalizer
             }
         },
         onkeyup: false,
@@ -36,7 +36,7 @@ app.register('init', 'no-event', function () {
  */
 app.register('listNotes', 'no-event', function () {
     app.use('yjax').get('Note:all', [], function (response) {
-        $('#notes').html(response);
+        $('#notes').html(response.html);
     });
 }).run();
 
@@ -63,7 +63,7 @@ app.register('searchNotes', 'keyup propertychange', function () {
 
     delay(function () {
        app.use('yjax').post('Note:search', data, [], function (response) {
-           $('#notes').html(response);
+           $('#notes').html(response.html);
        });
     }, 500);
 }).run();
@@ -79,7 +79,7 @@ app.register('createNote', 'click', function () {
         };
 
         app.use('yjax').post('Note:create', data, [], function (response) {
-            $('#notes .card-columns').prepend(response);
+            $('#notes .card-columns').prepend(response.html);
             $('#create_modal').modal('hide');
         });
     }
@@ -96,7 +96,7 @@ app.register('editNote', 'click', function () {
         };
 
         app.use('yjax').put('Note:edit', data, [app.retrieve('noteId')], function (response) {
-            $('#' + app.retrieve('noteId')).replaceWith(response);
+            $('#' + app.retrieve('noteId')).replaceWith(response.html);
             $('#edit_modal').modal('hide');
         });
     }
@@ -126,8 +126,8 @@ app.register('toggleModal', 'click', function () {
 
         if(target === 'edit_modal'){
             app.use('yjax').get('Note:get', [app.retrieve('noteId')], function (response) {
-                $('#title_edit').val(response[0].title);
-                $('#content_edit').val(response[0].content);
+                $('#title_edit').val(response.note.title);
+                $('#content_edit').val(response.note.content);
             });
         }
     }
@@ -147,9 +147,9 @@ app.register('error', 'no-event', function () {
         }
 
         if(!$('#app_error').length) {
-            $('#app_header').after(response);
+            $('#app_header').after(response.html);
         } else {
-            $('#app_error').replaceWith(response);
+            $('#app_error').replaceWith(response.html);
         }
     });
 }).run();

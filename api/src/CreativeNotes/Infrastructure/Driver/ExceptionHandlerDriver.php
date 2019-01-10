@@ -65,7 +65,7 @@ class ExceptionHandlerDriver implements DriverInterface
                 $run->pushHandler(new $handler());
             } else {
                 $run->pushHandler(function () use ($appConfiguration) {
-                    $view = $appConfiguration->loadDriver('templateEngine')->render('error/500.html.twig');
+                    $view = $appConfiguration->loadDriver('templateEngine')->render('error/_500.html.twig');
 
                     echo json_encode($view);
                 });
