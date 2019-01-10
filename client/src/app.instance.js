@@ -5,4 +5,7 @@
  */
 const app = (new App())
     .initNProgress()
-    .mount('yjax', new YjaxPlugin('http://localhost/creative-notes/api/web', '/yjax/routes'));
+    .mount('yjax', new YjaxPlugin({
+        host: 'http://localhost/creative-notes/api/web',
+        routesProvider: '/yjax/routes'
+    }));

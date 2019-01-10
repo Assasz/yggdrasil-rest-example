@@ -29,12 +29,15 @@ When database is connected, generate schema via following command:
 php bin/console.php orm:schema-tool:update --force
 ``` 
 
-Ensure that YjaxPlugin has proper URL of API (first parameter):
+Ensure that YjaxPlugin has proper URL of API (host parameter):
 
 ```javascript
 // client/src/app.instance.js
 
 const app = (new App())
     .initNProgress()
-    .mount('yjax', new YjaxPlugin('http://localhost/creative-notes/api/web', '/yjax/routes'));
+    .mount('yjax', new YjaxPlugin({
+        host: 'http://localhost/creative-notes/api/web',
+        routesProvider: '/yjax/routes'
+    }));
 ```

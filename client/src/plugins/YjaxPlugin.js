@@ -8,12 +8,13 @@ class YjaxPlugin {
     /**
      * Initializes plugin
      *
-     * @param {?string} host           Hostname of remote - if null, Yjax will try to resolve it automatically
-     * @param {?string} routesProvider Remote action to load routes from - if null, routes will not be loaded in this stage
+     * @param {object} options Includes:
+     *                         host - hostname of remote, if left empty, Yjax will try to resolve it automatically,
+     *                         routesProvider - remote action to load routes from, if left empty, routes will not be loaded in this stage
      */
-    constructor(host = null, routesProvider = null) {
-        if (null !== host) {
-            this.host = host;
+    constructor(options = {}) {
+        if (typeof options.host !== 'undefined') {
+            this.host = options.host;
         } else {
             this.host = window.location.protocol + '//' + window.location.host;
 
@@ -26,8 +27,8 @@ class YjaxPlugin {
             }
         }
 
-        if (null !== routesProvider) {
-            this.loadRoutes(routesProvider);
+        if (typeof options.routesProvider !== 'undefined') {
+            this.loadRoutes(options.routesProvider);
         }
 
         this.onError();
