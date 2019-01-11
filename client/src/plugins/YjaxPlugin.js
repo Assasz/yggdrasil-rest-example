@@ -71,7 +71,7 @@ class YjaxPlugin {
      * @param {object}   options.ajaxOptions Set of ajax options
      * @return {boolean}                     Returns false is action route doesn't exist
      */
-    get ({ action, params = [], success, error, ajaxOptions } = {}) {
+    get ({ action, params = [], success, error, ajaxOptions }) {
         if (typeof this.routes[action] === 'undefined') {
             console.error('Route for ' + action + ' doesn\'t exist.');
 
@@ -104,13 +104,13 @@ class YjaxPlugin {
      * Calls remote POST action
      *
      * @param {object}   options
-     * @param {string}   options.action          Alias of remote action like Controller:action
-     * @param {object}   options.data            Data to send
-     * @param {array}    options.params  Remote action parameters
-     * @param {function} options.success On success callback
-     * @param {function} options.error   On error callback
+     * @param {string}   options.action      Alias of remote action like Controller:action
+     * @param {object}   options.data        Data to send
+     * @param {array}    options.params      Remote action parameters
+     * @param {function} options.success     On success callback
+     * @param {function} options.error       On error callback
      * @param {object}   options.ajaxOptions Set of ajax options
-     * @return {boolean}                 Returns false is action route doesn't exist
+     * @return {boolean}                     Returns false is action route doesn't exist
      */
     post ({ action, data, params = [], success, error, ajaxOptions }) {
         if (typeof this.routes[action] === 'undefined') {
@@ -156,7 +156,7 @@ class YjaxPlugin {
      * @param {object}   options.ajaxOptions Set of ajax options
      * @return {boolean}                     Returns false is action route doesn't exist
      */
-    put ({ action, data, params = [], success, error, ajaxOptions } = {}) {
+    put ({ action, data, params = [], success, error, ajaxOptions }) {
         if (typeof this.routes[action] === 'undefined') {
             console.error('Route for ' + action + ' doesn\'t exist.');
 
@@ -199,7 +199,7 @@ class YjaxPlugin {
      * @param {?object}   options.ajaxOptions Set of ajax options
      * @return {boolean}                      Returns false is action route doesn't exist
      */
-    delete ({ action, params = [], success, error, ajaxOptions } = {}) {
+    delete ({ action, params = [], success, error, ajaxOptions }) {
         if (typeof this.routes[action] === 'undefined') {
             console.error('Route for ' + action + ' doesn\'t exist.');
 
