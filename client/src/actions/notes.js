@@ -35,8 +35,11 @@ app.register('init', 'no-event', function () {
  * List notes action
  */
 app.register('listNotes', 'no-event', function () {
-    app.use('yjax').get('Note:all', [], function (response) {
-        $('#notes').html(response.html);
+    app.use('yjax').get({
+        action: 'Note:all',
+        success: function (response) {
+            $('#notes').html(response.html);
+        }
     });
 }).run();
 
@@ -62,8 +65,12 @@ app.register('searchNotes', 'keyup propertychange', function () {
     let data = {searchTerm: $(this).val()};
 
     delay(function () {
-       app.use('yjax').post('Note:search', data, [], function (response) {
-           $('#notes').html(response.html);
+       app.use('yjax').post({
+           action: 'Note:search',
+           data: data,
+           success: function (response) {
+               $('#notes').html(response.html);
+           }
        });
     }, 500);
 }).run();
@@ -78,9 +85,13 @@ app.register('createNote', 'click', function () {
             content: $('#create_form #content').val()
         };
 
-        app.use('yjax').post('Note:create', data, [], function (response) {
-            $('#notes .card-columns').prepend(response.html);
-            $('#create_modal').modal('hide');
+        app.use('yjax').post({
+            action: 'Note:create',
+            data: data,
+            success: function (response) {
+                $('#notes .card-columns').prepend(response.html);
+                $('#create_modal').modal('hide');
+            }
         });
     }
 }).run();
@@ -95,9 +106,14 @@ app.register('editNote', 'click', function () {
             content: $('#content_edit').val()
         };
 
-        app.use('yjax').put('Note:edit', data, [app.retrieve('noteId')], function (response) {
-            $('#' + app.retrieve('noteId')).replaceWith(response.html);
-            $('#edit_modal').modal('hide');
+        app.use('yjax').put({
+            action: 'Note:edit',
+            data: data,
+            params: [app.retrieve('noteId')],
+            success: function (response) {
+                $('#' + app.retrieve('noteId')).replaceWith(response.html);
+                $('#edit_modal').modal('hide');
+            }
         });
     }
 }).run();
@@ -106,9 +122,13 @@ app.register('editNote', 'click', function () {
  * Delete note action
  */
 app.register('deleteNote', 'click', function () {
-    app.use('yjax').delete('Note:delete', [app.retrieve('noteId')], function () {
-        $('#' + app.retrieve('noteId')).remove();
-        $('#delete_modal').modal('hide');
+    app.use('yjax').delete({
+        action: 'Note:delete',
+        params: [app.retrieve('noteId')],
+        success: function () {
+            $('#' + app.retrieve('noteId')).remove();
+            $('#delete_modal').modal('hide');
+        }
     });
 }).run();
 
@@ -125,9 +145,13 @@ app.register('toggleModal', 'click', function () {
         app.store('noteId', $(this).data('note-id'));
 
         if(target === 'edit_modal'){
-            app.use('yjax').get('Note:get', [app.retrieve('noteId')], function (response) {
-                $('#title_edit').val(response.note.title);
-                $('#content_edit').val(response.note.content);
+            app.use('yjax').get({
+                action: 'Note:get',
+                params: [app.retrieve('noteId')],
+                success: function (response) {
+                    $('#title_edit').val(response.note.title);
+                    $('#content_edit').val(response.note.content);
+                }
             });
         }
     }
