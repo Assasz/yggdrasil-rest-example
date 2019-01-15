@@ -6,6 +6,14 @@ Simple REST API created with [Yggdrasil Skeleton](https://github.com/Assasz/yggd
 
 Just clone or download. PHP 7.2+ required.
 
+Then install API dependencies with [Composer](https://getcomposer.org/):
+
+```
+cd api
+
+composer update
+```
+
 ## Configuration
 
 Rename **config.example.ini** (api/src/CreativeNotes/Infrastructure/Configuration) to **config.ini** and adjust configuration to your needs.
