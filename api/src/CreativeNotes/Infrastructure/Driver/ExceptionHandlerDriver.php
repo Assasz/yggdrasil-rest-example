@@ -72,7 +72,7 @@ class ExceptionHandlerDriver implements DriverInterface
             }
 
             $logger = (new ExceptionLogger())
-                ->setLogPath(dirname(__DIR__, 4) . '/src/' . $configuration['exception_handler']['log_path'] . '/exceptions.txt');
+                ->setLogPath(dirname(__DIR__, 4) . $configuration['exception_handler']['log_path'] . '/error_logs.txt');
 
             $run->pushHandler(function ($exception) use ($logger) {
                 $logger->log($exception);

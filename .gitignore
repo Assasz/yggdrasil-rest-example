@@ -2,4 +2,4 @@
 /api/vendor
 /api/composer.lock
 /api/src/CreativeNotes/Infrastructure/Configuration/config.ini
-/api/src/CreativeNotes/Infrastructure/Log/*
+/api/error_logs.txt
