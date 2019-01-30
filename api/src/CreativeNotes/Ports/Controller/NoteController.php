@@ -73,7 +73,7 @@ class NoteController extends ApiController
      *
      * @throws \Exception
      */
-    public function getAction(int $id = 1)
+    public function getAction(int $id)
     {
         if (!$this->getRequest()->isMethod('GET')) {
             return $this->methodNotAllowed();
