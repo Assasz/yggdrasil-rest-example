@@ -20,7 +20,7 @@ class NoteRepository extends EntityRepository implements NoteRepositoryInterface
      * @param int $id The identifier.
      * @return Note? The entity instance or NULL if the entity can not be found.
      */
-    public function pick($id): Note
+    public function pick($id): ?Note
     {
         return $this->find($id);
     }

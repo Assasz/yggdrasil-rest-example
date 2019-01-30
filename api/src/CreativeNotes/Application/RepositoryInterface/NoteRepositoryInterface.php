@@ -17,7 +17,7 @@ interface NoteRepositoryInterface
      * @param int $id The identifier.
      * @return Note? The entity instance or NULL if the entity can not be found.
      */
-    public function pick(int $id): Note;
+    public function pick(int $id): ?Note;
 
     /**
      * Returns notes by a set of criteria
