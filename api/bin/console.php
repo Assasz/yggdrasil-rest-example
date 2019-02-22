@@ -9,6 +9,7 @@ use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use CreativeNotes\Infrastructure\Configuration\AppConfiguration;
 use Yggdrasil\Utils\Entity\EntityGenerateCommand;
 use Yggdrasil\Utils\Service\ServiceDTOGenerateCommand;
+use Yggdrasil\Utils\Seeds\SeedsPersistCommand;
 
 try {
     $consoleApplication = new Application('Yggdrasil CLI', 'dev');
@@ -30,6 +31,7 @@ try {
             // register commands here
             $consoleApplication->add(new EntityGenerateCommand($appConfiguration));
             $consoleApplication->add(new ServiceDTOGenerateCommand($appConfiguration));
+            $consoleApplication->add(new SeedsPersistCommand($appConfiguration));
 
             break;
     }

@@ -3,6 +3,7 @@
 namespace CreativeNotes\Infrastructure\Driver;
 
 use Doctrine\Common\Cache\RedisCache;
+use Doctrine\DBAL\ConnectionException;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
@@ -15,6 +16,7 @@ use CreativeNotes\Application\DriverInterface\EntityManagerInterface;
 use Yggdrasil\Core\Configuration\ConfigurationInterface;
 use Yggdrasil\Core\Driver\DriverInterface;
 use Yggdrasil\Core\Exception\MissingConfigurationException;
+use Yggdrasil\Utils\Seeds\SeederInterface;
 
 /**
  * Class EntityManagerDriver
@@ -24,7 +26,7 @@ use Yggdrasil\Core\Exception\MissingConfigurationException;
  * @package CreativeNotes\Infrastructure\Driver
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
-class EntityManagerDriver implements DriverInterface, EntityManagerInterface
+class EntityManagerDriver implements DriverInterface, EntityManagerInterface, SeederInterface
 {
     /**
      * Instance of driver
@@ -165,5 +167,35 @@ class EntityManagerDriver implements DriverInterface, EntityManagerInterface
     public function flush(object $entity = null): void
     {
         self::$managerInstance->flush($entity);
+    }
+
+    /**
+     * Truncates given table
+     *
+     * @param string $table Name of entity table
+     * @return bool
+     *
+     * @throws ConnectionException
+     */
+    public function truncate(string $table): bool
+    {
+        $conn = self::$managerInstance->getConnection();
+
+        $conn->beginTransaction();
+
+        try {
+            $conn->query('SET FOREIGN_KEY_CHECKS=0');
+            $conn->query('TRUNCATE TABLE ' . $table);
+            $conn->query('SET FOREIGN_KEY_CHECKS=1');
+            $conn->commit();
+
+            self::$managerInstance->flush();
+        } catch (\Throwable $t) {
+            $conn->rollBack();
+
+            return false;
+        }
+
+        return true;
     }
 }

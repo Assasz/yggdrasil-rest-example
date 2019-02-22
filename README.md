@@ -31,10 +31,12 @@ db_password = DBPASSWORD
 ...
 ```
 
-When database is connected, generate schema via following command:
+When database is connected, generate database schema and populate it with following commands:
 
 ```
 php bin/console.php orm:schema-tool:update --force
+
+php bin/console.php yggdrasil:seeds:persist Note
 ``` 
 
 Ensure that YjaxPlugin has proper URL of API (**host** parameter needs to be the same as **base_url** in config.ini):
