@@ -107,6 +107,10 @@ class NoteController extends ApiController
             return $this->methodNotAllowed();
         }
 
+        if (!$this->inBody(['searchTerm'])) {
+            return $this->badRequest('Some of required data is missing in request body.');
+        }
+
         $request = (new GetRequest())
             ->setSearchTerm($this->fromBody('searchTerm'));
 
@@ -131,6 +135,10 @@ class NoteController extends ApiController
     {
         if (!$this->getRequest()->isMethod('POST')) {
             return $this->methodNotAllowed();
+        }
+
+        if (!$this->inBody(['title', 'content'])) {
+            return $this->badRequest('Some of required data is missing in request body.');
         }
 
         $request = (new CreateRequest())
@@ -165,6 +173,10 @@ class NoteController extends ApiController
             return $this->methodNotAllowed();
         }
 
+        if (!$this->inBody(['title', 'content'])) {
+            return $this->badRequest('Some of required data is missing in request body.');
+        }
+
         $request = (new EditRequest())
             ->setNoteId($id)
             ->setTitle($this->fromBody('title'))
@@ -172,8 +184,12 @@ class NoteController extends ApiController
 
         $response = $this->container->getService('note.edit')->process($request);
 
+        if (!$response->isFound()) {
+            return $this->notFound('Requested note doesn\'t exist.');
+        }
+
         if (!$response->isSuccess()) {
-            return $this->badRequest('Bad request. Requested note doesn\'t exist or provided data is invalid.');
+            return $this->badRequest('Bad request. Provided data is invalid.');
         }
 
         $view = $this->renderPartial('note/_item.html.twig', [

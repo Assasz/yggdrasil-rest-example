@@ -20,6 +20,13 @@ class EditResponse
     private $success;
 
     /**
+     * Indicates if note was found
+     *
+     * @var bool
+     */
+    private $found;
+
+    /**
      * Edited note
      *
      * @var Note
@@ -34,6 +41,7 @@ class EditResponse
     public function __construct()
     {
         $this->success = false;
+        $this->found = true;
     }
 
     /**
@@ -55,6 +63,29 @@ class EditResponse
     public function setSuccess(bool $success): EditResponse
     {
         $this->success = $success;
+
+        return $this;
+    }
+
+    /**
+     * Returns true if note was found, false otherwise
+     *
+     * @return bool
+     */
+    public function isFound(): bool
+    {
+        return $this->found;
+    }
+
+    /**
+     * Sets found flag
+     *
+     * @param bool $found
+     * @return EditResponse
+     */
+    public function setFound(bool $found): EditResponse
+    {
+        $this->found = $found;
 
         return $this;
     }

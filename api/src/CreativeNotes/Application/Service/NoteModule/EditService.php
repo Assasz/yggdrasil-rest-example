@@ -34,7 +34,7 @@ class EditService extends AbstractService
         $response = new EditResponse();
 
         if (empty($note)) {
-            return $response;
+            return $response->setFound(false);
         }
 
         $note
