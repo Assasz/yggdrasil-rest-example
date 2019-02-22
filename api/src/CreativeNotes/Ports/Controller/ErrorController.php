@@ -39,14 +39,7 @@ class ErrorController extends ApiController
      */
     public function code400Action(): JsonResponse
     {
-        $view = $this->renderPartial('error/_400.html.twig', [
-            'message' => $this->getResponse()->getContent()
-        ]);
-
-        return $this->json([
-            'html' => $view,
-            'message' => $this->getResponse()->getContent()
-        ], Response::HTTP_BAD_REQUEST);
+        return $this->json(['message' => $this->getResponse()->getContent()], Response::HTTP_BAD_REQUEST);
     }
 
     /**
@@ -56,14 +49,7 @@ class ErrorController extends ApiController
      */
     public function code404Action(): JsonResponse
     {
-        $view = $this->renderPartial('error/_404.html.twig', [
-            'message' => $this->getResponse()->getContent()
-        ]);
-
-        return $this->json([
-            'html' => $view,
-            'message' => $this->getResponse()->getContent()
-        ], Response::HTTP_NOT_FOUND);
+        return $this->json(['message' => $this->getResponse()->getContent()], Response::HTTP_NOT_FOUND);
     }
 
     /**
@@ -73,14 +59,7 @@ class ErrorController extends ApiController
      */
     public function code405Action(): JsonResponse
     {
-        $view = $this->renderPartial('error/_405.html.twig', [
-            'message' => $this->getResponse()->getContent()
-        ]);
-
-        return $this->json([
-            'html' => $view,
-            'message' => $this->getResponse()->getContent()
-        ], Response::HTTP_METHOD_NOT_ALLOWED);
+        return $this->json(['message' => $this->getResponse()->getContent()], Response::HTTP_METHOD_NOT_ALLOWED);
     }
 
     /**
@@ -90,13 +69,6 @@ class ErrorController extends ApiController
      */
     public function defaultAction(): JsonResponse
     {
-        $view = $this->renderPartial('error/_default.html.twig', [
-            'message' => $this->getResponse()->getContent()
-        ]);
-
-        return $this->json([
-            'html' => $view,
-            'message' => $this->getResponse()->getContent()
-        ], $this->getResponse()->getStatusCode());
+        return $this->json(['message' => $this->getResponse()->getContent()], $this->getResponse()->getStatusCode());
     }
 }

@@ -54,14 +54,9 @@ class NoteController extends ApiController
         }
 
         $request = new GetRequest();
-
         $response = $this->container->getService('note.get')->process($request);
 
-        $view = $this->renderPartial('note/_list.html.twig', [
-            'notes' => $response->getNotes()
-        ]);
-
-        return $this->json(['html' => $view]);
+        return $this->json(['notes' => EntitySerializer::toArray($response->getNotes())]);
     }
 
     /**
@@ -116,11 +111,7 @@ class NoteController extends ApiController
 
         $response = $this->container->getService('note.get')->process($request);
 
-        $view = $this->renderPartial('note/_list.html.twig', [
-            'notes' => $response->getNotes()
-        ]);
-
-        return $this->json(['html' => $view]);
+        return $this->json(['notes' => EntitySerializer::toArray($response->getNotes())]);
     }
 
     /**
@@ -151,11 +142,9 @@ class NoteController extends ApiController
             return $this->badRequest('Bad request. Provided data is invalid.');
         }
 
-        $view = $this->renderPartial('note/_item.html.twig', [
-            'note' => $response->getNote()
-        ]);
+        $serialized = EntitySerializer::toArray([$response->getNote()]);
 
-        return $this->json(['html' => $view], Response::HTTP_CREATED);
+        return $this->json(['note' => $serialized[0]], Response::HTTP_CREATED);
     }
 
     /**
@@ -192,11 +181,9 @@ class NoteController extends ApiController
             return $this->badRequest('Bad request. Provided data is invalid.');
         }
 
-        $view = $this->renderPartial('note/_item.html.twig', [
-            'note' => $response->getNote()
-        ]);
+        $serialized = EntitySerializer::toArray([$response->getNote()]);
 
-        return $this->json(['html' => $view]);
+        return $this->json(['note' => $serialized[0]]);
     }
 
     /**

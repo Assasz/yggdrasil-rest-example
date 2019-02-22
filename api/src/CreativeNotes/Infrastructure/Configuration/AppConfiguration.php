@@ -41,7 +41,6 @@ class AppConfiguration extends AbstractConfiguration implements ConfigurationInt
             'router' => RouterDriver::class,
             'exceptionHandler' => ExceptionHandlerDriver::class,
             'entityManager' => EntityManagerDriver::class,
-            'templateEngine' => TemplateEngineDriver::class,
             'container' => ContainerDriver::class,
             'validator' => ValidatorDriver::class
         ];

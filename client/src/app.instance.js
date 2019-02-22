@@ -8,4 +8,5 @@ const app = (new App())
     .mount('yjax', new YjaxPlugin({
         host: 'http://localhost/creative-notes/api/web',
         routesProvider: '/yjax/routes'
-    }));
+    }))
+    .mount('noteHelper', new NoteHelperPlugin());

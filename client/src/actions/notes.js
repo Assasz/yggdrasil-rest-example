@@ -38,7 +38,9 @@ app.register('listNotes', 'no-event', function () {
     app.use('yjax').get({
         action: 'Note:all',
         success: function (response) {
-            $('#notes').html(response.html);
+            $.each(response.notes, function (index, note) {
+                $('#notes').append(app.use('noteHelper').render(note));
+            });
         }
     });
 }).run();
@@ -69,7 +71,11 @@ app.register('searchNotes', 'keyup propertychange', function () {
            action: 'Note:search',
            data: data,
            success: function (response) {
-               $('#notes').html(response.html);
+               $('#notes').empty();
+
+               $.each(response.notes, function (index, note) {
+                   $('#notes').append(app.use('noteHelper').render(note));
+               });
            }
        });
     }, 500);
@@ -89,7 +95,7 @@ app.register('createNote', 'click', function () {
             action: 'Note:create',
             data: data,
             success: function (response) {
-                $('#notes .card-columns').prepend(response.html);
+                $('#notes').prepend(app.use('noteHelper').render(response.note));
                 $('#create_modal').modal('hide');
             }
         });
@@ -111,7 +117,7 @@ app.register('editNote', 'click', function () {
             data: data,
             params: [app.retrieve('noteId')],
             success: function (response) {
-                $('#' + app.retrieve('noteId')).replaceWith(response.html);
+                $('#note_' + app.retrieve('noteId')).replaceWith(app.use('noteHelper').render(response.note));
                 $('#edit_modal').modal('hide');
             }
         });
@@ -126,7 +132,7 @@ app.register('deleteNote', 'click', function () {
         action: 'Note:delete',
         params: [app.retrieve('noteId')],
         success: function () {
-            $('#' + app.retrieve('noteId')).remove();
+            $('#note_' + app.retrieve('noteId')).remove();
             $('#delete_modal').modal('hide');
         }
     });
@@ -171,9 +177,14 @@ app.register('error', 'no-event', function () {
         }
 
         if(!$('#app_error').length) {
-            $('#app_header').after(response.html);
+            $('#app_header').after(`
+                <div id="app_error" class="alert alert-dismissible alert-primary mt-4">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <p id="error_message" class="mb-0">${response.message}</p>
+                </div>
+            `);
         } else {
-            $('#app_error').replaceWith(response.html);
+            $('#error_message').html(response.message);
         }
     });
 }).run();
