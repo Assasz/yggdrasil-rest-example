@@ -8,7 +8,7 @@ Just clone repository onto your server and then install API dependencies with [C
 PHP 7.2+ required.
 
 ```
-git clone https://github.com/Assasz/yggdrasil-rest-example creative-notes
+git clone https://github.com/Assasz/yggdrasil-rest-example.git creative-notes
 
 cd api
 
