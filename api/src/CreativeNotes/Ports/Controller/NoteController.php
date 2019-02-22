@@ -103,7 +103,7 @@ class NoteController extends ApiController
         }
 
         if (!$this->inBody(['searchTerm'])) {
-            return $this->badRequest('Some of required data is missing in request body.');
+            return $this->badRequest('Bad request. Some of required data is missing in request body.');
         }
 
         $request = (new GetRequest())
@@ -129,7 +129,7 @@ class NoteController extends ApiController
         }
 
         if (!$this->inBody(['title', 'content'])) {
-            return $this->badRequest('Some of required data is missing in request body.');
+            return $this->badRequest('Bad request. Some of required data is missing in request body.');
         }
 
         $request = (new CreateRequest())
@@ -163,7 +163,7 @@ class NoteController extends ApiController
         }
 
         if (!$this->inBody(['title', 'content'])) {
-            return $this->badRequest('Some of required data is missing in request body.');
+            return $this->badRequest('Bad request. Some of required data is missing in request body.');
         }
 
         $request = (new EditRequest())
@@ -174,7 +174,7 @@ class NoteController extends ApiController
         $response = $this->container->getService('note.edit')->process($request);
 
         if (!$response->isFound()) {
-            return $this->notFound('Requested note doesn\'t exist.');
+            return $this->notFound('Not found. Requested note doesn\'t exist.');
         }
 
         if (!$response->isSuccess()) {
