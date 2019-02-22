@@ -52,3 +52,7 @@ const app = (new App())
     }))
     .mount('noteHelper', new NoteHelperPlugin());
 ```
+
+## Usage
+
+Interact with API directly via e.g. [Postman](https://www.getpostman.com/) or client application located under `localhost/creative-notes/client` address (assuming that you are using localhost).
