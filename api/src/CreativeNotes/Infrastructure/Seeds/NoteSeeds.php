@@ -13,7 +13,7 @@ use Yggdrasil\Utils\Seeds\AbstractSeeds;
 class NoteSeeds extends AbstractSeeds
 {
     /**
-     * Creates user seeds
+     * Creates note seeds
      *
      * @return array
      *
