@@ -10,7 +10,7 @@ PHP 7.2+ required.
 ```
 git clone https://github.com/Assasz/yggdrasil-rest-example.git creative-notes
 
-cd api
+cd creative-notes/api
 
 composer update
 ```
