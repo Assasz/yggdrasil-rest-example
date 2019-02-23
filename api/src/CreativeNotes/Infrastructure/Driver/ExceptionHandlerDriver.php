@@ -65,9 +65,7 @@ class ExceptionHandlerDriver implements DriverInterface
                 $run->pushHandler(new $handler());
             } else {
                 $run->pushHandler(function () use ($appConfiguration) {
-                    $view = $appConfiguration->loadDriver('templateEngine')->render('error/_500.html.twig');
-
-                    echo json_encode($view);
+                    echo json_encode(['message' => 'Internal server error.']);
                 });
             }
 
