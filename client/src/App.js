@@ -67,12 +67,13 @@ class App {
     /**
      * Registers action
      *
-     * @param {string}   name     Action name, equivalent to data-action HTML attribute
-     * @param {string}   event    Event to bind action, use 'no-event' if no needed
-     * @param {function} callback Action callback
+     * @param {object}   options
+     * @param {string}   options.name     Action name, equivalent to data-action HTML attribute
+     * @param {string}   options.event    Event to bind action
+     * @param {function} options.callback Action callback
      * @return {App}
      */
-    register(name, event, callback) {
+    register({ name, event = '', callback }) {
         if (typeof this.actions[name] !== 'undefined') {
             console.error(name + ' action already exist.');
 
@@ -110,7 +111,7 @@ class App {
 
         $(document).ready(function () {
             if (this.isPjax) {
-                if ('no-event' === self.actions[action].event) {
+                if ('' === self.actions[action].event) {
                     self.actions[action].callback();
                 } else {
                     $('#pjax-container').on(
@@ -125,7 +126,7 @@ class App {
                 });
 
                 $(document).on('pjax:end', function () {
-                    if ('no-event' === self.actions[action].event) {
+                    if ('' === self.actions[action].event) {
                         self.actions[action].callback();
                     } else {
                         $('#pjax-container').on(
@@ -136,7 +137,7 @@ class App {
                     }
                 });
             } else {
-                if ('no-event' === self.actions[action].event) {
+                if ('' === self.actions[action].event) {
                     self.actions[action].callback();
                 } else {
                     $(document).on(
