@@ -9,14 +9,14 @@ use Yggdrasil\Utils\ExceptionLogger;
 use Yggdrasil\Core\Exception\MissingConfigurationException;
 
 /**
- * Class ExceptionHandlerDriver
+ * Class ErrorHandlerDriver
  *
- * [Whoops] Exception Handler driver
+ * [Whoops] Error Handler driver
  *
  * @package CreativeNotes\Infrastructure\Driver
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
-class ExceptionHandlerDriver implements DriverInterface
+class ErrorHandlerDriver implements DriverInterface
 {
     /**
      * Instance of driver
@@ -26,7 +26,7 @@ class ExceptionHandlerDriver implements DriverInterface
     private static $driverInstance;
 
     /**
-     * Instance of exception handler
+     * Instance of error handler
      *
      * @var Run
      */
@@ -40,9 +40,9 @@ class ExceptionHandlerDriver implements DriverInterface
     private function __clone() {}
 
     /**
-     * Installs exception handler driver
+     * Installs error handler driver
      *
-     * @param ConfigurationInterface $appConfiguration Configuration needed to configure exception handler
+     * @param ConfigurationInterface $appConfiguration Configuration needed to configure error handler
      * @return DriverInterface
      *
      * @throws MissingConfigurationException if handler or log_path is not configured
@@ -52,8 +52,8 @@ class ExceptionHandlerDriver implements DriverInterface
         if (self::$driverInstance === null) {
             $requiredConfig = ['handler', 'log_path'];
 
-            if (!$appConfiguration->isConfigured($requiredConfig, 'exception_handler')) {
-                throw new MissingConfigurationException($requiredConfig, 'exception_handler');
+            if (!$appConfiguration->isConfigured($requiredConfig, 'error_handler')) {
+                throw new MissingConfigurationException($requiredConfig, 'error_handler');
             }
 
             $configuration = $appConfiguration->getConfiguration();
@@ -61,7 +61,7 @@ class ExceptionHandlerDriver implements DriverInterface
             $run = new Run();
 
             if (DEBUG) {
-                $handler = 'Whoops\Handler\\' . $configuration['exception_handler']['handler'] ?? 'PrettyPageHandler';
+                $handler = 'Whoops\Handler\\' . $configuration['error_handler']['handler'] ?? 'PrettyPageHandler';
                 $run->pushHandler(new $handler());
             } else {
                 $run->pushHandler(function () use ($appConfiguration) {
@@ -70,7 +70,7 @@ class ExceptionHandlerDriver implements DriverInterface
             }
 
             $logger = (new ExceptionLogger())
-                ->setLogPath(dirname(__DIR__, 4) . $configuration['exception_handler']['log_path'] . '/error_logs.txt');
+                ->setLogPath(dirname(__DIR__, 4) . $configuration['error_handler']['log_path'] . '/error_logs.txt');
 
             $run->pushHandler(function ($exception) use ($logger) {
                 $logger->log($exception);
@@ -79,7 +79,7 @@ class ExceptionHandlerDriver implements DriverInterface
             $run->register();
 
             self::$handlerInstance = $run;
-            self::$driverInstance = new ExceptionHandlerDriver();
+            self::$driverInstance = new ErrorHandlerDriver();
         }
 
         return self::$driverInstance;

@@ -6,7 +6,7 @@ use Yggdrasil\Core\Configuration\AbstractConfiguration;
 use Yggdrasil\Core\Configuration\ConfigurationInterface;
 use CreativeNotes\Infrastructure\Driver\ContainerDriver;
 use CreativeNotes\Infrastructure\Driver\EntityManagerDriver;
-use CreativeNotes\Infrastructure\Driver\ExceptionHandlerDriver;
+use CreativeNotes\Infrastructure\Driver\ErrorHandlerDriver;
 use CreativeNotes\Infrastructure\Driver\RouterDriver;
 use CreativeNotes\Infrastructure\Driver\TemplateEngineDriver;
 use CreativeNotes\Infrastructure\Driver\ValidatorDriver;
@@ -39,7 +39,7 @@ class AppConfiguration extends AbstractConfiguration implements ConfigurationInt
     {
         return [
             'router' => RouterDriver::class,
-            'exceptionHandler' => ExceptionHandlerDriver::class,
+            'errorHandler' => ErrorHandlerDriver::class,
             'entityManager' => EntityManagerDriver::class,
             'container' => ContainerDriver::class,
             'validator' => ValidatorDriver::class
