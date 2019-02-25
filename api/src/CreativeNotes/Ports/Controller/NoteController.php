@@ -139,7 +139,7 @@ class NoteController extends ApiController
         $response = $this->container->getService('note.create')->process($request);
 
         if (!$response->isSuccess()) {
-            return $this->badRequest('Bad request. Provided data is invalid.');
+            return $this->unprocessableEntity('Unprocessable entity. Provided data is invalid.');
         }
 
         $serialized = EntitySerializer::toArray([$response->getNote()]);
@@ -178,7 +178,7 @@ class NoteController extends ApiController
         }
 
         if (!$response->isSuccess()) {
-            return $this->badRequest('Bad request. Provided data is invalid.');
+            return $this->unprocessableEntity('Unprocessable entity. Provided data is invalid.');
         }
 
         $serialized = EntitySerializer::toArray([$response->getNote()]);

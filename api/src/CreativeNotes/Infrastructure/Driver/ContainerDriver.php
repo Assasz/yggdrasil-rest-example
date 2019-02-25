@@ -8,8 +8,8 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Yggdrasil\Core\Configuration\ConfigurationInterface;
 use Yggdrasil\Core\Driver\DriverInterface;
 use Yggdrasil\Core\Exception\MissingConfigurationException;
-use Yggdrasil\Core\Exception\NotServiceReturnedException;
-use Yggdrasil\Core\Exception\ServiceNotFoundException;
+use Yggdrasil\Utils\Exception\NotServiceReturnedException;
+use Yggdrasil\Utils\Exception\ServiceNotFoundException;
 use Yggdrasil\Utils\Service\AbstractService;
 
 /**

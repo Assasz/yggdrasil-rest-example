@@ -33,36 +33,6 @@ class ErrorController extends ApiController
     }
 
     /**
-     * Bad Request action
-     *
-     * @return JsonResponse
-     */
-    public function code400Action(): JsonResponse
-    {
-        return $this->json(['message' => $this->getResponse()->getContent()], Response::HTTP_BAD_REQUEST);
-    }
-
-    /**
-     * Not Found action
-     *
-     * @return JsonResponse
-     */
-    public function code404Action(): JsonResponse
-    {
-        return $this->json(['message' => $this->getResponse()->getContent()], Response::HTTP_NOT_FOUND);
-    }
-
-    /**
-     * Method Not Allowed action
-     *
-     * @return JsonResponse
-     */
-    public function code405Action(): JsonResponse
-    {
-        return $this->json(['message' => $this->getResponse()->getContent()], Response::HTTP_METHOD_NOT_ALLOWED);
-    }
-
-    /**
      * Default error action
      *
      * @return JsonResponse
