@@ -10,7 +10,7 @@ app.register({
             return $.trim(value);
         };
 
-        $("#create_form, #edit_form").validate({
+        const validationSettings = {
             rules: {
                 title: {
                     required: true,
@@ -30,7 +30,10 @@ app.register({
             errorPlacement: function(error, element) {
                 error.appendTo(element.parent());
             }
-        });
+        };
+
+        $("#create_form").validate(validationSettings);
+        $('#edit_form').validate(validationSettings);
     }
 }).run();
 
