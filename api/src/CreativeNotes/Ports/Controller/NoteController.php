@@ -11,9 +11,9 @@ use CreativeNotes\Infrastructure\Driver\ContainerDriver;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yggdrasil\Utils\Entity\EntitySerializer;
 use Yggdrasil\Core\Controller\ApiController;
 use Yggdrasil\Core\Driver\DriverCollection;
+use Yggdrasil\Utils\Entity\EntitySerializer;
 
 /**
  * Class NoteController
@@ -56,7 +56,7 @@ class NoteController extends ApiController
         $request = new GetRequest();
         $response = $this->container->getService('note.get')->process($request);
 
-        return $this->json(['notes' => EntitySerializer::toArray($response->getNotes())]);
+        return $this->json(['notes' => $response->getNotes()]);
     }
 
     /**
@@ -83,9 +83,7 @@ class NoteController extends ApiController
             return $this->notFound('Not found. Requested note doesn\'t exist.');
         }
 
-        $serialized = EntitySerializer::toArray([$response->getNote()]);
-
-        return $this->json(['note' => $serialized[0]]);
+        return $this->json(['note' => $response->getNote()]);
     }
 
     /**
@@ -111,7 +109,7 @@ class NoteController extends ApiController
 
         $response = $this->container->getService('note.get')->process($request);
 
-        return $this->json(['notes' => EntitySerializer::toArray($response->getNotes())]);
+        return $this->json(['notes' => $response->getNotes()]);
     }
 
     /**
@@ -142,9 +140,7 @@ class NoteController extends ApiController
             return $this->unprocessableEntity('Unprocessable entity. Provided data is invalid.');
         }
 
-        $serialized = EntitySerializer::toArray([$response->getNote()]);
-
-        return $this->json(['note' => $serialized[0]], Response::HTTP_CREATED);
+        return $this->json(['note' => $response->getNote()], Response::HTTP_CREATED);
     }
 
     /**
@@ -181,9 +177,7 @@ class NoteController extends ApiController
             return $this->unprocessableEntity('Unprocessable entity. Provided data is invalid.');
         }
 
-        $serialized = EntitySerializer::toArray([$response->getNote()]);
-
-        return $this->json(['note' => $serialized[0]]);
+        return $this->json(['note' => $response->getNote()]);
     }
 
     /**
