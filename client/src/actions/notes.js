@@ -153,7 +153,7 @@ app.register({
     event: 'click',
     callback: function () {
         app.use('yjax').delete({
-            action: 'Note:delete',
+            action: 'Note:destroy',
             params: [app.retrieve('noteId')],
             success: function () {
                 $('#note_' + app.retrieve('noteId')).remove();
@@ -180,7 +180,7 @@ app.register({
 
             if(target === 'edit_modal'){
                 app.use('yjax').get({
-                    action: 'Note:get',
+                    action: 'Note:single',
                     params: [app.retrieve('noteId')],
                     success: function (response) {
                         $('#title_edit').val(response.note.title);

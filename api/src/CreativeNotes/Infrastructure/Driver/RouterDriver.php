@@ -66,6 +66,10 @@ class RouterDriver extends AbstractDriver implements DriverInterface
                 ->setDefaultAction($configuration['router']['default_action'])
                 ->setPassiveActions($passiveActions ?? []);
 
+            if ($appConfiguration->isConfigured(['simple_api_routing'], 'router')) {
+                $routingConfig->setSimpleApiRouting();
+            }
+
             self::$routerInstance = new Router($routingConfig);
             self::$driverInstance = new RouterDriver();
         }

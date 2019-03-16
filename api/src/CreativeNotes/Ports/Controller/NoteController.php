@@ -40,8 +40,8 @@ class NoteController extends ApiController
     }
 
   /**
-     * All action
-     * GET: /note/all, /note, /
+     * All notes action
+     * GET: /note, /
      *
      * @return JsonResponse|Response
      *
@@ -60,15 +60,15 @@ class NoteController extends ApiController
     }
 
     /**
-     * Get action
-     * GET: /note/get/{id}
+     * Single note action
+     * GET: /note/{id}
      *
      * @param int $id
      * @return JsonResponse|Response
      *
      * @throws \Exception
      */
-    public function getAction(int $id)
+    public function singleAction(int $id)
     {
         if (!$this->getRequest()->isMethod('GET')) {
             return $this->methodNotAllowed();
@@ -87,7 +87,7 @@ class NoteController extends ApiController
     }
 
     /**
-     * Search action
+     * Search notes action
      * POST: /note/search
      *
      * @return JsonResponse|Response
@@ -113,8 +113,8 @@ class NoteController extends ApiController
     }
 
     /**
-     * Create action
-     * POST: /note/create
+     * Create note action
+     * POST: /note
      *
      * @return JsonResponse|Response
      *
@@ -144,8 +144,8 @@ class NoteController extends ApiController
     }
 
     /**
-     * Edit action
-     * PUT: /note/edit/{id}
+     * Edit note action
+     * PUT: /note/{id}
      *
      * @param int $id
      * @return JsonResponse|Response
@@ -181,15 +181,15 @@ class NoteController extends ApiController
     }
 
     /**
-     * Delete action
-     * DELETE: /note/delete/{id}
+     * Destroy note action
+     * DELETE: /note/{id}
      *
      * @param int $id
      * @return JsonResponse|Response
      *
      * @throws \Exception
      */
-    public function deleteAction(int $id)
+    public function destroyAction(int $id)
     {
         if (!$this->getRequest()->isMethod('DELETE')) {
             return $this->methodNotAllowed();
