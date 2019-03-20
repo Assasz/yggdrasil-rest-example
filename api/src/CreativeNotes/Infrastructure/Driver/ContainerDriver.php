@@ -68,6 +68,7 @@ class ContainerDriver implements DriverInterface
             $loader->load('services.yaml');
 
             $container->setParameter('app.configuration', $appConfiguration);
+            $container->compile();
 
             self::$containerInstance = $container;
             self::$driverInstance = new ContainerDriver();

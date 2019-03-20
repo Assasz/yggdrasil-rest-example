@@ -1,16 +1,8 @@
 services:
-  note.get:
-    class: CreativeNotes\Application\Service\NoteModule\GetService
-    arguments: ['%app.configuration%']
-  note.get_one:
-    class: CreativeNotes\Application\Service\NoteModule\GetOneService
-    arguments: ['%app.configuration%']
-  note.create:
-    class: CreativeNotes\Application\Service\NoteModule\CreateService
-    arguments: ['%app.configuration%']
-  note.edit:
-    class: CreativeNotes\Application\Service\NoteModule\EditService
-    arguments: ['%app.configuration%']
-  note.delete:
-    class: CreativeNotes\Application\Service\NoteModule\DeleteService
+  _defaults:
+    public: true
+
+  CreativeNotes\Application\Service\:
+    resource: '../../../Application/Service/*'
+    exclude: '../../../Application/Service/*/{Request, Response}/*'
     arguments: ['%app.configuration%']

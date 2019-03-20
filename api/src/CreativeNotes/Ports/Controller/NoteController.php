@@ -2,6 +2,11 @@
 
 namespace CreativeNotes\Ports\Controller;
 
+use CreativeNotes\Application\Service\NoteModule\CreateService;
+use CreativeNotes\Application\Service\NoteModule\DeleteService;
+use CreativeNotes\Application\Service\NoteModule\EditService;
+use CreativeNotes\Application\Service\NoteModule\GetOneService;
+use CreativeNotes\Application\Service\NoteModule\GetService;
 use CreativeNotes\Application\Service\NoteModule\Request\CreateRequest;
 use CreativeNotes\Application\Service\NoteModule\Request\DeleteRequest;
 use CreativeNotes\Application\Service\NoteModule\Request\EditRequest;
@@ -54,7 +59,7 @@ class NoteController extends ApiController
         }
 
         $request = new GetRequest();
-        $response = $this->container->getService('note.get')->process($request);
+        $response = $this->container->getService(GetService::class)->process($request);
 
         return $this->json(['notes' => $response->getNotes()]);
     }
@@ -77,7 +82,7 @@ class NoteController extends ApiController
         $request = (new GetOneRequest())
             ->setNoteId($id);
 
-        $response = $this->container->getService('note.get_one')->process($request);
+        $response = $this->container->getService(GetOneService::class)->process($request);
 
         if (!$response->isSuccess()) {
             return $this->notFound('Not found. Requested note doesn\'t exist.');
@@ -107,7 +112,7 @@ class NoteController extends ApiController
         $request = (new GetRequest())
             ->setSearchTerm($this->fromBody('searchTerm'));
 
-        $response = $this->container->getService('note.get')->process($request);
+        $response = $this->container->getService(GetService::class)->process($request);
 
         return $this->json(['notes' => $response->getNotes()]);
     }
@@ -134,7 +139,7 @@ class NoteController extends ApiController
             ->setTitle($this->fromBody('title'))
             ->setContent($this->fromBody('content'));
 
-        $response = $this->container->getService('note.create')->process($request);
+        $response = $this->container->getService(CreateService::class)->process($request);
 
         if (!$response->isSuccess()) {
             return $this->unprocessableEntity('Unprocessable entity. Provided data is invalid.');
@@ -167,7 +172,7 @@ class NoteController extends ApiController
             ->setTitle($this->fromBody('title'))
             ->setContent($this->fromBody('content'));
 
-        $response = $this->container->getService('note.edit')->process($request);
+        $response = $this->container->getService(EditService::class)->process($request);
 
         if (!$response->isFound()) {
             return $this->notFound('Not found. Requested note doesn\'t exist.');
@@ -198,7 +203,7 @@ class NoteController extends ApiController
         $request = (new DeleteRequest())
             ->setNoteId($id);
 
-        $response = $this->container->getService('note.delete')->process($request);
+        $response = $this->container->getService(DeleteService::class)->process($request);
 
         if (!$response->isSuccess()) {
             return $this->notFound('Not found. Requested note doesn\'t exist.');
