@@ -53,14 +53,6 @@ const app = (new App())
     .mount('noteHelper', new NoteHelperPlugin());
 ```
 
-If you wish to switch to production mode, simply redefine **DEBUG** global constant in API entry script:
-
-```php
-// api/web/index.php
-
-define('DEBUG', false);
-```
-
 ## Usage
 
 Interact with API via client application located under `localhost/creative-notes/client` address (assuming that you are using localhost).

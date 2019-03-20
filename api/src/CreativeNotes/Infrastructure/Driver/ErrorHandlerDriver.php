@@ -60,7 +60,7 @@ class ErrorHandlerDriver implements DriverInterface
 
             $run = new Run();
 
-            if (DEBUG) {
+            if ('dev' === $configuration['framework']['env']) {
                 $handler = 'Whoops\Handler\\' . $configuration['error_handler']['handler'] ?? 'PrettyPageHandler';
                 $run->pushHandler(new $handler());
             } else {

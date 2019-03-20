@@ -40,12 +40,12 @@ class RouterDriver extends AbstractDriver implements DriverInterface
      * @param ConfigurationInterface $appConfiguration Configuration needed to configure router
      * @return DriverInterface
      *
-     * @throws MissingConfigurationException if default_controller, default_action, controller_namespace, base_url or resource_path are not configured
+     * @throws MissingConfigurationException if default_controller, default_action, base_url or resource_path are not configured
      */
     public static function install(ConfigurationInterface $appConfiguration): DriverInterface
     {
         if (self::$driverInstance === null) {
-            $requiredConfig = ['default_controller', 'default_action', 'controller_namespace', 'base_url', 'resource_path'];
+            $requiredConfig = ['default_controller', 'default_action', 'base_url', 'resource_path'];
 
             if (!$appConfiguration->isConfigured($requiredConfig, 'router')) {
                 throw new MissingConfigurationException($requiredConfig, 'router');
@@ -61,7 +61,7 @@ class RouterDriver extends AbstractDriver implements DriverInterface
 
             $routingConfig = (new RoutingConfiguration())
                 ->setBaseUrl($configuration['router']['base_url'])
-                ->setControllerNamespace($configuration['router']['controller_namespace'])
+                ->setControllerNamespace($configuration['framework']['root_namespace'] . 'Ports\Controller\\')
                 ->setDefaultController($configuration['router']['default_controller'])
                 ->setDefaultAction($configuration['router']['default_action'])
                 ->setPassiveActions($passiveActions ?? []);

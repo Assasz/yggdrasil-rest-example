@@ -55,14 +55,14 @@ class EntityManagerDriver implements DriverInterface, EntityManagerInterface, Se
      * @param ConfigurationInterface $appConfiguration Configuration needed to configure entity manager
      * @return DriverInterface
      *
-     * @throws MissingConfigurationException if db_name, db_host, db_user, db_password or entity_namespace are not configured
+     * @throws MissingConfigurationException if db_name, db_host, db_user or db_password are not configured
      * @throws DBALException
      * @throws ORMException
      */
     public static function install(ConfigurationInterface $appConfiguration): DriverInterface
     {
         if (self::$driverInstance === null) {
-            $requiredConfig = ['db_name', 'db_user', 'db_password', 'db_host', 'entity_namespace'];
+            $requiredConfig = ['db_name', 'db_user', 'db_password', 'db_host'];
 
             if (!$appConfiguration->isConfigured($requiredConfig, 'entity_manager')) {
                 throw new MissingConfigurationException($requiredConfig, 'entity_manager');
@@ -81,16 +81,17 @@ class EntityManagerDriver implements DriverInterface, EntityManagerInterface, Se
             ];
 
             $fullResourcePath = dirname(__DIR__, 4) . '/src/' . $configuration['entity_manager']['resource_path'];
+            $entityNamespace = $configuration['framework']['root_namespace'] . 'Domain\Entity';
 
             $driver = new SimplifiedYamlDriver([
-                $fullResourcePath => $configuration['entity_manager']['entity_namespace']
+                $fullResourcePath => $entityNamespace
             ]);
 
             $config = Setup::createConfiguration();
             $config->setMetadataDriverImpl($driver);
-            $config->addEntityNamespace('Entity', $configuration['entity_manager']['entity_namespace']);
+            $config->addEntityNamespace('Entity', $entityNamespace);
 
-            if (!DEBUG && $appConfiguration->hasDriver('cache')) {
+            if ('prod' === $configuration['framework']['env'] && $appConfiguration->hasDriver('cache')) {
                 $cache = $appConfiguration->loadDriver('cache')->getComponentInstance();
 
                 $cacheDriver = new RedisCache();
