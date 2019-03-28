@@ -62,7 +62,7 @@ class EditService extends AbstractService
         return [
             ValidatorInterface::class      => 'validator',
             EntityManagerInterface::class  => 'entityManager',
-            NoteRepositoryInterface::class => $this->getDriver('entityManager')->getRepository('Entity:Note')
+            NoteRepositoryInterface::class => $this->getRepositoryProvider('entityManager')->getRepository('Entity:Note')
         ];
     }
 }

@@ -15,6 +15,7 @@ use Doctrine\ORM\OptimisticLockException;
 use CreativeNotes\Application\DriverInterface\EntityManagerInterface;
 use Yggdrasil\Core\Configuration\ConfigurationInterface;
 use Yggdrasil\Core\Driver\DriverInterface;
+use Yggdrasil\Core\Driver\RepositoryProviderInterface;
 use Yggdrasil\Core\Exception\MissingConfigurationException;
 use Yggdrasil\Utils\Seeds\SeederInterface;
 
@@ -26,7 +27,7 @@ use Yggdrasil\Utils\Seeds\SeederInterface;
  * @package CreativeNotes\Infrastructure\Driver
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
-class EntityManagerDriver implements DriverInterface, EntityManagerInterface, SeederInterface
+class EntityManagerDriver implements DriverInterface, EntityManagerInterface, SeederInterface, RepositoryProviderInterface
 {
     /**
      * Instance of driver
@@ -123,7 +124,7 @@ class EntityManagerDriver implements DriverInterface, EntityManagerInterface, Se
     }
 
     /**
-     * Return given repository
+     * Returns given repository
      *
      * @param string $name Name of repository
      * @return EntityRepository

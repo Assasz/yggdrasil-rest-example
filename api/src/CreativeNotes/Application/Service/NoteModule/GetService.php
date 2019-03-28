@@ -46,7 +46,7 @@ class GetService extends AbstractService
     {
         return [
             EntityManagerInterface::class  => 'entityManager',
-            NoteRepositoryInterface::class => $this->getDriver('entityManager')->getRepository('Entity:Note')
+            NoteRepositoryInterface::class => $this->getRepositoryProvider('entityManager')->getRepository('Entity:Note')
         ];
     }
 }
