@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yggdrasil\Core\Controller\ApiController;
+use Yggdrasil\Core\Controller\ErrorControllerInterface;
 use Yggdrasil\Core\Driver\DriverCollection;
 
 /**
@@ -16,7 +17,7 @@ use Yggdrasil\Core\Driver\DriverCollection;
  *
  * @package CreativeNotes\Ports\Controller
  */
-class ErrorController extends ApiController
+class ErrorController extends ApiController implements ErrorControllerInterface
 {
     /**
      * ErrorController constructor.

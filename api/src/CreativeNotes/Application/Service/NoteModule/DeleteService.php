@@ -44,14 +44,12 @@ class DeleteService extends AbstractService
     /**
      * Returns contracts between service and external suppliers
      *
-     * @example [EntityManagerInterface::class => $this->getDriver('entityManager')]
-     *
      * @return array
      */
     protected function getContracts(): array
     {
         return [
-            EntityManagerInterface::class  => $this->getDriver('entityManager'),
+            EntityManagerInterface::class  => 'entityManager',
             NoteRepositoryInterface::class => $this->getDriver('entityManager')->getRepository('Entity:Note')
         ];
     }

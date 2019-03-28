@@ -5,7 +5,7 @@ namespace CreativeNotes\Infrastructure\Driver;
 use Whoops\Run;
 use Yggdrasil\Core\Configuration\ConfigurationInterface;
 use Yggdrasil\Core\Driver\DriverInterface;
-use Yggdrasil\Utils\ExceptionLogger;
+use Yggdrasil\Utils\ErrorLogger;
 use Yggdrasil\Core\Exception\MissingConfigurationException;
 
 /**
@@ -69,7 +69,7 @@ class ErrorHandlerDriver implements DriverInterface
                 });
             }
 
-            $logger = (new ExceptionLogger())
+            $logger = (new ErrorLogger())
                 ->setLogPath(dirname(__DIR__, 4) . $configuration['error_handler']['log_path'] . '/error_logs.txt');
 
             $run->pushHandler(function ($exception) use ($logger) {

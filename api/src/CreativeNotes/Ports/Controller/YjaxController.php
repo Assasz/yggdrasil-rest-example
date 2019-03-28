@@ -14,8 +14,6 @@ use Yggdrasil\Core\Controller\ApiController;
  *
  * @package CreativeNotes\Ports\Controller
  * @author Paweł Antosiak <contact@pawelantosiak.com>
- *
- * @property RouterDriver $router
  */
 class YjaxController extends ApiController
 {
@@ -39,6 +37,6 @@ class YjaxController extends ApiController
 
         $this->enableCors();
 
-        return $this->json($this->router->getQueryMap());
+        return $this->json($this->getRouter()->getQueryMap());
     }
 }

@@ -41,6 +41,7 @@ class NoteController extends ApiController
     {
         parent::__construct($drivers, $request, $response);
 
+        $this->installDrivers(['container']);
         $this->enableCors();
     }
 

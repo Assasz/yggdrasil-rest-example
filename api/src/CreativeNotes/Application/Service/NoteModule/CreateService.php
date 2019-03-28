@@ -49,15 +49,13 @@ class CreateService extends AbstractService
     /**
      * Returns contracts between service and external suppliers
      *
-     * @example [EntityManagerInterface::class => $this->getDriver('entityManager')]
-     *
      * @return array
      */
     protected function getContracts(): array
     {
         return [
-            EntityManagerInterface::class => $this->getDriver('entityManager'),
-            ValidatorInterface::class     => $this->getDriver('validator')
+            EntityManagerInterface::class => 'entityManager',
+            ValidatorInterface::class     => 'validator'
         ];
     }
 }
