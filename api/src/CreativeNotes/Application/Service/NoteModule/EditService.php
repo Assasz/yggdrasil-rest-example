@@ -60,8 +60,8 @@ class EditService extends AbstractService
     protected function getContracts(): array
     {
         return [
-            ValidatorInterface::class      => 'validator',
-            EntityManagerInterface::class  => 'entityManager',
+            ValidatorInterface::class      => $this->getDriver('validator'),
+            EntityManagerInterface::class  => $this->getDriver('entityManager'),
             NoteRepositoryInterface::class => $this->getRepositoryProvider('entityManager')->getRepository('Entity:Note')
         ];
     }

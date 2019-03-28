@@ -49,7 +49,7 @@ class DeleteService extends AbstractService
     protected function getContracts(): array
     {
         return [
-            EntityManagerInterface::class  => 'entityManager',
+            EntityManagerInterface::class  => $this->getDriver('entityManager'),
             NoteRepositoryInterface::class => $this->getRepositoryProvider('entityManager')->getRepository('Entity:Note')
         ];
     }

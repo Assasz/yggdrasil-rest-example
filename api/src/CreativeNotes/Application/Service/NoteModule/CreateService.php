@@ -54,8 +54,8 @@ class CreateService extends AbstractService
     protected function getContracts(): array
     {
         return [
-            EntityManagerInterface::class => 'entityManager',
-            ValidatorInterface::class     => 'validator'
+            EntityManagerInterface::class => $this->getDriver('entityManager'),
+            ValidatorInterface::class     => $this->getDriver('validator')
         ];
     }
 }
