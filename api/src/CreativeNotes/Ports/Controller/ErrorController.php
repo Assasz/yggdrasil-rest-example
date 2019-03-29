@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Yggdrasil\Core\Controller\ApiController;
 use Yggdrasil\Core\Controller\ErrorControllerInterface;
 use Yggdrasil\Core\Driver\DriverCollection;
+use Yggdrasil\Utils\Annotation\CORS;
 
 /**
  * Class ErrorController
@@ -16,23 +17,12 @@ use Yggdrasil\Core\Driver\DriverCollection;
  * Can be extended with code 4xx and 5xx actions, feel free to customize as needed
  *
  * @package CreativeNotes\Ports\Controller
+ * @author Paweł Antosiak <contact@pawelantosiak.com>
+ *
+ * @CORS()
  */
 class ErrorController extends ApiController implements ErrorControllerInterface
 {
-    /**
-     * ErrorController constructor.
-     *
-     * @param DriverCollection $drivers
-     * @param Request $request
-     * @param Response $response
-     */
-    public function __construct(DriverCollection $drivers, Request $request, Response $response)
-    {
-        parent::__construct($drivers, $request, $response);
-
-        $this->enableCors();
-    }
-
     /**
      * Default error action
      *
