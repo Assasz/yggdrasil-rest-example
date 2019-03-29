@@ -8,12 +8,15 @@ use CreativeNotes\Application\Service\NoteModule\Request\CreateRequest;
 use CreativeNotes\Application\Service\NoteModule\Response\CreateResponse;
 use CreativeNotes\Domain\Entity\Note;
 use Yggdrasil\Utils\Service\AbstractService;
+use Yggdrasil\Utils\Annotation\Drivers;
 
 /**
  * Class CreateService
  *
  * @package CreativeNotes\Application\Service\NoteModule
  * @author Paweł Antosiak <contact@pawelantosiak.com>
+ *
+ * @Drivers(install={EntityManagerInterface::class:"entityManager", ValidatorInterface::class:"validator"})
  *
  * @property EntityManagerInterface $entityManager
  * @property ValidatorInterface $validator
@@ -44,18 +47,5 @@ class CreateService extends AbstractService
         return $response
             ->setSuccess(true)
             ->setNote($note);
-    }
-
-    /**
-     * Returns contracts between service and external suppliers
-     *
-     * @return array
-     */
-    protected function getContracts(): array
-    {
-        return [
-            EntityManagerInterface::class => $this->getDriver('entityManager'),
-            ValidatorInterface::class     => $this->getDriver('validator')
-        ];
     }
 }

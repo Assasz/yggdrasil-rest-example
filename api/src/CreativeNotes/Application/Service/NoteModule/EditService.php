@@ -8,6 +8,8 @@ use CreativeNotes\Application\RepositoryInterface\NoteRepositoryInterface;
 use CreativeNotes\Application\Service\NoteModule\Request\EditRequest;
 use CreativeNotes\Application\Service\NoteModule\Response\EditResponse;
 use Yggdrasil\Utils\Service\AbstractService;
+use Yggdrasil\Utils\Annotation\Drivers;
+use Yggdrasil\Utils\Annotation\Repository;
 
 /**
  * Class EditService
@@ -15,8 +17,11 @@ use Yggdrasil\Utils\Service\AbstractService;
  * @package CreativeNotes\Application\Service\NoteModule
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  *
- * @property ValidatorInterface $validator
+ * @Drivers(install={EntityManagerInterface::class:"entityManager", ValidatorInterface::class:"validator"})
+ * @Repository(name="Entity:Note", contract=NoteRepositoryInterface::class, repositoryProvider="entityManager")
+ *
  * @property EntityManagerInterface $entityManager
+ * @property ValidatorInterface $validator
  * @property NoteRepositoryInterface $noteRepository
  */
 class EditService extends AbstractService
@@ -50,19 +55,5 @@ class EditService extends AbstractService
         return $response
             ->setSuccess(true)
             ->setNote($note);
-    }
-
-    /**
-     * Returns contracts between service and external suppliers
-     *
-     * @return array
-     */
-    protected function getContracts(): array
-    {
-        return [
-            ValidatorInterface::class      => $this->getDriver('validator'),
-            EntityManagerInterface::class  => $this->getDriver('entityManager'),
-            NoteRepositoryInterface::class => $this->getRepositoryProvider('entityManager')->getRepository('Entity:Note')
-        ];
     }
 }

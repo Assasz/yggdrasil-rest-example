@@ -7,12 +7,17 @@ use CreativeNotes\Application\RepositoryInterface\NoteRepositoryInterface;
 use CreativeNotes\Application\Service\NoteModule\Request\DeleteRequest;
 use CreativeNotes\Application\Service\NoteModule\Response\DeleteResponse;
 use Yggdrasil\Utils\Service\AbstractService;
+use Yggdrasil\Utils\Annotation\Drivers;
+use Yggdrasil\Utils\Annotation\Repository;
 
 /**
  * Class DeleteService
  *
  * @package CreativeNotes\Application\Service\NoteModule
  * @author Paweł Antosiak <contact@pawelantosiak.com>
+ *
+ * @Drivers(install={EntityManagerInterface::class:"entityManager"})
+ * @Repository(name="Entity:Note", contract=NoteRepositoryInterface::class, repositoryProvider="entityManager")
  *
  * @property EntityManagerInterface $entityManager
  * @property NoteRepositoryInterface $noteRepository
@@ -39,18 +44,5 @@ class DeleteService extends AbstractService
         $this->entityManager->flush();
 
         return $response->setSuccess(true);
-    }
-
-    /**
-     * Returns contracts between service and external suppliers
-     *
-     * @return array
-     */
-    protected function getContracts(): array
-    {
-        return [
-            EntityManagerInterface::class  => $this->getDriver('entityManager'),
-            NoteRepositoryInterface::class => $this->getRepositoryProvider('entityManager')->getRepository('Entity:Note')
-        ];
     }
 }
