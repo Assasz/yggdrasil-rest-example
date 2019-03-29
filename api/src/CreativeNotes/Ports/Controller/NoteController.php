@@ -42,10 +42,6 @@ class NoteController extends ApiController
      */
     public function allAction()
     {
-        if (!$this->getRequest()->isMethod('GET')) {
-            return $this->methodNotAllowed();
-        }
-
         $request = new GetRequest();
         $response = $this->container->getService(GetService::class)->process($request);
 
@@ -63,10 +59,6 @@ class NoteController extends ApiController
      */
     public function singleAction(int $id)
     {
-        if (!$this->getRequest()->isMethod('GET')) {
-            return $this->methodNotAllowed();
-        }
-
         $request = (new GetOneRequest())
             ->setNoteId($id);
 
@@ -115,10 +107,6 @@ class NoteController extends ApiController
      */
     public function createAction()
     {
-        if (!$this->getRequest()->isMethod('POST')) {
-            return $this->methodNotAllowed();
-        }
-
         if (!$this->inBody(['title', 'content'])) {
             return $this->badRequest('Bad request. Some of required data is missing in request body.');
         }
@@ -147,10 +135,6 @@ class NoteController extends ApiController
      */
     public function editAction(int $id)
     {
-        if (!$this->getRequest()->isMethod('PUT')) {
-            return $this->methodNotAllowed();
-        }
-
         if (!$this->inBody(['title', 'content'])) {
             return $this->badRequest('Bad request. Some of required data is missing in request body.');
         }
@@ -184,10 +168,6 @@ class NoteController extends ApiController
      */
     public function destroyAction(int $id)
     {
-        if (!$this->getRequest()->isMethod('DELETE')) {
-            return $this->methodNotAllowed();
-        }
-
         $request = (new DeleteRequest())
             ->setNoteId($id);
 
