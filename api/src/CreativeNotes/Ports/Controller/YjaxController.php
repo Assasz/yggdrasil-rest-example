@@ -5,7 +5,7 @@ namespace CreativeNotes\Ports\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Yggdrasil\Core\Controller\ApiController;
-use Yggdrasil\Core\Annotation\CORS;
+use Yggdrasil\Utils\Annotation\CORS;
 
 /**
  * Class YjaxController
