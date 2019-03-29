@@ -13,7 +13,7 @@ class YjaxPlugin {
      * @param {string} options.routesProvider Remote action to load routes from, if left empty, routes will not be loaded in this stage
      */
     constructor({ host, routesProvider } = {}) {
-        if (null !== host) {
+        if (typeof host !== 'undefined') {
             this.host = host;
         } else {
             this.host = window.location.protocol + '//' + window.location.host;
@@ -27,7 +27,7 @@ class YjaxPlugin {
             }
         }
 
-        if (null !== routesProvider) {
+        if (typeof routesProvider !== 'undefined') {
             this.loadRoutes(routesProvider);
         }
 
