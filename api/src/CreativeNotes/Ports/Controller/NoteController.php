@@ -14,11 +14,10 @@ use CreativeNotes\Application\Service\NoteModule\Request\GetOneRequest;
 use CreativeNotes\Application\Service\NoteModule\Request\GetRequest;
 use CreativeNotes\Infrastructure\Driver\ContainerDriver;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yggdrasil\Core\Controller\ApiController;
-use Yggdrasil\Core\Driver\DriverCollection;
-use Yggdrasil\Utils\Entity\EntitySerializer;
+use Yggdrasil\Core\Annotation\Drivers;
+use Yggdrasil\Core\Annotation\CORS;
 
 /**
  * Class NoteController
@@ -26,26 +25,14 @@ use Yggdrasil\Utils\Entity\EntitySerializer;
  * @package CreativeNotes\Ports\Controller
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  *
+ * @Drivers(install={"container"})
+ * @CORS()
+ *
  * @property ContainerDriver $container
  */
 class NoteController extends ApiController
 {
     /**
-     * NoteController constructor.
-     *
-     * @param DriverCollection $drivers
-     * @param Request $request
-     * @param Response $response
-     */
-    public function __construct(DriverCollection $drivers, Request $request, Response $response)
-    {
-        parent::__construct($drivers, $request, $response);
-
-        $this->installDrivers(['container']);
-        $this->enableCors();
-    }
-
-  /**
      * All notes action
      * GET: /note, /
      *

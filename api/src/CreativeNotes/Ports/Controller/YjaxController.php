@@ -2,10 +2,10 @@
 
 namespace CreativeNotes\Ports\Controller;
 
-use CreativeNotes\Infrastructure\Driver\RouterDriver;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Yggdrasil\Core\Controller\ApiController;
+use Yggdrasil\Core\Annotation\CORS;
 
 /**
  * Class YjaxController
@@ -14,6 +14,8 @@ use Yggdrasil\Core\Controller\ApiController;
  *
  * @package CreativeNotes\Ports\Controller
  * @author Paweł Antosiak <contact@pawelantosiak.com>
+ *
+ * @CORS()
  */
 class YjaxController extends ApiController
 {
@@ -34,8 +36,6 @@ class YjaxController extends ApiController
         if (!$this->getRequest()->isMethod('GET')) {
             return $this->methodNotAllowed();
         }
-
-        $this->enableCors();
 
         return $this->json($this->getRouter()->getQueryMap());
     }
