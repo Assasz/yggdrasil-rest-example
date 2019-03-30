@@ -38,7 +38,6 @@ class GetService extends AbstractService
             $notes = $this->noteRepository->fetch([], ['createDate' => 'desc']);
         }
 
-        return (new GetResponse())
-            ->setNotes($notes);
+        return (new GetResponse())->setNotes($notes);
     }
 }
