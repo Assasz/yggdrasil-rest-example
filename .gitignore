@@ -1,5 +1,7 @@
 /.idea
 /api/vendor
 /api/composer.lock
-/api/src/CreativeNotes/Infrastructure/Configuration/config.ini
+/api/src/CreativeNotes/Infrastructure/Configuration/App/config.ini
+/api/src/CreativeNotes/Infrastructure/Configuration/Test/config.ini
 /api/error_logs.txt
+/api/.phpunit.result.cache

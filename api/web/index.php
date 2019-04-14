@@ -1,17 +1,20 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+$loader = require __DIR__ . '/../vendor/autoload.php';
 
 use Symfony\Component\HttpFoundation\Request;
-use CreativeNotes\Infrastructure\Configuration\AppConfiguration;
+use CreativeNotes\Infrastructure\Configuration\Api\ApiConfiguration;
 use Yggdrasil\Core\Kernel;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 
-$appConfiguration = new AppConfiguration();
+AnnotationRegistry::registerLoader([$loader, 'loadClass']);
 
-if ('prod' === $appConfiguration->getConfiguration()['framework']['env']) {
+$apiConfiguration = new ApiConfiguration();
+
+if ('prod' === $apiConfiguration->getConfiguration()['framework']['env']) {
     ini_set('display_errors', 0);
 }
 
-(new Kernel($appConfiguration))
+(new Kernel($apiConfiguration))
     ->handle(Request::createFromGlobals())
     ->send();

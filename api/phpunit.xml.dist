@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<phpunit bootstrap="./src/CreativeNotes/Tests/bootstrap.php">
+
+    <testsuites>
+        <testsuite name="CreativeNotes - TestSuite">
+            <directory>./src/CreativeNotes/Tests</directory>
+        </testsuite>
+    </testsuites>
+
+</phpunit>

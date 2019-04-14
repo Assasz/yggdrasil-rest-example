@@ -1,6 +1,6 @@
 <?php
 
-namespace CreativeNotes\Infrastructure\Configuration;
+namespace CreativeNotes\Infrastructure\Configuration\Api;
 
 use Yggdrasil\Core\Configuration\AbstractConfiguration;
 use Yggdrasil\Core\Configuration\ConfigurationInterface;
@@ -8,17 +8,16 @@ use CreativeNotes\Infrastructure\Driver\ContainerDriver;
 use CreativeNotes\Infrastructure\Driver\EntityManagerDriver;
 use CreativeNotes\Infrastructure\Driver\ErrorHandlerDriver;
 use CreativeNotes\Infrastructure\Driver\RouterDriver;
-use CreativeNotes\Infrastructure\Driver\TemplateEngineDriver;
 use CreativeNotes\Infrastructure\Driver\ValidatorDriver;
 
 /**
- * Class AppConfiguration
+ * Class ApiConfiguration
  *
- * Manages configuration of application
+ * Manages configuration of API
  *
- * @package CreativeNotes\Infrastructure\Configuration
+ * @package CreativeNotes\Infrastructure\Configuration\Api
  */
-class AppConfiguration extends AbstractConfiguration implements ConfigurationInterface
+class ApiConfiguration extends AbstractConfiguration implements ConfigurationInterface
 {
     /**
      * Returns application config path
@@ -27,7 +26,7 @@ class AppConfiguration extends AbstractConfiguration implements ConfigurationInt
      */
     protected function getConfigPath(): string
     {
-        return 'CreativeNotes/Infrastructure/Configuration';
+        return 'CreativeNotes/Infrastructure/Configuration/Api';
     }
 
     /**
