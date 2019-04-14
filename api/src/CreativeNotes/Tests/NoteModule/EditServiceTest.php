@@ -2,22 +2,22 @@
 
 namespace CreativeNotes\Tests\NoteModule;
 
-use CreativeNotes\Application\Service\NoteModule\CreateService;
-use CreativeNotes\Application\Service\NoteModule\Request\CreateRequest;
+use CreativeNotes\Application\Service\NoteModule\EditService;
+use CreativeNotes\Application\Service\NoteModule\Request\EditRequest;
 use CreativeNotes\Domain\Entity\Note;
 use CreativeNotes\Infrastructure\Configuration\Test\TestConfiguration;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Class CreateServiceTest
+ * Class EditServiceTest
  *
  * @package CreativeNotes\Tests\NoteModule
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
-class CreateServiceTest extends TestCase
+class EditServiceTest extends TestCase
 {
     /**
-     * @var CreateService
+     * @var EditService
      */
     private $service;
 
@@ -27,17 +27,29 @@ class CreateServiceTest extends TestCase
      */
     public function setUp(): void
     {
-        $this->service = new CreateService(new TestConfiguration());
+        $this->service = new EditService(new TestConfiguration());
     }
 
     /**
-     * @covers CreateService::process()
+     * @covers EditService::process()
+     */
+    public function testFailOnNonExistentNoteId(): void
+    {
+        $request = (new EditRequest())->setNoteId(9999);
+        $response = $this->service->process($request);
+
+        $this->assertFalse($response->isFound());
+    }
+
+    /**
+     * @covers EditService::process()
      */
     public function testFailOnInvalidNoteTitle(): void
     {
-        $request = (new CreateRequest())
+        $request = (new EditRequest())
+            ->setNoteId(1)
             ->setTitle('')
-            ->setContent('foo');
+            ->setContent('newContent');
 
         $response = $this->service->process($request);
 
@@ -50,12 +62,13 @@ class CreateServiceTest extends TestCase
     }
 
     /**
-     * @covers CreateService::process()
+     * @covers EditService::process()
      */
     public function testFailOnInvalidNoteContent(): void
     {
-        $request = (new CreateRequest())
-            ->setTitle('foo')
+        $request = (new EditRequest())
+            ->setNoteId(1)
+            ->setTitle('newTitle')
             ->setContent('');
 
         $response = $this->service->process($request);
@@ -69,16 +82,16 @@ class CreateServiceTest extends TestCase
     }
 
     /**
-     * @covers CreateService::process()
+     * @covers EditService::process()
      */
     public function testReturnNoteOnSuccess(): void
     {
-        $request = (new CreateRequest())
-            ->setTitle('foo')
-            ->setContent('bar');
+        $request = (new EditRequest())
+            ->setNoteId(1)
+            ->setTitle('newTitle')
+            ->setContent('newContent');
 
         $response = $this->service->process($request);
-
         $this->assertInstanceOf(Note::class, $response->getNote());
     }
 

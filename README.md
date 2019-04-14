@@ -17,7 +17,7 @@ composer update
 
 ## Configuration
 
-Rename **config.example.ini** (api/src/CreativeNotes/Infrastructure/Configuration) to **config.ini** and adjust configuration to your needs.
+Rename **config.example.ini** file located in `api/src/CreativeNotes/Infrastructure/Configuration/Api` to **config.ini** and adjust configuration to your needs.
 
 ```
 [router]
@@ -56,3 +56,15 @@ const app = (new App())
 ## Usage
 
 Interact with API via client application located under `localhost/creative-notes/client` address (assuming that you are using localhost).
+
+## Testing
+
+Before running tests create testing database, import note table from existing production database and configure it's connection in 
+`api/src/CreativeNotes/Infrastructure/Configuration/Test/config.ini` file.
+
+Then run unit tests with following command (for Windows just flip slashes):
+
+```
+./vendor/bin/phpunit
+```
+
