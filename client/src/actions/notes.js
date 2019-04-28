@@ -44,7 +44,7 @@ app.register({
     name: 'listNotes',
     callback: function () {
         app.use('yjax').get({
-            action: 'Note:all',
+            action: 'Notes:all',
             success: function (response) {
                 $.each(response.notes, function (index, note) {
                     $('#notes').append(app.use('noteHelper').render(note));
@@ -80,7 +80,7 @@ app.register({
 
         delay(function () {
             app.use('yjax').post({
-                action: 'Note:search',
+                action: 'Notes:search',
                 data: data,
                 success: function (response) {
                     $('#notes').empty();
@@ -108,7 +108,7 @@ app.register({
             };
 
             app.use('yjax').post({
-                action: 'Note:create',
+                action: 'Notes:create',
                 data: data,
                 success: function (response) {
                     $('#notes').prepend(app.use('noteHelper').render(response.note));
@@ -133,7 +133,7 @@ app.register({
             };
 
             app.use('yjax').put({
-                action: 'Note:edit',
+                action: 'Notes:edit',
                 data: data,
                 params: [app.retrieve('noteId')],
                 success: function (response) {
@@ -153,7 +153,7 @@ app.register({
     event: 'click',
     callback: function () {
         app.use('yjax').delete({
-            action: 'Note:destroy',
+            action: 'Notes:destroy',
             params: [app.retrieve('noteId')],
             success: function () {
                 $('#note_' + app.retrieve('noteId')).remove();
@@ -180,7 +180,7 @@ app.register({
 
             if(target === 'edit_modal'){
                 app.use('yjax').get({
-                    action: 'Note:single',
+                    action: 'Notes:single',
                     params: [app.retrieve('noteId')],
                     success: function (response) {
                         $('#title_edit').val(response.note.title);

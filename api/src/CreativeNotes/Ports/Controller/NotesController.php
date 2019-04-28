@@ -20,7 +20,7 @@ use Yggdrasil\Utils\Annotation\Drivers;
 use Yggdrasil\Utils\Annotation\CORS;
 
 /**
- * Class NoteController
+ * Class NotesController
  *
  * @package CreativeNotes\Ports\Controller
  * @author Paweł Antosiak <contact@pawelantosiak.com>
@@ -30,7 +30,7 @@ use Yggdrasil\Utils\Annotation\CORS;
  *
  * @property ContainerDriver $container
  */
-class NoteController extends ApiController
+class NotesController extends ApiController
 {
     /**
      * All notes action
