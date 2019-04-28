@@ -67,9 +67,7 @@ class NoteController extends ApiController
             return $this->methodNotAllowed();
         }
 
-        $request = (new GetOneRequest())
-            ->setNoteId($id);
-
+        $request = (new GetOneRequest())->setNoteId($id);
         $response = $this->container->getService(GetOneService::class)->process($request);
 
         if (!$response->isSuccess()) {
@@ -97,9 +95,7 @@ class NoteController extends ApiController
             return $this->badRequest('Bad request. Some of required data is missing in request body.');
         }
 
-        $request = (new GetRequest())
-            ->setSearchTerm($this->fromBody('searchTerm'));
-
+        $request = (new GetRequest())->setSearchTerm($this->fromBody('searchTerm'));
         $response = $this->container->getService(GetService::class)->process($request);
 
         return $this->json(['notes' => $response->getNotes()]);
@@ -188,9 +184,7 @@ class NoteController extends ApiController
             return $this->methodNotAllowed();
         }
 
-        $request = (new DeleteRequest())
-            ->setNoteId($id);
-
+        $request = (new DeleteRequest())->setNoteId($id);
         $response = $this->container->getService(DeleteService::class)->process($request);
 
         if (!$response->isSuccess()) {
