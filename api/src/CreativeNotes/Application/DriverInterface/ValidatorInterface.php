@@ -11,7 +11,7 @@ namespace CreativeNotes\Application\DriverInterface;
 interface ValidatorInterface
 {
     /**
-     * Returns TRUE if given entity object is valid, false otherwise
+     * Returns true if given entity object is valid, false otherwise
      *
      * @param object $entity
      * @return bool
