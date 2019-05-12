@@ -71,23 +71,20 @@ class NotesController extends ApiController
 
     /**
      * Search notes action
-     * POST: /notes/search
+     * GET: /notes/search/{searchTerm}
      *
+     * @param string $searchTerm
      * @return JsonResponse|Response
      *
      * @throws \Exception
      */
-    public function searchAction()
+    public function searchAction(string $searchTerm)
     {
-        if (!$this->getRequest()->isMethod('POST')) {
+        if (!$this->getRequest()->isMethod('GET')) {
             return $this->methodNotAllowed();
         }
 
-        if (!$this->inBody(['searchTerm'])) {
-            return $this->badRequest('Bad request. Some of required data is missing in request body.');
-        }
-
-        $request = (new GetRequest())->setSearchTerm($this->fromBody('searchTerm'));
+        $request = (new GetRequest())->setSearchTerm($searchTerm);
         $response = $this->container->getService(GetService::class)->process($request);
 
         return $this->json(['notes' => $response->getNotes()]);
