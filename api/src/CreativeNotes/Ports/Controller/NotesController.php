@@ -34,7 +34,7 @@ class NotesController extends ApiController
 {
     /**
      * All notes action
-     * GET: /note, /
+     * GET: /notes, /
      *
      * @return JsonResponse|Response
      *
@@ -50,7 +50,7 @@ class NotesController extends ApiController
 
     /**
      * Single note action
-     * GET: /note/{id}
+     * GET: /notes/{id}
      *
      * @param int $id
      * @return JsonResponse|Response
@@ -71,7 +71,7 @@ class NotesController extends ApiController
 
     /**
      * Search notes action
-     * POST: /note/search
+     * POST: /notes/search
      *
      * @return JsonResponse|Response
      *
@@ -95,7 +95,7 @@ class NotesController extends ApiController
 
     /**
      * Create note action
-     * POST: /note
+     * POST: /notes
      *
      * @return JsonResponse|Response
      *
@@ -122,7 +122,7 @@ class NotesController extends ApiController
 
     /**
      * Edit note action
-     * PUT: /note/{id}
+     * PUT: /notes/{id}
      *
      * @param int $id
      * @return JsonResponse|Response
@@ -155,7 +155,7 @@ class NotesController extends ApiController
 
     /**
      * Destroy note action
-     * DELETE: /note/{id}
+     * DELETE: /notes/{id}
      *
      * @param int $id
      * @return JsonResponse|Response
