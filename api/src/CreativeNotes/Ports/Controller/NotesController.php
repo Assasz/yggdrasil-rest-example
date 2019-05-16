@@ -71,20 +71,20 @@ class NotesController extends ApiController
 
     /**
      * Search notes action
-     * GET: /notes/search/{searchTerm}
+     * GET: /notes/search/{query}
      *
-     * @param string $searchTerm
+     * @param string $query
      * @return JsonResponse|Response
      *
      * @throws \Exception
      */
-    public function searchAction(string $searchTerm)
+    public function searchAction(string $query)
     {
         if (!$this->getRequest()->isMethod('GET')) {
             return $this->methodNotAllowed();
         }
 
-        $request = (new GetRequest())->setSearchTerm($searchTerm);
+        $request = (new GetRequest())->setSearchTerm($query);
         $response = $this->container->getService(GetService::class)->process($request);
 
         return $this->json(['notes' => $response->getNotes()]);
