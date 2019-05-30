@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityRepository;
 /**
  * Class NoteRepository
  *
- * @package CreativeNotes\Application\RepositoryInterface
+ * @package CreativeNotes\Infrastructure\Repository
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  */
 class NoteRepository extends EntityRepository implements NoteRepositoryInterface
