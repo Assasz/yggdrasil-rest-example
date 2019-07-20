@@ -1,8 +1,0 @@
-services:
-  _defaults:
-    public: true
-
-  CreativeNotes\Application\Service\:
-    resource: '../../../Application/Service/*'
-    exclude: '../../../Application/Service/*/{Request, Response}/*'
-    arguments: ['%app.configuration%']
