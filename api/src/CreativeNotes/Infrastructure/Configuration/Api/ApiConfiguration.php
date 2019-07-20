@@ -4,7 +4,6 @@ namespace CreativeNotes\Infrastructure\Configuration\Api;
 
 use Yggdrasil\Core\Configuration\AbstractConfiguration;
 use Yggdrasil\Core\Configuration\ConfigurationInterface;
-use CreativeNotes\Infrastructure\Driver\ContainerDriver;
 use CreativeNotes\Infrastructure\Driver\EntityManagerDriver;
 use CreativeNotes\Infrastructure\Driver\ErrorHandlerDriver;
 use CreativeNotes\Infrastructure\Driver\RouterDriver;
@@ -40,7 +39,6 @@ class ApiConfiguration extends AbstractConfiguration implements ConfigurationInt
             'router' => RouterDriver::class,
             'errorHandler' => ErrorHandlerDriver::class,
             'entityManager' => EntityManagerDriver::class,
-            'container' => ContainerDriver::class,
             'validator' => ValidatorDriver::class
         ];
     }

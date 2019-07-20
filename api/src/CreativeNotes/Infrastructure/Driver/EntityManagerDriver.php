@@ -62,26 +62,24 @@ class EntityManagerDriver implements DriverInterface, EntityManagerInterface, Se
     public static function install(ConfigurationInterface $appConfiguration): DriverInterface
     {
         if (self::$driverInstance === null) {
-            $requiredConfig = ['db_name', 'db_user', 'db_password', 'db_host'];
+            $requiredConfig = ['db_name', 'db_user', 'db_password', 'db_host', 'resource_path'];
 
             if (!$appConfiguration->isConfigured($requiredConfig, 'entity_manager')) {
                 throw new MissingConfigurationException($requiredConfig, 'entity_manager');
             }
 
-            $configuration = $appConfiguration->getConfiguration();
-
             $connectionParams = [
-                'dbname'   => $configuration['entity_manager']['db_name'],
-                'user'     => $configuration['entity_manager']['db_user'],
-                'password' => $configuration['entity_manager']['db_password'],
-                'host'     => $configuration['entity_manager']['db_host'],
-                'port'     => $configuration['entity_manager']['db_port']    ?? 3306,
-                'driver'   => $configuration['entity_manager']['db_driver']  ?? 'pdo_mysql',
-                'charset'  => $configuration['entity_manager']['db_charset'] ?? 'UTF8'
+                'dbname'   => $appConfiguration->get('db_name', 'entity_manager'),
+                'user'     => $appConfiguration->get('db_user', 'entity_manager'),
+                'password' => $appConfiguration->get('db_password', 'entity_manager'),
+                'host'     => $appConfiguration->get('db_host', 'entity_manager'),
+                'port'     => $appConfiguration->get('db_port', 'entity_manager') ?? 3306,
+                'driver'   => $appConfiguration->get('db_driver', 'entity_manager') ?? 'pdo_mysql',
+                'charset'  => $appConfiguration->get('db_charset', 'entity_manager') ?? 'UTF8'
             ];
 
-            $fullResourcePath = dirname(__DIR__, 4) . '/src/' . $configuration['entity_manager']['resource_path'];
-            $entityNamespace = $configuration['framework']['root_namespace'] . 'Domain\Entity';
+            $fullResourcePath = dirname(__DIR__, 4) . '/src/' . $appConfiguration->get('resource_path', 'entity_manager');
+            $entityNamespace = $appConfiguration->get('root_namespace', 'framework') . 'Domain\Entity';
 
             $driver = new SimplifiedYamlDriver([
                 $fullResourcePath => $entityNamespace
@@ -91,8 +89,8 @@ class EntityManagerDriver implements DriverInterface, EntityManagerInterface, Se
             $config->setMetadataDriverImpl($driver);
             $config->addEntityNamespace('Entity', $entityNamespace);
 
-            if ('prod' === $configuration['framework']['env'] && $appConfiguration->hasDriver('cache')) {
-                $cache = $appConfiguration->loadDriver('cache')->getComponentInstance();
+            if ('prod' === $appConfiguration->get('env', 'framework') && $appConfiguration->hasDriver('cache')) {
+                $cache = $appConfiguration->installDriver('cache')->getComponentInstance();
 
                 $cacheDriver = new RedisCache();
                 $cacheDriver->setRedis($cache);
@@ -106,7 +104,7 @@ class EntityManagerDriver implements DriverInterface, EntityManagerInterface, Se
             $connection->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
 
             self::$managerInstance = EntityManager::create($connection, $config);
-            self::$driverInstance = new EntityManagerDriver();
+            self::$driverInstance  = new EntityManagerDriver();
         }
 
         return self::$driverInstance;

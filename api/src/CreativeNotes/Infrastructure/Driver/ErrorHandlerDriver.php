@@ -56,20 +56,19 @@ class ErrorHandlerDriver implements DriverInterface
                 throw new MissingConfigurationException($requiredConfig, 'error_handler');
             }
 
-            $configuration = $appConfiguration->getConfiguration();
             $run = new Run();
 
-            if ('dev' === $configuration['framework']['env']) {
-                $handler = 'Whoops\Handler\\' . $configuration['error_handler']['handler'] ?? 'PrettyPageHandler';
+            if ('dev' === $appConfiguration->get('env', 'framework')) {
+                $handler = 'Whoops\Handler\\' . $appConfiguration->get('handler', 'error_handler') ?? 'PrettyPageHandler';
                 $run->pushHandler(new $handler());
             } else {
                 $run->pushHandler(function () use ($appConfiguration) {
-                    echo json_encode(['message' => 'Internal server error.']);
+                    echo $appConfiguration->installDriver('templateEngine')->render('error/500.html.twig');
                 });
             }
 
             $logger = (new ErrorLogger())
-                ->setLogPath(dirname(__DIR__, 4) . $configuration['error_handler']['log_path'] . '/error_logs.txt');
+                ->setLogPath(dirname(__DIR__, 4) . $appConfiguration->get('log_path', 'error_handler') . '/error_logs.txt');
 
             $run->pushHandler(function ($exception) use ($logger) {
                 $logger->log($exception);

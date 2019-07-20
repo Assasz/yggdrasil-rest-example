@@ -12,11 +12,10 @@ use CreativeNotes\Application\Service\NoteModule\Request\DeleteRequest;
 use CreativeNotes\Application\Service\NoteModule\Request\EditRequest;
 use CreativeNotes\Application\Service\NoteModule\Request\GetOneRequest;
 use CreativeNotes\Application\Service\NoteModule\Request\GetRequest;
-use CreativeNotes\Infrastructure\Driver\ContainerDriver;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Yggdrasil\Core\Controller\ApiController;
-use Yggdrasil\Utils\Annotation\Drivers;
+use Yggdrasil\Utils\Annotation\Services;
 use Yggdrasil\Utils\Annotation\CORS;
 
 /**
@@ -25,10 +24,20 @@ use Yggdrasil\Utils\Annotation\CORS;
  * @package CreativeNotes\Ports\Controller
  * @author Paweł Antosiak <contact@pawelantosiak.com>
  *
- * @Drivers(install={"container"})
+ * @Services(install={
+ *     GetService::class,
+ *     GetOneService::class,
+ *     CreateService::class,
+ *     EditService::class,
+ *     DeleteService::class
+ * })
  * @CORS()
  *
- * @property ContainerDriver $container
+ * @property GetService $noteGetService
+ * @property GetOneService $noteGetOneService
+ * @property CreateService $noteCreateService
+ * @property EditService $noteEditService
+ * @property DeleteService $noteDeleteService
  */
 class NotesController extends ApiController
 {
@@ -43,7 +52,7 @@ class NotesController extends ApiController
     public function allAction()
     {
         $request = new GetRequest();
-        $response = $this->container->getService(GetService::class)->process($request);
+        $response = $this->noteGetService->process($request);
 
         return $this->json(['notes' => $response->getNotes()]);
     }
@@ -60,7 +69,7 @@ class NotesController extends ApiController
     public function singleAction(int $id)
     {
         $request = (new GetOneRequest())->setNoteId($id);
-        $response = $this->container->getService(GetOneService::class)->process($request);
+        $response = $this->noteGetOneService->process($request);
 
         if (!$response->isSuccess()) {
             return $this->notFound('Not found. Requested note doesn\'t exist.');
@@ -85,7 +94,7 @@ class NotesController extends ApiController
         }
 
         $request = (new GetRequest())->setSearchTerm($query);
-        $response = $this->container->getService(GetService::class)->process($request);
+        $response = $this->noteGetService->process($request);
 
         return $this->json(['notes' => $response->getNotes()]);
     }
@@ -108,7 +117,7 @@ class NotesController extends ApiController
             ->setTitle($this->fromBody('title'))
             ->setContent($this->fromBody('content'));
 
-        $response = $this->container->getService(CreateService::class)->process($request);
+        $response = $this->noteCreateService->process($request);
 
         if (!$response->isSuccess()) {
             return $this->unprocessableEntity('Unprocessable entity. Provided data is invalid.');
@@ -137,7 +146,7 @@ class NotesController extends ApiController
             ->setTitle($this->fromBody('title'))
             ->setContent($this->fromBody('content'));
 
-        $response = $this->container->getService(EditService::class)->process($request);
+        $response = $this->noteEditService->process($request);
 
         if (!$response->isFound()) {
             return $this->notFound('Not found. Requested note doesn\'t exist.');
@@ -162,7 +171,7 @@ class NotesController extends ApiController
     public function destroyAction(int $id)
     {
         $request = (new DeleteRequest())->setNoteId($id);
-        $response = $this->container->getService(DeleteService::class)->process($request);
+        $response = $this->noteDeleteService->process($request);
 
         if (!$response->isSuccess()) {
             return $this->notFound('Not found. Requested note doesn\'t exist.');

@@ -51,19 +51,18 @@ class RouterDriver extends AbstractDriver implements DriverInterface
                 throw new MissingConfigurationException($requiredConfig, 'router');
             }
 
-            $configuration = $appConfiguration->getConfiguration();
-
-            $passiveActionsPath = dirname(__DIR__, 4) . '/src/' . $configuration['router']['resource_path'] . '/passive_actions.yaml';
+            $passiveActionsPath = dirname(__DIR__, 4) . '/src/' . $appConfiguration->get('resource_path', 'router') . '/passive_actions.yaml';
 
             if (file_exists($passiveActionsPath)) {
                 $passiveActions = Yaml::parseFile($passiveActionsPath);
             }
 
             $routingConfig = (new RoutingConfiguration())
-                ->setBaseUrl($configuration['router']['base_url'])
-                ->setControllerNamespace($configuration['framework']['root_namespace'] . 'Ports\Controller\\')
-                ->setDefaultController($configuration['router']['default_controller'])
-                ->setDefaultAction($configuration['router']['default_action'])
+                ->setBaseUrl($appConfiguration->get('base_url', 'router'))
+                ->setControllerNamespace($appConfiguration->get('root_namespace', 'framework') . 'Ports\Controller\\')
+                ->setDefaultController($appConfiguration->get('default_controller', 'router'))
+                ->setDefaultAction($appConfiguration->get('default_action', 'router'))
+                ->setNotFoundMsg($appConfiguration->get('not_found_msg', 'router') ?? 'Not found.')
                 ->setPassiveActions($passiveActions ?? []);
 
             if ($appConfiguration->isConfigured(['rest_routing'], 'router')) {
